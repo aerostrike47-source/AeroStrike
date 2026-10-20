@@ -183,9 +183,7 @@
             border-radius: 14px;
             border: 1px solid rgba(255, 255, 255, 0.08);
             text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            cursor: pointer;
             transition: all 0.3s ease;
         }
 
@@ -208,28 +206,90 @@
             font-size: 14px;
             color: var(--text-main);
             display: block;
-            margin-bottom: 14px;
+        }
+
+        /* ROZWIJANA SEKCJA POD SPODEM */
+        .dropdown-details {
+            display: none;
+            grid-column: 1 / -1;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--accent-cyan);
+            border-radius: 14px;
+            padding: 20px;
+            margin-top: 10px;
+            text-align: left;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .dropdown-details.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .details-content {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        @media (max-width: 600px) {
+            .details-content {
+                flex-direction: column;
+            }
+        }
+
+        .details-img {
+            width: 180px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: #000;
+        }
+
+        .details-info {
+            flex: 1;
+        }
+
+        .details-title {
+            font-size: 18px;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .details-price {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--accent-cyan);
+            margin-bottom: 8px;
+        }
+
+        .details-desc {
+            font-size: 13px;
+            color: var(--text-sub);
+            margin-bottom: 15px;
+            line-height: 1.4;
         }
 
         .buy-btn {
-            display: block;
-            width: 100%;
-            padding: 10px 12px;
-            font-size: 11px;
+            display: inline-block;
+            padding: 8px 16px;
+            font-size: 12px;
             font-weight: 800;
             color: #0b0e14;
             background: var(--accent-cyan);
             border-radius: 8px;
             text-decoration: none;
             transition: all 0.2s ease;
-            letter-spacing: 0.5px;
-            text-align: center;
         }
 
         .buy-btn:hover {
             background: #ffffff;
-            box-shadow: 0 0 12px #ffffff;
-            transform: scale(1.02);
+            box-shadow: 0 0 10px #ffffff;
         }
 
         footer {
@@ -244,7 +304,6 @@
     <canvas id="bg-canvas"></canvas>
 
     <div class="container">
-        <!-- AVATAR -->
         <div class="avatar-container">
             <div class="avatar">
                 <i class="fa-solid fa-gamepad"></i>
@@ -258,7 +317,6 @@
         </a>
         <p class="bio">Zakup swój sprzęt marzeń i podnieś swój gaming na wyższy poziom.</p>
 
-        <!-- SOCIALE -->
         <div class="links">
             <a href="http://www.youtube.com/@AeroStrike47" target="_blank" class="link-btn" style="border-color: rgba(255, 0, 0, 0.3); background: rgba(255, 0, 0, 0.05);" onmouseover="this.style.borderColor='#FF0000'; this.style.boxShadow='0 0 15px rgba(255, 0, 0, 0.4)';" onmouseout="this.style.borderColor='rgba(255, 0, 0, 0.3)'; this.style.boxShadow='none';">
                 <div style="display: flex; align-items: center; gap: 12px;">
@@ -289,117 +347,158 @@
             <i class="fa-solid fa-cart-shopping" style="color: var(--accent-cyan);"></i> CO OFERUJEMY:
         </div>
 
-        <!-- 1. PODKŁADKI POD MYSZKĘ -->
+        <!-- 1. PODKŁADKI -->
         <div class="category-title"><i class="fa-solid fa-layer-group"></i> PODKŁADKI POD MYSZKĘ</div>
         <div class="gear-grid-3">
-            <div class="gear-card">
-                <div><span>Podkładka</span><strong>Podkładka #1</strong></div>
-                <a href="TUTAJ_LINK_1" target="_blank" class="buy-btn">KUP TERAZ</a>
+            <div class="gear-card" onclick="toggleDetails('p1')">
+                <span>Podkładka</span><strong>Podkładka #1</strong>
             </div>
-            <div class="gear-card">
-                <div><span>Podkładka</span><strong>Podkładka #2</strong></div>
-                <a href="TUTAJ_LINK_2" target="_blank" class="buy-btn">KUP TERAZ</a>
+            <div class="gear-card" onclick="toggleDetails('p2')">
+                <span>Podkładka</span><strong>Podkładka #2</strong>
             </div>
-            <div class="gear-card">
-                <div><span>Podkładka</span><strong>Podkładka #3</strong></div>
-                <a href="TUTAJ_LINK_3" target="_blank" class="buy-btn">KUP TERAZ</a>
+            <div class="gear-card" onclick="toggleDetails('p3')">
+                <span>Podkładka</span><strong>Podkładka #3</strong>
+            </div>
+
+            <!-- ROZWIJANE OKIENKO DLA PODKŁADEK -->
+            <div id="details-p1" class="dropdown-details">
+                <div class="details-content">
+                    <img src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500" class="details-img" alt="Podkładka 1">
+                    <div class="details-info">
+                        <div class="details-title">Podkładka #1</div>
+                        <div class="details-price">79.99 zł</div>
+                        <div class="details-desc">Wysokiej jakości podkładka gładka typu Speed, wymiary 900x400mm z obszyciem.</div>
+                        <a href="#" target="_blank" class="buy-btn">KUP TERAZ</a>
+                    </div>
+                </div>
+            </div>
+            <div id="details-p2" class="dropdown-details">
+                <div class="details-content">
+                    <img src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500" class="details-img" alt="Podkładka 2">
+                    <div class="details-info">
+                        <div class="details-title">Podkładka #2</div>
+                        <div class="details-price">89.99 zł</div>
+                        <div class="details-desc">Podkładka z podświetleniem RGB, idealny poślizg dla czujników optycznych.</div>
+                        <a href="#" target="_blank" class="buy-btn">KUP TERAZ</a>
+                    </div>
+                </div>
+            </div>
+            <div id="details-p3" class="dropdown-details">
+                <div class="details-content">
+                    <img src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500" class="details-img" alt="Podkładka 3">
+                    <div class="details-info">
+                        <div class="details-title">Podkładka #3</div>
+                        <div class="details-price">99.99 zł</div>
+                        <div class="details-desc">Wersja Control z chropowatą strukturą zapewniającą pełną precyzję celowania.</div>
+                        <a href="#" target="_blank" class="buy-btn">KUP TERAZ</a>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- 2. MYSZKI GAMINGOWE -->
+        <!-- 2. MYSZKI -->
         <div class="category-title"><i class="fa-solid fa-computer-mouse"></i> MYSZKI GAMINGOWE</div>
         <div class="gear-grid-3">
-            <div class="gear-card">
-                <div><span>Myszka</span><strong>Myszka #1</strong></div>
-                <a href="TUTAJ_LINK_4" target="_blank" class="buy-btn">KUP TERAZ</a>
+            <div class="gear-card" onclick="toggleDetails('m1')">
+                <span>Myszka</span><strong>Myszka #1</strong>
             </div>
-            <div class="gear-card">
-                <div><span>Myszka</span><strong>Myszka #2</strong></div>
-                <a href="TUTAJ_LINK_5" target="_blank" class="buy-btn">KUP TERAZ</a>
+            <div class="gear-card" onclick="toggleDetails('m2')">
+                <span>Myszka</span><strong>Myszka #2</strong>
             </div>
-            <div class="gear-card">
-                <div><span>Myszka</span><strong>Myszka #3</strong></div>
-                <a href="TUTAJ_LINK_6" target="_blank" class="buy-btn">KUP TERAZ</a>
+            <div class="gear-card" onclick="toggleDetails('m3')">
+                <span>Myszka</span><strong>Myszka #3</strong>
+            </div>
+
+            <!-- ROZWIJANE OKIENKO DLA MYSZEK -->
+            <div id="details-m1" class="dropdown-details">
+                <div class="details-content">
+                    <img src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500" class="details-img" alt="Myszka 1">
+                    <div class="details-info">
+                        <div class="details-title">Myszka #1</div>
+                        <div class="details-price">249.99 zł</div>
+                        <div class="details-desc">Ultra-lekka myszka bezprzewodowa 55g, czujnik 26,000 DPI.</div>
+                        <a href="#" target="_blank" class="buy-btn">KUP TERAZ</a>
+                    </div>
+                </div>
+            </div>
+            <div id="details-m2" class="dropdown-details">
+                <div class="details-content">
+                    <img src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500" class="details-img" alt="Myszka 2">
+                    <div class="details-info">
+                        <div class="details-title">Myszka #2</div>
+                        <div class="details-price">199.99 zł</div>
+                        <div class="details-desc">Ergonomiczny kształt profilowany pod prawą dłoń, bardzo niska latencja.</div>
+                        <a href="#" target="_blank" class="buy-btn">KUP TERAZ</a>
+                    </div>
+                </div>
+            </div>
+            <div id="details-m3" class="dropdown-details">
+                <div class="details-content">
+                    <img src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500" class="details-img" alt="Myszka 3">
+                    <div class="details-info">
+                        <div class="details-title">Myszka #3</div>
+                        <div class="details-price">299.99 zł</div>
+                        <div class="details-desc">Myszka z odświeżaniem 8000Hz Polling Rate dla najbardziej wymagających.</div>
+                        <a href="#" target="_blank" class="buy-btn">KUP TERAZ</a>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- 3. KLAWIATURY MECHANICZNE -->
+        <!-- 3. KLAWIATURY -->
         <div class="category-title"><i class="fa-solid fa-keyboard"></i> KLAWIATURY MECHANICZNE</div>
         <div class="gear-grid-3">
-            <div class="gear-card">
-                <div><span>Klawiatura</span><strong>Klawiatura #1</strong></div>
-                <a href="TUTAJ_LINK_7" target="_blank" class="buy-btn">KUP TERAZ</a>
+            <div class="gear-card" onclick="toggleDetails('k1')">
+                <span>Klawiatura</span><strong>Klawiatura #1</strong>
             </div>
-            <div class="gear-card">
-                <div><span>Klawiatura</span><strong>Klawiatura #2</strong></div>
-                <a href="TUTAJ_LINK_8" target="_blank" class="buy-btn">KUP TERAZ</a>
+            <div class="gear-card" onclick="toggleDetails('k2')">
+                <span>Klawiatura</span><strong>Klawiatura #2</strong>
             </div>
-            <div class="gear-card">
-                <div><span>Klawiatura</span><strong>Klawiatura #3</strong></div>
-                <a href="TUTAJ_LINK_9" target="_blank" class="buy-btn">KUP TERAZ</a>
+            <div class="gear-card" onclick="toggleDetails('k3')">
+                <span>Klawiatura</span><strong>Klawiatura #3</strong>
+            </div>
+
+            <!-- ROZWIJANE OKIENKO DLA KLAWIATUR -->
+            <div id="details-k1" class="dropdown-details">
+                <div class="details-content">
+                    <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500" class="details-img" alt="Klawiatura 1">
+                    <div class="details-info">
+                        <div class="details-title">Klawiatura #1</div>
+                        <div class="details-price">399.99 zł</div>
+                        <div class="details-desc">Klawiatura mechaniczna 60% na przełącznikach magnetycznych Rapid Trigger.</div>
+                        <a href="#" target="_blank" class="buy-btn">KUP TERAZ</a>
+                    </div>
+                </div>
+            </div>
+            <div id="details-k2" class="dropdown-details">
+                <div class="details-content">
+                    <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500" class="details-img" alt="Klawiatura 2">
+                    <div class="details-info">
+                        <div class="details-title">Klawiatura #2</div>
+                        <div class="details-price">299.99 zł</div>
+                        <div class="details-desc">Customowa klawiatura wyciszona fabrycznie piankami Poron.</div>
+                        <a href="#" target="_blank" class="buy-btn">KUP TERAZ</a>
+                    </div>
+                </div>
+            </div>
+            <div id="details-k3" class="dropdown-details">
+                <div class="details-content">
+                    <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500" class="details-img" alt="Klawiatura 3">
+                    <div class="details-info">
+                        <div class="details-title">Klawiatura #3</div>
+                        <div class="details-price">349.99 zł</div>
+                        <div class="details-desc">Bezprzewodowa klawiatura mechaniczna TKL z aluminiową obudową.</div>
+                        <a href="#" target="_blank" class="buy-btn">KUP TERAZ</a>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- 4. SŁUCHAWKI GAMINGOWE -->
+        <!-- 4. SŁUCHAWKI -->
         <div class="category-title"><i class="fa-solid fa-headphones"></i> SŁUCHAWKI GAMINGOWE</div>
         <div class="gear-grid-3">
-            <div class="gear-card">
-                <div><span>Słuchawki</span><strong>Słuchawki #1</strong></div>
-                <a href="TUTAJ_LINK_10" target="_blank" class="buy-btn">KUP TERAZ</a>
+            <div class="gear-card" onclick="toggleDetails('s1')">
+                <span>Słuchawki</span><strong>Słuchawki #1</strong>
             </div>
-            <div class="gear-card">
-                <div><span>Słuchawki</span><strong>Słuchawki #2</strong></div>
-                <a href="TUTAJ_LINK_11" target="_blank" class="buy-btn">KUP TERAZ</a>
-            </div>
-            <div class="gear-card">
-                <div><span>Słuchawki</span><strong>Słuchawki #3</strong></div>
-                <a href="TUTAJ_LINK_12" target="_blank" class="buy-btn">KUP TERAZ</a>
-            </div>
-        </div>
-
-        <footer>
-            © 2026 AeroStrike. All rights reserved.
-        </footer>
-    </div>
-
-    <!-- Animacja tła -->
-    <script>
-        const canvas = document.getElementById('bg-canvas');
-        const ctx = canvas.getContext('2d');
-        let width = canvas.width = window.innerWidth;
-        let height = canvas.height = window.innerHeight;
-
-        window.addEventListener('resize', () => {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        });
-
-        const particles = [];
-        for (let i = 0; i < 45; i++) {
-            particles.push({
-                x: Math.random() * width,
-                y: Math.random() * height,
-                radius: Math.random() * 2 + 1,
-                vx: (Math.random() - 0.5) * 0.5,
-                vy: (Math.random() - 0.5) * 0.5,
-                alpha: Math.random() * 0.5 + 0.2
-            });
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-            particles.forEach(p => {
-                p.x += p.vx; p.y += p.vy;
-                if (p.x < 0) p.x = width; if (p.x > width) p.x = 0;
-                if (p.y < 0) p.y = height; if (p.y > height) p.y = 0;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(0, 243, 255, ${p.alpha})`;
-                ctx.fill();
-            });
-            requestAnimationFrame(animate);
-        }
-        animate();
-    </script>
-</body>
-</html>
+            <div class="gear-card" onclick="toggleDetails('s2')">
+                <span>Słuch
