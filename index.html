@@ -8,7 +8,7 @@
     <style>
         :root {
             --bg-color: #0b0e14;
-            --card-bg: rgba(18, 22, 31, 0.88);
+            --card-bg: rgba(18, 22, 31, 0.92);
             --accent-purple: #8a2be2;
             --accent-cyan: #00f3ff;
             --text-main: #f0f6fc;
@@ -34,14 +34,13 @@
             overflow-x: hidden;
         }
 
-        /* Canvas z animacją tła */
         #bg-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
+            z-index: 0;
             pointer-events: none;
         }
 
@@ -59,7 +58,6 @@
             z-index: 1;
         }
 
-        /* Avatar RGB */
         .avatar-container {
             position: relative;
             width: 110px;
@@ -116,7 +114,6 @@
             margin-bottom: 25px;
         }
 
-        /* Sekcja Sociali */
         .links {
             display: flex;
             flex-direction: column;
@@ -141,7 +138,6 @@
             transform: translateY(-2px);
         }
 
-        /* Sekcja Oferty */
         .main-offer-title {
             font-size: 24px;
             font-weight: 900;
@@ -217,7 +213,8 @@
 
         .buy-btn {
             display: inline-block;
-            padding: 8px 12px;
+            width: 100%;
+            padding: 10px 12px;
             font-size: 11px;
             font-weight: 800;
             color: #0b0e14;
@@ -233,28 +230,31 @@
         .buy-btn:hover {
             background: #ffffff;
             box-shadow: 0 0 12px #ffffff;
-            transform: scale(1.03);
+            transform: scale(1.02);
         }
 
-        /* SCENA PRODUKTU / MODAL POPUP */
+        /* MODAL POPUP */
         .modal-overlay {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
             background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(8px);
             display: none;
             justify-content: center;
             align-items: center;
-            z-index: 999;
+            z-index: 9999;
             padding: 20px;
         }
 
         .modal-overlay.active {
-            display: flex;
+            display: flex !important;
         }
 
         .modal-card {
-            background: var(--card-bg);
+            background: #12161f;
             border: 1px solid var(--accent-cyan);
             border-radius: 20px;
             max-width: 450px;
@@ -314,21 +314,33 @@
             flex: 1;
             background: rgba(255, 255, 255, 0.1);
             color: #fff;
-            padding: 10px;
+            padding: 12px;
             border-radius: 8px;
             border: none;
             cursor: pointer;
             font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .modal-close-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .modal-buy-link {
             flex: 2;
             background: var(--accent-cyan);
             color: #000;
-            padding: 10px;
+            padding: 12px;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 800;
+            display: inline-block;
+            transition: 0.2s;
+        }
+
+        .modal-buy-link:hover {
+            background: #fff;
+            box-shadow: 0 0 10px #fff;
         }
 
         footer {
@@ -340,11 +352,9 @@
 </head>
 <body>
 
-    <!-- Animowane cząsteczki w tle -->
     <canvas id="bg-canvas"></canvas>
 
     <div class="container">
-        <!-- AVATAR -->
         <div class="avatar-container">
             <div class="avatar">
                 <i class="fa-solid fa-gamepad"></i>
@@ -358,9 +368,7 @@
         </a>
         <p class="bio">Zakup swój sprzęt marzeń i podnieś swój gaming na wyższy poziom.</p>
 
-        <!-- SOCIALE -->
         <div class="links">
-            <!-- YOUTUBE -->
             <a href="http://www.youtube.com/@AeroStrike47" target="_blank" class="link-btn" style="border-color: rgba(255, 0, 0, 0.3); background: rgba(255, 0, 0, 0.05);" onmouseover="this.style.borderColor='#FF0000'; this.style.boxShadow='0 0 15px rgba(255, 0, 0, 0.4)';" onmouseout="this.style.borderColor='rgba(255, 0, 0, 0.3)'; this.style.boxShadow='none';">
                 <div style="display: flex; align-items: center; gap: 12px;">
                     <i class="fa-brands fa-youtube" style="color: #FF0000; font-size: 22px;"></i>
@@ -369,7 +377,6 @@
                 <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 12px; opacity: 0.6; color: #FF0000;"></i>
             </a>
 
-            <!-- TIKTOK -->
             <a href="https://www.tiktok.com/@aero_strike47?is_from_webapp=1&sender_device=pc" target="_blank" class="link-btn" style="border-color: rgba(0, 243, 255, 0.3); background: rgba(0, 243, 255, 0.05);" onmouseover="this.style.borderColor='#00f3ff'; this.style.boxShadow='0 0 15px rgba(0, 243, 255, 0.4)';" onmouseout="this.style.borderColor='rgba(0, 243, 255, 0.3)'; this.style.boxShadow='none';">
                 <div style="display: flex; align-items: center; gap: 12px;">
                     <i class="fa-brands fa-tiktok" style="color: #00f3ff; font-size: 20px;"></i>
@@ -378,7 +385,6 @@
                 <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 12px; opacity: 0.6; color: #00f3ff;"></i>
             </a>
 
-            <!-- DISCORD -->
             <a href="https://discord.gg/FneCx5rfuq" target="_blank" class="link-btn" style="border-color: rgba(88, 101, 242, 0.4); background: rgba(88, 101, 242, 0.08);" onmouseover="this.style.borderColor='#5865F2'; this.style.boxShadow='0 0 15px rgba(88, 101, 242, 0.5)';" onmouseout="this.style.borderColor='rgba(88, 101, 242, 0.4)'; this.style.boxShadow='none';">
                 <div style="display: flex; align-items: center; gap: 12px;">
                     <i class="fa-brands fa-discord" style="color: #5865F2; font-size: 22px;"></i>
@@ -388,7 +394,6 @@
             </a>
         </div>
 
-        <!-- SEKCJA CO OFERUJEMY -->
         <div class="main-offer-title">
             <i class="fa-solid fa-cart-shopping" style="color: var(--accent-cyan);"></i> CO OFERUJEMY:
         </div>
@@ -398,15 +403,15 @@
         <div class="gear-grid-3">
             <div class="gear-card">
                 <div><span>Kategoria</span><strong>Podkładka #1</strong></div>
-                <button class="buy-btn" onclick="openModal('podkladka1')">KUP TERAZ</button>
+                <button type="button" class="buy-btn" onclick="openModal('podkladka1')">KUP TERAZ</button>
             </div>
             <div class="gear-card">
                 <div><span>Kategoria</span><strong>Podkładka #2</strong></div>
-                <button class="buy-btn" onclick="openModal('podkladka2')">KUP TERAZ</button>
+                <button type="button" class="buy-btn" onclick="openModal('podkladka2')">KUP TERAZ</button>
             </div>
             <div class="gear-card">
                 <div><span>Kategoria</span><strong>Podkładka #3</strong></div>
-                <button class="buy-btn" onclick="openModal('podkladka3')">KUP TERAZ</button>
+                <button type="button" class="buy-btn" onclick="openModal('podkladka3')">KUP TERAZ</button>
             </div>
         </div>
 
@@ -415,12 +420,10 @@
         <div class="gear-grid-3">
             <div class="gear-card">
                 <div><span>Kategoria</span><strong>Myszka #1</strong></div>
-                <button class="buy-btn" onclick="openModal('myszka1')">KUP TERAZ</button>
+                <button type="button" class="buy-btn" onclick="openModal('myszka1')">KUP TERAZ</button>
             </div>
             <div class="gear-card">
                 <div><span>Kategoria</span><strong>Myszka #2</strong></div>
-                <button class="buy-btn" onclick="openModal('myszka2')">KUP TERAZ</button>
+                <button type="button" class="buy-btn" onclick="openModal('myszka2')">KUP TERAZ</button>
             </div>
-            <div class="gear-card">
-                <div><span>Kategoria</span><strong>Myszka #3</strong></div>
-                <button class="buy-btn" onclick="openModal('myszka3')
+            <div
