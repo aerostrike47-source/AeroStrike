@@ -179,13 +179,11 @@
 
         .gear-card {
             background: rgba(10, 13, 20, 0.6);
-            padding: 14px;
+            padding: 16px;
             border-radius: 14px;
             border: 1px solid rgba(255, 255, 255, 0.08);
             text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            cursor: pointer;
             transition: all 0.3s ease;
         }
 
@@ -195,51 +193,102 @@
             box-shadow: 0 8px 20px rgba(0, 243, 255, 0.15);
         }
 
-        .card-img {
-            width: 100%;
-            height: 90px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: #000;
-        }
-
         .gear-card span {
             display: block;
             font-size: 10px;
             color: var(--text-sub);
             text-transform: uppercase;
             letter-spacing: 0.8px;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
 
         .gear-card strong {
-            font-size: 13px;
+            font-size: 14px;
             color: var(--text-main);
             display: block;
-            margin-bottom: 12px;
+        }
+
+        .category-dropdown-box {
+            display: none;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--accent-cyan);
+            border-radius: 14px;
+            padding: 20px;
+            margin-top: 14px;
+            text-align: left;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .category-dropdown-box.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .details-content {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        @media (max-width: 600px) {
+            .details-content {
+                flex-direction: column;
+            }
+        }
+
+        .details-img {
+            width: 180px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: #000;
+        }
+
+        .details-info {
+            flex: 1;
+        }
+
+        .details-title {
+            font-size: 18px;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .details-price {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--accent-cyan);
+            margin-bottom: 8px;
+        }
+
+        .details-desc {
+            font-size: 13px;
+            color: var(--text-sub);
+            margin-bottom: 15px;
+            line-height: 1.4;
         }
 
         .buy-btn {
-            display: block;
-            width: 100%;
-            padding: 8px 10px;
-            font-size: 11px;
+            display: inline-block;
+            padding: 8px 16px;
+            font-size: 12px;
             font-weight: 800;
             color: #0b0e14;
             background: var(--accent-cyan);
             border-radius: 8px;
             text-decoration: none;
             transition: all 0.2s ease;
-            letter-spacing: 0.5px;
-            text-align: center;
         }
 
         .buy-btn:hover {
             background: #ffffff;
-            box-shadow: 0 0 12px #ffffff;
-            transform: scale(1.02);
+            box-shadow: 0 0 10px #ffffff;
         }
 
         footer {
@@ -254,7 +303,6 @@
     <canvas id="bg-canvas"></canvas>
 
     <div class="container">
-        <!-- AVATAR -->
         <div class="avatar-container">
             <div class="avatar">
                 <i class="fa-solid fa-gamepad"></i>
@@ -268,7 +316,6 @@
         </a>
         <p class="bio">Zakup swój sprzęt marzeń i podnieś swój gaming na wyższy poziom.</p>
 
-        <!-- SOCIALE -->
         <div class="links">
             <a href="http://www.youtube.com/@AeroStrike47" target="_blank" class="link-btn" style="border-color: rgba(255, 0, 0, 0.3); background: rgba(255, 0, 0, 0.05);" onmouseover="this.style.borderColor='#FF0000'; this.style.boxShadow='0 0 15px rgba(255, 0, 0, 0.4)';" onmouseout="this.style.borderColor='rgba(255, 0, 0, 0.3)'; this.style.boxShadow='none';">
                 <div style="display: flex; align-items: center; gap: 12px;">
@@ -299,108 +346,103 @@
             <i class="fa-solid fa-cart-shopping" style="color: var(--accent-cyan);"></i> CO OFERUJEMY:
         </div>
 
-        <!-- 1. PODKŁADKI POD MYSZKĘ -->
-        <div class="gear-card">
-                <div>
-                    <img src="https://i.ibb.co/3s6q2jV/podkladka1.png" class="card-img" alt="Podkładka AeroStrike">
-                    <span>Podkładka</span>
-                    <strong>Podkładka #1</strong>
-                </div>
-                <a href="TUTAJ_LINK_1" target="_blank" class="buy-btn">KUP TERAZ</a>
+        <!-- 1. PODKŁADKI -->
+        <div class="category-title"><i class="fa-solid fa-layer-group"></i> PODKŁADKI POD MYSZKĘ</div>
+        <div class="gear-grid-3">
+            <div class="gear-card" onclick="showProduct('podkladka', 1)">
+                <span>Podkładka</span><strong>Podkładka #1</strong>
             </div>
-                <a href="TUTAJ_LINK_1" target="_blank" class="buy-btn">KUP TERAZ</a>
+            <div class="gear-card" onclick="showProduct('podkladka', 2)">
+                <span>Podkładka</span><strong>Podkładka #2</strong>
             </div>
-            <div class="gear-card">
-                <div>
-                    <span>Podkładka</span>
-                    <strong>Podkładka #2</strong>
-                </div>
-                <a href="TUTAJ_LINK_2" target="_blank" class="buy-btn">KUP TERAZ</a>
+            <div class="gear-card" onclick="showProduct('podkladka', 3)">
+                <span>Podkładka</span><strong>Podkładka #3</strong>
             </div>
-            <div class="gear-card">
-                <div>
-                    <span>Podkładka</span>
-                    <strong>Podkładka #3</strong>
+        </div>
+        <div id="box-podkladka" class="category-dropdown-box">
+            <div class="details-content">
+                <img id="img-podkladka" src="" class="details-img" alt="Produkt">
+                <div class="details-info">
+                    <div id="title-podkladka" class="details-title">Nazwa</div>
+                    <div id="price-podkladka" class="details-price">0.00 zł</div>
+                    <div id="desc-podkladka" class="details-desc">Opis...</div>
+                    <a id="link-podkladka" href="#" target="_blank" class="buy-btn">KUP TERAZ</a>
                 </div>
-                <a href="TUTAJ_LINK_3" target="_blank" class="buy-btn">KUP TERAZ</a>
             </div>
         </div>
 
-        <!-- 2. MYSZKI GAMINGOWE -->
+        <!-- 2. MYSZKI -->
         <div class="category-title"><i class="fa-solid fa-computer-mouse"></i> MYSZKI GAMINGOWE</div>
         <div class="gear-grid-3">
-            <div class="gear-card">
-                <div>
-                    <span>Myszka</span>
-                    <strong>Myszka #1</strong>
-                </div>
-                <a href="TUTAJ_LINK_4" target="_blank" class="buy-btn">KUP TERAZ</a>
+            <div class="gear-card" onclick="showProduct('myszka', 1)">
+                <span>Myszka</span><strong>Myszka #1</strong>
             </div>
-            <div class="gear-card">
-                <div>
-                    <span>Myszka</span>
-                    <strong>Myszka #2</strong>
-                </div>
-                <a href="TUTAJ_LINK_5" target="_blank" class="buy-btn">KUP TERAZ</a>
+            <div class="gear-card" onclick="showProduct('myszka', 2)">
+                <span>Myszka</span><strong>Myszka #2</strong>
             </div>
-            <div class="gear-card">
-                <div>
-                    <span>Myszka</span>
-                    <strong>Myszka #3</strong>
+            <div class="gear-card" onclick="showProduct('myszka', 3)">
+                <span>Myszka</span><strong>Myszka #3</strong>
+            </div>
+        </div>
+        <div id="box-myszka" class="category-dropdown-box">
+            <div class="details-content">
+                <img id="img-myszka" src="" class="details-img" alt="Produkt">
+                <div class="details-info">
+                    <div id="title-myszka" class="details-title">Nazwa</div>
+                    <div id="price-myszka" class="details-price">0.00 zł</div>
+                    <div id="desc-myszka" class="details-desc">Opis...</div>
+                    <a id="link-myszka" href="#" target="_blank" class="buy-btn">KUP TERAZ</a>
                 </div>
-                <a href="TUTAJ_LINK_6" target="_blank" class="buy-btn">KUP TERAZ</a>
             </div>
         </div>
 
-        <!-- 3. KLAWIATURY MECHANICZNE -->
+        <!-- 3. KLAWIATURY -->
         <div class="category-title"><i class="fa-solid fa-keyboard"></i> KLAWIATURY MECHANICZNE</div>
         <div class="gear-grid-3">
-            <div class="gear-card">
-                <div>
-                    <span>Klawiatura</span>
-                    <strong>Klawiatura #1</strong>
-                </div>
-                <a href="TUTAJ_LINK_7" target="_blank" class="buy-btn">KUP TERAZ</a>
+            <div class="gear-card" onclick="showProduct('klawiatura', 1)">
+                <span>Klawiatura</span><strong>Klawiatura #1</strong>
             </div>
-            <div class="gear-card">
-                <div>
-                    <span>Klawiatura</span>
-                    <strong>Klawiatura #2</strong>
-                </div>
-                <a href="TUTAJ_LINK_8" target="_blank" class="buy-btn">KUP TERAZ</a>
+            <div class="gear-card" onclick="showProduct('klawiatura', 2)">
+                <span>Klawiatura</span><strong>Klawiatura #2</strong>
             </div>
-            <div class="gear-card">
-                <div>
-                    <span>Klawiatura</span>
-                    <strong>Klawiatura #3</strong>
+            <div class="gear-card" onclick="showProduct('klawiatura', 3)">
+                <span>Klawiatura</span><strong>Klawiatura #3</strong>
+            </div>
+        </div>
+        <div id="box-klawiatura" class="category-dropdown-box">
+            <div class="details-content">
+                <img id="img-klawiatura" src="" class="details-img" alt="Produkt">
+                <div class="details-info">
+                    <div id="title-klawiatura" class="details-title">Nazwa</div>
+                    <div id="price-klawiatura" class="details-price">0.00 zł</div>
+                    <div id="desc-klawiatura" class="details-desc">Opis...</div>
+                    <a id="link-klawiatura" href="#" target="_blank" class="buy-btn">KUP TERAZ</a>
                 </div>
-                <a href="TUTAJ_LINK_9" target="_blank" class="buy-btn">KUP TERAZ</a>
             </div>
         </div>
 
-        <!-- 4. SŁUCHAWKI GAMINGOWE -->
+        <!-- 4. SŁUCHAWKI -->
         <div class="category-title"><i class="fa-solid fa-headphones"></i> SŁUCHAWKI GAMINGOWE</div>
         <div class="gear-grid-3">
-            <div class="gear-card">
-                <div>
-                    <span>Słuchawki</span>
-                    <strong>Słuchawki #1</strong>
-                </div>
-                <a href="TUTAJ_LINK_10" target="_blank" class="buy-btn">KUP TERAZ</a>
+            <div class="gear-card" onclick="showProduct('sluchawki', 1)">
+                <span>Słuchawki</span><strong>Słuchawki #1</strong>
             </div>
-            <div class="gear-card">
-                <div>
-                    <span>Słuchawki</span>
-                    <strong>Słuchawki #2</strong>
-                </div>
-                <a href="TUTAJ_LINK_11" target="_blank" class="buy-btn">KUP TERAZ</a>
+            <div class="gear-card" onclick="showProduct('sluchawki', 2)">
+                <span>Słuchawki</span><strong>Słuchawki #2</strong>
             </div>
-            <div class="gear-card">
-                <div>
-                    <span>Słuchawki</span>
-                    <strong>Słuchawki #3</strong>
+            <div class="gear-card" onclick="showProduct('sluchawki', 3)">
+                <span>Słuchawki</span><strong>Słuchawki #3</strong>
+            </div>
+        </div>
+        <div id="box-sluchawki" class="category-dropdown-box">
+            <div class="details-content">
+                <img id="img-sluchawki" src="" class="details-img" alt="Produkt">
+                <div class="details-info">
+                    <div id="title-sluchawki" class="details-title">Nazwa</div>
+                    <div id="price-sluchawki" class="details-price">0.00 zł</div>
+                    <div id="desc-sluchawki" class="details-desc">Opis...</div>
+                    <a id="link-sluchawki" href="#" target="_blank" class="buy-btn">KUP TERAZ</a>
                 </div>
-                <a href="TUTAJ_LINK_12" target="_blank" class="buy-btn">KUP TERAZ</a>
             </div>
         </div>
 
@@ -409,8 +451,49 @@
         </footer>
     </div>
 
-    <!-- Animacja tła -->
     <script>
+        const db = {
+            'podkladka': {
+                1: { title: 'Podkładka #1', price: '79.99 zł', desc: 'Wysokiej jakości podkładka gładka typu Speed, wymiary 900x400mm.', img: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500', link: '#' },
+                2: { title: 'Podkładka #2', price: '89.99 zł', desc: 'Podkładka z podświetleniem RGB, idealny poślizg dla czujników.', img: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500', link: '#' },
+                3: { title: 'Podkładka #3', price: '99.99 zł', desc: 'Wersja Control z chropowatą strukturą zapewniającą precyzję.', img: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500', link: '#' }
+            },
+            'myszka': {
+                1: { title: 'Myszka #1', price: '249.99 zł', desc: 'Ultra-lekka myszka bezprzewodowa 55g, czujnik 26,000 DPI.', img: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500', link: '#' },
+                2: { title: 'Myszka #2', price: '199.99 zł', desc: 'Ergonomiczny kształt profilowany pod prawą dłoń.', img: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500', link: '#' },
+                3: { title: 'Myszka #3', price: '299.99 zł', desc: 'Myszka z odświeżaniem 8000Hz Polling Rate.', img: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500', link: '#' }
+            },
+            'klawiatura': {
+                1: { title: 'Klawiatura #1', price: '399.99 zł', desc: 'Klawiatura mechaniczna 60% na przełącznikach magnetycznych.', img: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500', link: '#' },
+                2: { title: 'Klawiatura #2', price: '299.99 zł', desc: 'Customowa klawiatura wyciszona piankami Poron.', img: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500', link: '#' },
+                3: { title: 'Klawiatura #3', price: '349.99 zł', desc: 'Bezprzewodowa klawiatura mechaniczna TKL.', img: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500', link: '#' }
+            },
+            'sluchawki': {
+                1: { title: 'Słuchawki #1', price: '189.99 zł', desc: 'Słuchawki z dźwiękiem przestrzennym 7.1 i mikrofonem.', img: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500', link: '#' },
+                2: { title: 'Słuchawki #2', price: '279.99 zł', desc: 'Bezprzewodowe słuchawki z baterią do 50 godzin.', img: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500', link: '#' },
+                3: { title: 'Słuchawki #3', price: '149.99 zł', desc: 'Profesjonalne słuchawki dokanałowe (IEM).', img: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500', link: '#' }
+            }
+        };
+
+        function showProduct(category, num) {
+            const item = db[category][num];
+            const box = document.getElementById('box-' + category);
+            
+            document.getElementById('img-' + category).src = item.img;
+            document.getElementById('title-' + category).innerText = item.title;
+            document.getElementById('price-' + category).innerText = item.price;
+            document.getElementById('desc-' + category).innerText = item.desc;
+            document.getElementById('link-' + category).href = item.link;
+
+            const isOpen = box.classList.contains('active');
+            
+            document.querySelectorAll('.category-dropdown-box').forEach(b => b.classList.remove('active'));
+
+            if (!isOpen) {
+                box.classList.add('active');
+            }
+        }
+
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let width = canvas.width = window.innerWidth;
