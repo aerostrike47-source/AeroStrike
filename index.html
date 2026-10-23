@@ -294,7 +294,7 @@
             margin-top: 10px;
         }
 
-        /* --- WYSOWANY PANEL KOSZYKA (DRAWER) --- */
+        /* --- WYSUWANY PANEL KOSZYKA (DRAWER) --- */
         .cart-drawer-overlay {
             position: fixed;
             top: 0;
@@ -314,8 +314,8 @@
         .cart-drawer {
             position: fixed;
             top: 0;
-            right: -450px;
-            width: 450px;
+            right: -480px;
+            width: 480px;
             height: 100%;
             background: #161822;
             border-left: 2px solid #e50914;
@@ -325,6 +325,7 @@
             flex-direction: column;
             padding: 25px;
             box-shadow: -10px 0 30px rgba(0, 0, 0, 0.8);
+            overflow-y: auto;
         }
 
         .cart-drawer.active {
@@ -346,13 +347,10 @@
         }
 
         .cart-items-list {
-            flex: 1;
-            overflow-y: auto;
             display: flex;
             flex-direction: column;
             gap: 15px;
             margin-bottom: 20px;
-            padding-right: 5px;
         }
 
         .cart-item {
@@ -453,6 +451,69 @@
             accent-color: #e50914;
         }
 
+        /* FORMULARZ DANYCH WYSYŁKOWYCH */
+        .shipping-form-box {
+            background: #181a24;
+            border: 1px solid #2a2e3d;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .form-group label {
+            font-size: 11px;
+            color: #aaaaaa;
+            text-transform: uppercase;
+        }
+
+        .form-control {
+            width: 100%;
+            background: #0f1015;
+            border: 1px solid #2a2e3d;
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            border-color: #e50914;
+        }
+
+        .form-control.error {
+            border-color: #ff4444 !important;
+            background-color: rgba(255, 68, 68, 0.05);
+        }
+
+        /* Błąd braku danych */
+        .error-message-box {
+            color: #ff4444;
+            font-size: 13px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 12px;
+            display: none;
+            background: rgba(255, 68, 68, 0.1);
+            border: 1px solid #ff4444;
+            padding: 8px;
+            border-radius: 6px;
+        }
+
         /* Podsumowanie w koszyku */
         .cart-summary {
             background: #11131a;
@@ -505,6 +566,10 @@
             .cart-drawer {
                 width: 100%;
                 right: -100%;
+            }
+            .form-row {
+                flex-direction: column;
+                gap: 10px;
             }
         }
     </style>
@@ -600,7 +665,7 @@
         </div>
     </div>
 
-    <!-- WYSOWANY PANEL KOSZYKA (DRAWER) -->
+    <!-- WYSUWANY PANEL KOSZYKA (DRAWER) -->
     <div class="cart-drawer-overlay" id="cartOverlay" onclick="closeCart()"></div>
     <div class="cart-drawer" id="cartDrawer">
         <div class="cart-header">
@@ -665,6 +730,43 @@
                 </label>
             </div>
 
+            <!-- FORMULARZ DANYCH WYSYŁKOWYCH -->
+            <div class="cart-options-title">Dane Wysyłkowe:</div>
+            <div class="shipping-form-box">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Imię *</label>
+                        <input type="text" id="shipFirstName" class="form-control" placeholder="np. Jan">
+                    </div>
+                    <div class="form-group">
+                        <label>Nazwisko *</label>
+                        <input type="text" id="shipLastName" class="form-control" placeholder="np. Kowalski">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Adres E-mail *</label>
+                        <input type="email" id="shipEmail" class="form-control" placeholder="jan@gmail.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Telefon *</label>
+                        <input type="tel" id="shipPhone" class="form-control" placeholder="123456789">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Miejscowość *</label>
+                        <input type="text" id="shipCity" class="form-control" placeholder="np. Warszawa">
+                    </div>
+                    <div class="form-group">
+                        <label id="shipAddressLabel">Kod Paczkomatu *</label>
+                        <input type="text" id="shipAddress" class="form-control" placeholder="np. KRA01M lub Ulica 12/3">
+                    </div>
+                </div>
+            </div>
+
             <!-- PODSUMOWANIE KOSZTÓW KOSZYKA -->
             <div class="cart-summary">
                 <div class="cart-summary-row">
@@ -683,6 +785,11 @@
                     <span>Razem:</span>
                     <span id="cartGrandTotal" style="color: #e50914;">0.00 zł</span>
                 </div>
+            </div>
+
+            <!-- KOMUNIKAT BŁĘDU -->
+            <div class="error-message-box" id="shippingErrorMsg">
+                ⚠️ uzupelnij dane wysylkowe
             </div>
 
             <button class="btn-primary" style="width: 100%; padding: 14px;" onclick="processCartCheckout()">PRZEJDŹ DO PŁATNOŚCI</button>
@@ -796,8 +903,20 @@
 
         function calculateCartTotal() {
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-            const deliveryCost = parseFloat(document.querySelector('input[name="cartDelivery"]:checked').value);
+            const deliveryRadio = document.querySelector('input[name="cartDelivery"]:checked');
+            const deliveryCost = parseFloat(deliveryRadio.value);
             const paymentRate = parseFloat(document.querySelector('input[name="cartPayment"]:checked').value);
+
+            // Zmiana etykiety adresu w zależności od dostawy
+            const addressLabel = document.getElementById('shipAddressLabel');
+            const addressInput = document.getElementById('shipAddress');
+            if (deliveryRadio.value === "15") {
+                addressLabel.innerText = "Kod Paczkomatu *";
+                addressInput.placeholder = "np. KRA01M";
+            } else {
+                addressLabel.innerText = "Ulica i Nr Domu *";
+                addressInput.placeholder = "np. Polna 12/4";
+            }
 
             const feeCost = (subtotal + deliveryCost) * paymentRate;
             const grandTotal = subtotal + deliveryCost + feeCost;
@@ -809,11 +928,49 @@
         }
 
         function processCartCheckout() {
+            const fields = [
+                document.getElementById('shipFirstName'),
+                document.getElementById('shipLastName'),
+                document.getElementById('shipEmail'),
+                document.getElementById('shipPhone'),
+                document.getElementById('shipCity'),
+                document.getElementById('shipAddress')
+            ];
+
+            let isValid = true;
+
+            fields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.classList.add('error');
+                    isValid = false;
+                } else {
+                    field.classList.remove('error');
+                }
+            });
+
+            const errorMsgBox = document.getElementById('shippingErrorMsg');
+
+            if (!isValid) {
+                errorMsgBox.style.display = 'block';
+                return; // Zatrzymujemy przejście do płatności!
+            }
+
+            errorMsgBox.style.display = 'none';
+
             const selectedPayment = document.querySelector('input[name="cartPayment"]:checked').getAttribute('data-name');
             const grandTotal = document.getElementById('cartGrandTotal').innerText;
             
-            alert('Przejście do bramki płatności!\n\nWybrana metoda: ' + selectedPayment + '\nŁączna kwota: ' + grandTotal);
+            alert('Dane zostały poprawne!\n\nPrzejście do płatności dla: ' + fields[0].value + ' ' + fields[1].value + '\nMetoda: ' + selectedPayment + '\nSuma: ' + grandTotal);
         }
+
+        // Czyszczenie czerwonego ramkowania podczas wpisywania
+        document.querySelectorAll('.form-control').forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.value.trim()) {
+                    this.classList.remove('error');
+                }
+            });
+        });
 
         // Zamknięcie okienka z opisem po kliknięciu poza niego
         window.onclick = function(event) {
