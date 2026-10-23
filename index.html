@@ -36,11 +36,11 @@
             z-index: 100;
         }
 
-        /* Lewa strona paska (logo + regulamin) */
+        /* Lewa strona paska (logo + regulamin + partnerstwo) */
         .header-left {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 15px;
         }
 
         .logo {
@@ -50,7 +50,7 @@
             filter: drop-shadow(0px 0px 8px rgba(229, 9, 20, 0.4));
         }
 
-        .regulations-btn {
+        .nav-btn {
             background-color: transparent;
             border: 1px solid #2a2e3d;
             color: #aaaaaa;
@@ -63,7 +63,7 @@
             transition: all 0.2s ease;
         }
 
-        .regulations-btn:hover {
+        .nav-btn:hover {
             border-color: #e50914;
             color: #ffffff;
             background-color: #202333;
@@ -377,8 +377,8 @@
             animation: fadeIn 0.25s ease;
         }
 
-        /* Styl dla okienka regulaminu */
-        .regulations-modal-content {
+        /* Styl dla okienka regulaminu i partnerstwa */
+        .modal-large-content {
             background: #161822;
             border: 2px solid #e50914;
             border-radius: 12px;
@@ -393,7 +393,7 @@
             animation: fadeIn 0.25s ease;
         }
 
-        .regulations-scroll-box {
+        .scroll-box {
             flex: 1;
             overflow-y: auto;
             padding-right: 12px;
@@ -408,7 +408,7 @@
             padding: 15px;
         }
 
-        .regulations-scroll-box h3 {
+        .scroll-box h3 {
             color: #ffffff;
             font-size: 15px;
             margin-top: 15px;
@@ -416,7 +416,30 @@
             text-transform: uppercase;
         }
 
-        /* Przycisk akceptacji nieaktywny */
+        /* Formularz w partnerstwie */
+        .partner-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .partner-input {
+            width: 100%;
+            background: #0f1015;
+            border: 1px solid #2a2e3d;
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .partner-input:focus {
+            border-color: #e50914;
+        }
+
+        /* Przycisk akceptacji regulaminu nieaktywny */
         .btn-accept-disabled {
             width: 100%;
             padding: 14px;
@@ -431,7 +454,6 @@
             transition: all 0.3s ease;
         }
 
-        /* Przycisk akceptacji aktywny (czerwony) */
         .btn-accept-active {
             background-color: #e50914 !important;
             color: #ffffff !important;
@@ -772,11 +794,12 @@
 </head>
 <body>
 
-    <!-- GÓRNY PASEK Z LOGO I REGULAMINEM PO LEWEJ, KOSZYKIEM PO PRAWEJ -->
+    <!-- GÓRNY PASEK Z LOGO, REGULAMINEM I PARTNERSTWEM PO LEWEJ, KOSZYKIEM PO PRAWEJ -->
     <div class="header">
         <div class="header-left">
             <img src="https://i.postimg.cc/SQrrKzc9/logo-aerostrike-biale.png" alt="AeroStrike Logo" class="logo">
-            <button class="regulations-btn" onclick="openRegulationsModal()">REGULAMIN</button>
+            <button class="nav-btn" onclick="openRegulationsModal()">REGULAMIN</button>
+            <button class="nav-btn" onclick="openPartnerModal()">PARTNERSTWO</button>
         </div>
         <button class="cart-icon-btn" onclick="openCart()">
             <span>🛒 KOSZYK</span>
@@ -786,11 +809,11 @@
 
     <!-- OKIENKO MODAL: REGULAMIN -->
     <div class="modal-overlay" id="regulationsModal">
-        <div class="regulations-modal-content">
+        <div class="modal-large-content">
             <span class="close-btn" onclick="closeRegulationsModal()">&times;</span>
             <h2 class="modal-title">Regulamin Sklepu AeroStrike</h2>
             
-            <div class="regulations-scroll-box" id="regulationsBox" onscroll="checkRegulationsScroll()">
+            <div class="scroll-box" id="regulationsBox" onscroll="checkRegulationsScroll()">
                 <h3>§ 1. Postanowienia Ogólne</h3>
                 <p>1. Sklep internetowy działający pod marką AeroStrike dostępny jest dla graczy oraz entuzjastów sprzętu gamingowego.</p>
                 <p>2. Złożenie zamówienia w sklepie jest równoznaczne z pełną akceptacją niniejszego regulaminu.</p>
@@ -816,6 +839,37 @@
             <button class="btn-accept-disabled" id="acceptRegulationsBtn" onclick="acceptRegulations()" disabled>
                 PRZEWIŃ REGULAMIN DO KOŃCA
             </button>
+        </div>
+    </div>
+
+    <!-- OKIENKO MODAL: PARTNERSTWO -->
+    <div class="modal-overlay" id="partnerModal">
+        <div class="modal-large-content">
+            <span class="close-btn" onclick="closePartnerModal()">&times;</span>
+            <h2 class="modal-title">Zostań Partnerem AeroStrike</h2>
+            
+            <div class="scroll-box">
+                <h3>Dołącz do naszego zespołu twórców!</h3>
+                <p>Jesteś streamerem na Twitch/Kick, nagrywasz na YouTube lub kręcisz rolki na TikToku? Chętnie nawiążemy z Tobą współpracę barterową!</p>
+                
+                <h3>Co oferujemy?</h3>
+                <p>• Darmowe produkty z oferty AeroStrike (np. podkładki gamingowe wysyłane prosto do Ciebie).</p>
+                <p>• Indywidualny kod rabatowy dla Twoich widzów.</p>
+
+                <h3>Czego oczekujemy?</h3>
+                <p>• Regularnych materiałów wideo lub transmisji z wykorzystaniem naszego sprzętu.</p>
+                <p>• Zaangażowanej społeczności i aktywnego kanału.</p>
+
+                <h3 style="margin-top: 20px;">Wyślij zgłoszenie współpracy:</h3>
+                <div class="partner-form">
+                    <input type="text" id="partnerName" class="partner-input" placeholder="Twój Pseudonim / Imię i Nazwisko">
+                    <input type="text" id="partnerChannel" class="partner-input" placeholder="Link do Twojego Kanału (TikTok / Twitch / YouTube)">
+                    <input type="email" id="partnerEmail" class="partner-input" placeholder="Twój Adres E-mail do kontaktu">
+                    <button class="btn-primary" style="width: 100%; padding: 12px; margin-top: 5px;" onclick="sendPartnerApplication()">WYŚLIJ ZGŁOSZENIE</button>
+                </div>
+            </div>
+
+            <button class="btn-primary" style="width: 100%; padding: 12px;" onclick="closePartnerModal()">ZAMKNIJ</button>
         </div>
     </div>
 
@@ -1091,6 +1145,29 @@
             closeRegulationsModal();
         }
 
+        // Obsługa Partnerstwa
+        function openPartnerModal() {
+            document.getElementById('partnerModal').classList.add('active');
+        }
+
+        function closePartnerModal() {
+            document.getElementById('partnerModal').classList.remove('active');
+        }
+
+        function sendPartnerApplication() {
+            const name = document.getElementById('partnerName').value;
+            const channel = document.getElementById('partnerChannel').value;
+            const email = document.getElementById('partnerEmail').value;
+
+            if (!name || !channel || !email) {
+                alert('⚠️ Wypełnij wszystkie pola formularza zgłoszeniowego!');
+                return;
+            }
+
+            alert('Dziękujemy za zgłoszenie, ' + name + '!\nTwoja prośba o partnerstwo została zapisana. Odezwiemy się wkrótce na podany e-mail.');
+            closePartnerModal();
+        }
+
         function selectCategory(categoryKey, button) {
             if (button) {
                 const parentItem = button.parentElement;
@@ -1318,8 +1395,10 @@
         window.onclick = function(event) {
             const descModal = document.getElementById('descModal');
             const regModal = document.getElementById('regulationsModal');
+            const partnerModal = document.getElementById('partnerModal');
             if (event.target === descModal) closeDescModal();
             if (event.target === regModal) closeRegulationsModal();
+            if (event.target === partnerModal) closePartnerModal();
         }
     </script>
 
