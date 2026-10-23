@@ -60,15 +60,26 @@
             color: #ffffff;
         }
 
+        /* Kontener na karty produktów */
+        .products-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
         /* Karta produktu */
         .product-card {
             background: #181a24;
             border: 1px solid #2a2e3d;
             border-radius: 12px;
-            max-width: 450px;
+            width: 100%;
+            max-width: 420px;
             padding: 24px;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
             transition: transform 0.3s ease, border-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .product-card:hover {
@@ -85,7 +96,7 @@
 
         .product-image {
             width: 100%;
-            height: auto;
+            height: 250px;
             border-radius: 8px;
             margin-bottom: 20px;
             display: block;
@@ -136,6 +147,9 @@
                 margin-left: 0;
                 padding: 20px;
             }
+            .products-container {
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -150,13 +164,32 @@
     <div class="main-content">
         <h1 class="section-title">Nasze Produkty</h1>
 
-       <!-- PRZEDMIOT 1: PODKŁADKA -->
-        <div class="product-card">
-            <h2 class="product-title">Podkładka Gamingowa AeroStrike</h2>
-            
-            <img src="https://i.postimg.cc/tCzRnB78/Zrzut-ekranu-2026-10-23-191712.png" alt="Podkładka AeroStrike" class="product-image">
-            
-            <div class="price-tag">65 zł</div>
-    
-    <a href="https://www.vinted.pl/member/284983221" target="_blank" class="buy-btn">KUP TERAZ</a>
-</div>
+        <div class="products-container">
+            <!-- PRZEDMIOT 1: PODKŁADKA AEROSTRIKE EAGLE -->
+            <div class="product-card">
+                <div>
+                    <h2 class="product-title">Podkładka Pod Myszkę AeroStrike-Eagle</h2>
+                    <img src="https://i.postimg.cc/mD8z3T8p/obraz-2026-10-23-211149723.png" alt="Podkładka AeroStrike Eagle" class="product-image">
+                </div>
+                <div>
+                    <div class="price-tag">65 zł</div>
+                    <a href="https://www.vinted.pl/member/284983221" target="_blank" class="buy-btn">KUP TERAZ</a>
+                </div>
+            </div>
+
+            <!-- PRZEDMIOT 2: PODKŁADKA AEROSTRIKE FORTNITE -->
+            <div class="product-card">
+                <div>
+                    <h2 class="product-title">Podkładka Pod Myszkę AeroStrike Fortnite</h2>
+                    <img src="https://i.postimg.cc/W3VR6JWt/obraz-2026-10-23-211247348.png" alt="Podkładka AeroStrike Fortnite" class="product-image">
+                </div>
+                <div>
+                    <div class="price-tag">65 zł</div>
+                    <a href="https://www.vinted.pl/member/284983221" target="_blank" class="buy-btn">KUP TERAZ</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
