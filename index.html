@@ -135,7 +135,7 @@
             box-shadow: 0 0 15px rgba(229, 9, 20, 0.6);
         }
 
-        /* --- OKIENKO MODAL (POP-UP) --- */
+        /* --- OKIENKA MODAL (POP-UP) --- */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -166,7 +166,7 @@
             padding: 30px;
             position: relative;
             box-shadow: 0 0 30px rgba(229, 9, 20, 0.3);
-            animation: fadeIn 0.3s ease;
+            animation: fadeIn 0.25s ease;
         }
 
         @keyframes fadeIn {
@@ -221,15 +221,7 @@
             margin-top: 10px;
         }
 
-        /* Sekcja opcji płatności i dostawy */
-        .step-section {
-            display: none;
-        }
-
-        .step-section.active {
-            display: block;
-        }
-
+        /* Opcje w drugim okienku */
         .payment-options, .delivery-options {
             display: flex;
             flex-direction: column;
@@ -249,7 +241,7 @@
             transition: border-color 0.2s, background-color 0.2s;
         }
 
-        .option-card:hover, .option-card.selected {
+        .option-card:hover {
             border-color: #e50914;
             background: #202333;
         }
@@ -265,22 +257,6 @@
             align-items: center;
             gap: 12px;
             font-weight: 500;
-        }
-
-        .back-btn {
-            background: transparent;
-            border: 1px solid #2a2e3d;
-            color: #cccccc;
-            padding: 10px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-bottom: 15px;
-            transition: all 0.2s;
-        }
-
-        .back-btn:hover {
-            border-color: #ffffff;
-            color: #ffffff;
         }
 
         /* RWD - Dostosowanie na telefony */
@@ -321,11 +297,11 @@
             <div class="product-card">
                 <div>
                     <h2 class="product-title">Podkładka Pod Myszkę AeroStrike-Eagle</h2>
-                    <img src="https://i.postimg.cc/tCzRnB78/Zrzut-ekranu-2026-10-23-191712.png" alt="Podkładka AeroStrike Eagle" class="product-image" onclick="openModal('AeroStrike-Eagle', '65 zł', 'https://i.postimg.cc/tCzRnB78/Zrzut-ekranu-2026-10-23-191712.png', 'Wyjątkowa podkładka gamingowa AeroStrike-Eagle zapewniająca optymalny poślizg oraz najwyższą precyzję sensora.')">
+                    <img src="https://i.postimg.cc/tCzRnB78/Zrzut-ekranu-2026-10-23-191712.png" alt="Podkładka AeroStrike Eagle" class="product-image" onclick="openDescModal('AeroStrike-Eagle', '65 zł', 'https://i.postimg.cc/tCzRnB78/Zrzut-ekranu-2026-10-23-191712.png', 'Wyjątkowa podkładka gamingowa AeroStrike-Eagle zapewniająca optymalny poślizg oraz najwyższą precyzję sensora.')">
                 </div>
                 <div>
                     <div class="price-tag">65 zł</div>
-                    <button class="buy-btn" onclick="openModal('AeroStrike-Eagle', '65 zł', 'https://i.postimg.cc/tCzRnB78/Zrzut-ekranu-2026-10-23-191712.png', 'Wyjątkowa podkładka gamingowa AeroStrike-Eagle zapewniająca optymalny poślizg oraz najwyższą precyzję sensora.')">ZOBACZ / KUP</button>
+                    <button class="buy-btn" onclick="openDescModal('AeroStrike-Eagle', '65 zł', 'https://i.postimg.cc/tCzRnB78/Zrzut-ekranu-2026-10-23-191712.png', 'Wyjątkowa podkładka gamingowa AeroStrike-Eagle zapewniająca optymalny poślizg oraz najwyższą precyzję sensora.')">ZOBACZ / KUP</button>
                 </div>
             </div>
 
@@ -333,11 +309,11 @@
             <div class="product-card">
                 <div>
                     <h2 class="product-title">Podkładka Pod Myszkę AeroStrike Fortnite</h2>
-                    <img src="https://i.postimg.cc/W3VR6JWt/obraz-2026-10-23-211247348.png" alt="Podkładka AeroStrike Fortnite" class="product-image" onclick="openModal('AeroStrike Fortnite', '65 zł', 'https://i.postimg.cc/W3VR6JWt/obraz-2026-10-23-211247348.png', 'Dedykowana podkładka dla fanów Fortnite. Unikalny, pełen detali styl graficzny oraz obszywane krawędzie gwarantują trwałość na lata.')">
+                    <img src="https://i.postimg.cc/W3VR6JWt/obraz-2026-10-23-211247348.png" alt="Podkładka AeroStrike Fortnite" class="product-image" onclick="openDescModal('AeroStrike Fortnite', '65 zł', 'https://i.postimg.cc/W3VR6JWt/obraz-2026-10-23-211247348.png', 'Dedykowana podkładka dla fanów Fortnite. Unikalny, pełen detali styl graficzny oraz obszywane krawędzie gwarantują trwałość na lata.')">
                 </div>
                 <div>
                     <div class="price-tag">65 zł</div>
-                    <button class="buy-btn" onclick="openModal('AeroStrike Fortnite', '65 zł', 'https://i.postimg.cc/W3VR6JWt/obraz-2026-10-23-211247348.png', 'Dedykowana podkładka dla fanów Fortnite. Unikalny, pełen detali styl graficzny oraz obszywane krawędzie gwarantują trwałość na lata.')">ZOBACZ / KUP</button>
+                    <button class="buy-btn" onclick="openDescModal('AeroStrike Fortnite', '65 zł', 'https://i.postimg.cc/W3VR6JWt/obraz-2026-10-23-211247348.png', 'Dedykowana podkładka dla fanów Fortnite. Unikalny, pełen detali styl graficzny oraz obszywane krawędzie gwarantują trwałość na lata.')">ZOBACZ / KUP</button>
                 </div>
             </div>
 
@@ -345,41 +321,139 @@
             <div class="product-card">
                 <div>
                     <h2 class="product-title">Podkładka Pod Myszkę AeroStrike Minecraft</h2>
-                    <img src="https://i.postimg.cc/hvgp5LTD/Zrzut-ekranu-2026-10-23-213119.png" alt="Podkładka AeroStrike Minecraft" class="product-image" onclick="openModal('AeroStrike Minecraft', '65 zł', 'https://i.postimg.cc/hvgp5LTD/Zrzut-ekranu-2026-10-23-213119.png', 'Epicka podkładka z motywem blokowego świata. Trwały nadruk o wysokiej rozdzielczości oraz powłoka hydrofobowa odporna na zachlapania.')">
+                    <img src="https://i.postimg.cc/hvgp5LTD/Zrzut-ekranu-2026-10-23-213119.png" alt="Podkładka AeroStrike Minecraft" class="product-image" onclick="openDescModal('AeroStrike Minecraft', '65 zł', 'https://i.postimg.cc/hvgp5LTD/Zrzut-ekranu-2026-10-23-213119.png', 'Epicka podkładka z motywem blokowego świata. Trwały nadruk o wysokiej rozdzielczości oraz powłoka hydrofobowa odporna na zachlapania.')">
                 </div>
                 <div>
                     <div class="price-tag">65 zł</div>
-                    <button class="buy-btn" onclick="openModal('AeroStrike Minecraft', '65 zł', 'https://i.postimg.cc/hvgp5LTD/Zrzut-ekranu-2026-10-23-213119.png', 'Epicka podkładka z motywem blokowego świata. Trwały nadruk o wysokiej rozdzielczości oraz powłoka hydrofobowa odporna na zachlapania.')">ZOBACZ / KUP</button>
+                    <button class="buy-btn" onclick="openDescModal('AeroStrike Minecraft', '65 zł', 'https://i.postimg.cc/hvgp5LTD/Zrzut-ekranu-2026-10-23-213119.png', 'Epicka podkładka z motywem blokowego świata. Trwały nadruk o wysokiej rozdzielczości oraz powłoka hydrofobowa odporna na zachlapania.')">ZOBACZ / KUP</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- MIEJSCE NA DWUETAPOWE OKIENKO MODAL (POP-UP) -->
-    <div class="modal-overlay" id="productModal">
+    <!-- 1. PIERWSZE OKIENKO: OPIS PRODUKTU -->
+    <div class="modal-overlay" id="descModal">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-
-            <!-- KROK 1: OPIS I SZCZEGÓŁY PRODUKTU -->
-            <div id="step1" class="step-section active">
-                <h2 class="modal-title" id="modalTitle">Nazwa Produktu</h2>
-                <img src="" alt="Produkt" class="modal-img" id="modalImg">
-                <div class="modal-price" id="modalPrice">65 zł</div>
-                
-                <div class="modal-description">
-                    <p id="modalDesc">Opis produktu...</p>
-                    <ul>
-                        <li>Gładka powierzchnia Speed/Control</li>
-                        <li>Antypoślizgowy spód z kauczuku</li>
-                        <li>Trwały obszyty brzeg</li>
-                        <li>Wysoka jakość nadruku</li>
-                    </ul>
-                </div>
-
-                <button class="buy-btn" onclick="goToStep2()">PRZEJDŹ DO PŁATNOŚCI</button>
+            <span class="close-btn" onclick="closeDescModal()">&times;</span>
+            <h2 class="modal-title" id="modalTitle">Nazwa Produktu</h2>
+            <img src="" alt="Produkt" class="modal-img" id="modalImg">
+            <div class="modal-price" id="modalPrice">65 zł</div>
+            
+            <div class="modal-description">
+                <p id="modalDesc">Opis produktu...</p>
+                <ul>
+                    <li>Gładka powierzchnia Speed/Control</li>
+                    <li>Antypoślizgowy spód z kauczuku</li>
+                    <li>Trwały obszyty brzeg</li>
+                    <li>Wysoka jakość nadruku</li>
+                </ul>
             </div>
 
-            <!-- KROK 2: WYBÓR PŁATNOŚCI I DOSTAWY -->
-            <div id="step2" class="step-section">
-                <button class="back-btn" onclick="goToStep1()">← Wróć do opisu</button>
-                <h2 class="modal
+            <button class="buy-btn" onclick="switchToPaymentModal()">PRZEJDŹ DO PŁATNOŚCI</button>
+        </div>
+    </div>
+
+    <!-- 2. DRUGIE OKIENKO: WYBÓR PŁATNOŚCI I DOSTAWY -->
+    <div class="modal-overlay" id="paymentModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closePaymentModal()">&times;</span>
+            <h2 class="modal-title">Wybierz Metodę Płatności</h2>
+
+            <p style="color: #aaaaaa; font-size: 14px; margin-bottom: 10px;">Forma płatności:</p>
+            <div class="payment-options">
+                <label class="option-card">
+                    <div class="option-label">
+                        <input type="radio" name="payment" value="blik" checked>
+                        <span>BLIK (Szybki kod)</span>
+                    </div>
+                    <span style="color: #e50914; font-weight: bold;">BLIK</span>
+                </label>
+
+                <label class="option-card">
+                    <div class="option-label">
+                        <input type="radio" name="payment" value="card">
+                        <span>Karta płatnicza (Visa / Mastercard)</span>
+                    </div>
+                    <span>💳</span>
+                </label>
+
+                <label class="option-card">
+                    <div class="option-label">
+                        <input type="radio" name="payment" value="p24">
+                        <span>Szybki przelew (Przelewy24 / Tpay)</span>
+                    </div>
+                    <span>🏦</span>
+                </label>
+
+                <label class="option-card">
+                    <div class="option-label">
+                        <input type="radio" name="payment" value="gpay_apple">
+                        <span>Google Pay / Apple Pay</span>
+                    </div>
+                    <span>📱</span>
+                </label>
+            </div>
+
+            <p style="color: #aaaaaa; font-size: 14px; margin-bottom: 10px;">Dostawa:</p>
+            <div class="delivery-options">
+                <label class="option-card">
+                    <div class="option-label">
+                        <input type="radio" name="delivery" value="inpost" checked>
+                        <span>Paczkomat InPost</span>
+                    </div>
+                    <span style="color: #ffcc00; font-weight: bold;">InPost</span>
+                </label>
+                <label class="option-card">
+                    <div class="option-label">
+                        <input type="radio" name="delivery" value="courier">
+                        <span>Kurier pod adres</span>
+                    </div>
+                    <span>📦</span>
+                </label>
+            </div>
+
+            <button class="buy-btn" onclick="processFinalPayment()">ZAPŁAĆ TERAZ</button>
+        </div>
+    </div>
+
+    <script>
+        // Otwieranie pierwszego okienka (Opis)
+        function openDescModal(title, price, imgSrc, description) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalPrice').innerText = price;
+            document.getElementById('modalImg').src = imgSrc;
+            document.getElementById('modalDesc').innerText = description;
+            
+            document.getElementById('descModal').classList.add('active');
+        }
+
+        function closeDescModal() {
+            document.getElementById('descModal').classList.remove('active');
+        }
+
+        // Przejście z 1 okienka do 2 okienka (Płatności)
+        function switchToPaymentModal() {
+            closeDescModal();
+            document.getElementById('paymentModal').classList.add('active');
+        }
+
+        function closePaymentModal() {
+            document.getElementById('paymentModal').classList.remove('active');
+        }
+
+        function processFinalPayment() {
+            const selectedPayment = document.querySelector('input[name="payment"]:checked').value;
+            alert('Wybrano płatność: ' + selectedPayment.toUpperCase() + '. Tutaj podepniemy natychmiastowe przekierowanie do płatności!');
+        }
+
+        // Zamknięcie po kliknięciu w tło wokół okienka
+        window.onclick = function(event) {
+            const descModal = document.getElementById('descModal');
+            const paymentModal = document.getElementById('paymentModal');
+            if (event.target === descModal) closeDescModal();
+            if (event.target === paymentModal) closePaymentModal();
+        }
+    </script>
+
+</body>
+</html>
