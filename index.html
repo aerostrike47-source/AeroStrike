@@ -66,7 +66,7 @@
             border-radius: 12px;
         }
 
-        /* Układ główny strony */
+        /* Układ główny strony z trzema kolumnami */
         .app-layout {
             display: flex;
             margin-top: 70px;
@@ -74,8 +74,8 @@
         }
 
         /* Lewy panel z logo */
-        .sidebar {
-            width: 280px;
+        .sidebar-left {
+            width: 250px;
             background-color: #161822;
             padding: 30px 20px;
             border-right: 2px solid #e50914;
@@ -97,9 +97,121 @@
             filter: drop-shadow(0px 0px 8px rgba(229, 9, 20, 0.4));
         }
 
-        /* Prawa strona z zawartością */
+        /* Prawa kolumna - Kategorie (Accordion) */
+        .sidebar-right {
+            width: 280px;
+            background-color: #161822;
+            padding: 30px 20px;
+            border-left: 1px solid #2a2e3d;
+            position: fixed;
+            top: 70px;
+            bottom: 0;
+            right: 0;
+            z-index: 10;
+            overflow-y: auto;
+        }
+
+        .categories-title {
+            font-size: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #ffffff;
+            border-bottom: 2px solid #e50914;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .category-accordion {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .category-item {
+            background: #181a24;
+            border: 1px solid #2a2e3d;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+
+        .category-item:hover {
+            border-color: #e50914;
+        }
+
+        .category-header {
+            width: 100%;
+            padding: 14px 16px;
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            text-align: left;
+            transition: background 0.2s;
+        }
+
+        .category-header:hover {
+            background: #202333;
+        }
+
+        .category-icon {
+            font-size: 18px;
+            margin-right: 10px;
+        }
+
+        .arrow-icon {
+            font-size: 12px;
+            color: #e50914;
+            transition: transform 0.3s ease;
+        }
+
+        .category-item.active .arrow-icon {
+            transform: rotate(180deg);
+        }
+
+        .category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background: #11131a;
+            border-top: 1px solid transparent;
+        }
+
+        .category-item.active .category-content {
+            max-height: 250px;
+            border-top-color: #2a2e3d;
+        }
+
+        .subcategories-list {
+            list-style: none;
+            padding: 10px 15px;
+        }
+
+        .subcategories-list li {
+            padding: 8px 10px;
+            font-size: 13px;
+            color: #cccccc;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .subcategories-list li:hover {
+            background: #e50914;
+            color: #ffffff;
+            padding-left: 15px;
+        }
+
+        /* Główna sekcja środków na produkty */
         .main-content {
-            margin-left: 280px;
+            margin-left: 250px;
+            margin-right: 280px;
             flex: 1;
             padding: 40px;
             overflow-y: auto;
@@ -119,7 +231,7 @@
         .products-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 30px;
+            gap: 25px;
         }
 
         /* Karta produktu */
@@ -128,8 +240,8 @@
             border: 1px solid #2a2e3d;
             border-radius: 12px;
             width: 100%;
-            max-width: 380px;
-            padding: 24px;
+            max-width: 340px;
+            padding: 20px;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
             transition: transform 0.3s ease, border-color 0.3s ease;
             display: flex;
@@ -143,24 +255,24 @@
         }
 
         .product-title {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: bold;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             color: #ffffff;
         }
 
         .product-image {
             width: 100%;
-            height: 230px;
+            height: 200px;
             border-radius: 8px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             display: block;
             object-fit: cover;
             cursor: pointer;
         }
 
         .price-tag {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
             color: #e50914;
             margin-bottom: 15px;
@@ -173,14 +285,14 @@
 
         .btn-secondary {
             flex: 1;
-            padding: 12px;
+            padding: 10px;
             background: #2a2e3d;
             color: #ffffff;
             border: none;
             border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 13px;
+            font-size: 12px;
             text-transform: uppercase;
             transition: background 0.2s;
         }
@@ -191,14 +303,14 @@
 
         .btn-primary {
             flex: 1.2;
-            padding: 12px;
+            padding: 10px;
             background-color: #e50914;
             color: #ffffff;
             border: none;
             border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 13px;
+            font-size: 12px;
             text-transform: uppercase;
             transition: background-color 0.2s, box-shadow 0.2s;
         }
@@ -540,12 +652,21 @@
             color: #ffffff;
         }
 
-        /* RWD - Dostosowanie do telefonów */
+        /* RWD - Dostosowanie do ekranów urządzeń mobilnych */
+        @media (max-width: 1024px) {
+            .sidebar-right {
+                display: none;
+            }
+            .main-content {
+                margin-right: 0;
+            }
+        }
+
         @media (max-width: 768px) {
             .header {
                 padding: 0 20px;
             }
-            .sidebar {
+            .sidebar-left {
                 position: relative;
                 top: 0;
                 width: 100%;
@@ -586,11 +707,11 @@
 
     <div class="app-layout">
         <!-- LEWA STRONA: BIAŁE LOGO -->
-        <div class="sidebar">
+        <div class="sidebar-left">
             <img src="https://i.postimg.cc/SQrrKzc9/logo-aerostrike-biale.png" alt="AeroStrike Logo" class="logo">
         </div>
 
-        <!-- PRAWA STRONA: PRODUKTY -->
+        <!-- ŚRODEK: GLÓWNA SEKCJA PRODUKTÓW -->
         <div class="main-content">
             <h1 class="section-title">Nasze Produkty</h1>
 
@@ -637,6 +758,74 @@
                             <button class="btn-secondary" onclick="openDescModal('Podkładka AeroStrike Minecraft', 65, 'https://i.postimg.cc/hvgp5LTD/Zrzut-ekranu-2026-10-23-213119.png', 'Epicka podkładka z motywem blokowego świata. Trwały nadruk o wysokiej rozdzielczości oraz powłoka hydrofobowa odporna na zachlapania.')">OPIS</button>
                             <button class="btn-primary" onclick="addToCart('Podkładka AeroStrike Minecraft', 65, 'https://i.postimg.cc/hvgp5LTD/Zrzut-ekranu-2026-10-23-213119.png')">+ KOSZYK</button>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PRAWA STRONA: KATEGORIE (ROZWIJANE MENU ACCORDION) -->
+        <div class="sidebar-right">
+            <h2 class="categories-title">Kategorie</h2>
+
+            <div class="category-accordion">
+                <!-- KATEGORIA 1: PODKŁADKI POD MYSZKĘ -->
+                <div class="category-item">
+                    <button class="category-header" onclick="toggleCategory(this)">
+                        <span><span class="category-icon">🟩</span> Podkładki pod myszkę</span>
+                        <span class="arrow-icon">▼</span>
+                    </button>
+                    <div class="category-content">
+                        <ul class="subcategories-list">
+                            <li>Podkładki Speed (Szybkie)</li>
+                            <li>Podkładki Control (Precyzyjne)</li>
+                            <li>Podkładki XXL (900x400 mm)</li>
+                            <li>Podkładki RGB</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- KATEGORIA 2: SŁUCHAWKI -->
+                <div class="category-item">
+                    <button class="category-header" onclick="toggleCategory(this)">
+                        <span><span class="category-icon">🎧</span> Słuchawki</span>
+                        <span class="arrow-icon">▼</span>
+                    </button>
+                    <div class="category-content">
+                        <ul class="subcategories-list">
+                            <li>Słuchawki bezprzewodowe</li>
+                            <li>Słuchawki z mikrofonem</li>
+                            <li>Słuchawki 7.1 Surround</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- KATEGORIA 3: MYSZKI -->
+                <div class="category-item">
+                    <button class="category-header" onclick="toggleCategory(this)">
+                        <span><span class="category-icon">🖱️</span> Myszki</span>
+                        <span class="arrow-icon">▼</span>
+                    </button>
+                    <div class="category-content">
+                        <ul class="subcategories-list">
+                            <li>Myszki Ultralight (Lekkie)</li>
+                            <li>Myszki Bezprzewodowe</li>
+                            <li>Myszki Ergonomiczne</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- KATEGORIA 4: KLAWIATURY -->
+                <div class="category-item">
+                    <button class="category-header" onclick="toggleCategory(this)">
+                        <span><span class="category-icon">⌨️</span> Klawiatury</span>
+                        <span class="arrow-icon">▼</span>
+                    </button>
+                    <div class="category-content">
+                        <ul class="subcategories-list">
+                            <li>Klawiatury Mechaniczne</li>
+                            <li>Klawiatury 60% / TKL</li>
+                            <li>Klawiatury Membranowe</li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -799,6 +988,22 @@
     <script>
         // Stan koszyka
         let cart = [];
+
+        // Obsługa rozwijania kategorii (Accordion)
+        function toggleCategory(button) {
+            const categoryItem = button.parentElement;
+            const isOpen = categoryItem.classList.contains('active');
+
+            // Zamykanie innych aktywnych kategorii dla przejrzystości
+            document.querySelectorAll('.category-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Przełączanie bieżącej kategorii
+            if (!isOpen) {
+                categoryItem.classList.add('active');
+            }
+        }
 
         // Otwieranie / zamykanie pierwszego okienka opisu
         function openDescModal(title, price, imgSrc, description) {
