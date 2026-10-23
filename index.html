@@ -452,7 +452,6 @@
             font-size: 12px;
         }
 
-        /* Podgląd zdjęcia w partnerstwie */
         .image-preview-container {
             display: none;
             align-items: center;
@@ -806,6 +805,27 @@
             color: #ffffff;
         }
 
+        /* Styl sekcji kodu rabatowego */
+        .promo-box {
+            background: #181a24;
+            border: 1px solid #2a2e3d;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .promo-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .promo-info {
+            font-size: 11px;
+            color: #888888;
+            margin-top: 6px;
+            text-align: right;
+        }
+
         /* RWD */
         @media (max-width: 1024px) {
             .sidebar-left {
@@ -918,7 +938,6 @@
                         <input type="file" id="partnerProof" class="file-input" accept="image/*" onchange="previewPartnerImage(event)">
                     </div>
 
-                    <!-- Podgląd wgranego zdjęcia -->
                     <div class="image-preview-container" id="imagePreviewBox">
                         <img id="previewImg" src="" alt="Podgląd dowodu">
                         <div style="flex: 1; font-size: 12px; color: #00ff66;">Zdjęcie dodane pomyślnie</div>
@@ -1032,6 +1051,16 @@
         </div>
 
         <div id="cartCheckoutSection" style="display: none;">
+            <!-- KOD RABATOWY -->
+            <div class="cart-options-title">Kod Rabatowy:</div>
+            <div class="promo-box">
+                <div class="promo-row">
+                    <input type="text" id="promoCodeInput" class="form-control" placeholder="Wpisz np. START">
+                    <button class="btn-primary" style="padding: 10px 16px; flex: unset;" onclick="applyPromoCode()">UŻNIJ</button>
+                </div>
+                <div class="promo-info" id="promoStatsText">Wykorzystano: 0 / 100 • Pozostało: 100</div>
+            </div>
+
             <div class="cart-options-title">Dostawa:</div>
             <div class="option-group">
                 <label class="cart-option-card">
@@ -1123,6 +1152,11 @@
                     <span>Produkty:</span>
                     <span id="cartSubtotal">0.00 zł</span>
                 </div>
+                <!-- Wiersz rabatu (widoczny tylko po aktywacji) -->
+                <div class="cart-summary-row" id="discountRow" style="display: none; color: #00ff66;">
+                    <span>Rabat (START -15%):</span>
+                    <span id="cartDiscountAmount">-0.00 zł</span>
+                </div>
                 <div class="cart-summary-row">
                     <span>Dostawa:</span>
                     <span id="cartDeliveryCost">15.00 zł</span>
@@ -1175,8 +1209,18 @@
 
         let cart = [];
 
+        // Stan kodu rabatowego
+        let promoState = {
+            code: "START",
+            discountPercent: 15,
+            maxUses: 100,
+            usedCount: 0,
+            applied: false
+        };
+
         window.onload = function() {
             filterCategory('all');
+            updatePromoStatsUI();
         };
 
         // Obsługa Regulaminu
@@ -1203,7 +1247,7 @@
             closeRegulationsModal();
         }
 
-        // Obsługa Partnerstwa i Podglądu Zdjęcia
+        // Obsługa Partnerstwa
         function openPartnerModal() {
             document.getElementById('partnerModal').classList.add('active');
         }
@@ -1249,7 +1293,7 @@
                 return;
             }
 
-            const myEmail = "twoj-adres-email@gmail.com"; // <-- TUTAJ WPISZ SWÓJ E-MAIL
+            const myEmail = "twoj-adres-email@gmail.com";
             const subject = encodeURIComponent("Zgłoszenie partnerstwa od: " + name);
             const body = encodeURIComponent(
                 "Imię / Pseudonim: " + name + "\n" +
@@ -1262,6 +1306,38 @@
 
             alert('Zgłoszenie gotowe!\nOtwiera się program pocztowy z wiadomością dla Ciebie.');
             closePartnerModal();
+        }
+
+        // Logika Kodu Rabatowego
+        function applyPromoCode() {
+            const inputVal = document.getElementById('promoCodeInput').value.trim().toUpperCase();
+
+            if (inputVal === "") {
+                alert("⚠️ Wpisz kod rabatowy!");
+                return;
+            }
+
+            if (inputVal === promoState.code) {
+                if (promoState.usedCount >= promoState.maxUses) {
+                    alert("❌ Ten kod wykorzystał już maksymalną liczbę osób (100/100)!");
+                    return;
+                }
+                if (promoState.applied) {
+                    alert("ℹ️ Ten kod został już aktywowany w tym koszyku.");
+                    return;
+                }
+
+                promoState.applied = true;
+                alert("✅ Kod START aktywowany! Naliczono 15% rabatu.");
+                calculateCartTotal();
+            } else {
+                alert("❌ Nieznany lub nieprawidłowy kod rabatowy.");
+            }
+        }
+
+        function updatePromoStatsUI() {
+            const remaining = promoState.maxUses - promoState.usedCount;
+            document.getElementById('promoStatsText').innerText = `Wykorzystano: ${promoState.usedCount} / ${promoState.maxUses} • Pozostało: ${remaining}`;
         }
 
         function selectCategory(categoryKey, button) {
@@ -1426,6 +1502,21 @@
 
         function calculateCartTotal() {
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            
+            // Obliczanie rabatu jeśli kod jest aktywny
+            let discountAmount = 0;
+            const discountRow = document.getElementById('discountRow');
+            
+            if (promoState.applied) {
+                discountAmount = subtotal * (promoState.discountPercent / 100);
+                document.getElementById('cartDiscountAmount').innerText = '-' + discountAmount.toFixed(2) + ' zł';
+                discountRow.style.display = 'flex';
+            } else {
+                discountRow.style.display = 'none';
+            }
+
+            const discountedSubtotal = subtotal - discountAmount;
+
             const deliveryRadio = document.querySelector('input[name="cartDelivery"]:checked');
             const deliveryCost = parseFloat(deliveryRadio.value);
             const paymentRate = parseFloat(document.querySelector('input[name="cartPayment"]:checked').value);
@@ -1440,8 +1531,8 @@
                 addressInput.placeholder = "np. Polna 12/4";
             }
 
-            const feeCost = (subtotal + deliveryCost) * paymentRate;
-            const grandTotal = subtotal + deliveryCost + feeCost;
+            const feeCost = (discountedSubtotal + deliveryCost) * paymentRate;
+            const grandTotal = discountedSubtotal + deliveryCost + feeCost;
 
             document.getElementById('cartSubtotal').innerText = subtotal.toFixed(2) + ' zł';
             document.getElementById('cartDeliveryCost').innerText = deliveryCost.toFixed(2) + ' zł';
@@ -1476,10 +1567,24 @@
             }
 
             errorMsgBox.style.display = 'none';
+
+            // ZALICZENIE UŻYCIA KODU TYLKO GDY UŻYTKOWNIK FAKTYCZNIE KUPUJE I PRZECHODZI DALEJ
+            if (promoState.applied && promoState.usedCount < promoState.maxUses) {
+                promoState.usedCount += 1;
+                updatePromoStatsUI();
+            }
+
             const selectedPayment = document.querySelector('input[name="cartPayment"]:checked').getAttribute('data-name');
             const grandTotal = document.getElementById('cartGrandTotal').innerText;
             
-            alert('Dane poprawne!\nPrzejście do płatności dla: ' + fields[0].value + ' ' + fields[1].value + '\nMetoda: ' + selectedPayment + '\nSuma: ' + grandTotal);
+            alert('Sukces! Zamówienie zostało złożone.\nDane: ' + fields[0].value + ' ' + fields[1].value + '\nMetoda płatności: ' + selectedPayment + '\nKwota do zapłaty: ' + grandTotal);
+            
+            // Czyszczenie koszyka po udanym zakupie
+            cart = [];
+            promoState.applied = false;
+            document.getElementById('promoCodeInput').value = '';
+            updateCartUI();
+            closeCart();
         }
 
         document.querySelectorAll('.form-control').forEach(input => {
