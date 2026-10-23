@@ -43,6 +43,7 @@
             filter: drop-shadow(0px 0px 8px rgba(229, 9, 20, 0.4));
         }
 
+        /* Prawa strona paska z przyciskami */
         .header-right {
             display: flex;
             align-items: center;
@@ -375,7 +376,7 @@
             animation: fadeIn 0.25s ease;
         }
 
-        /* Specjalny styl dla okienka regulaminu z możliwością skrolowania treści */
+        /* Styl dla okienka regulaminu */
         .regulations-modal-content {
             background: #161822;
             border: 2px solid #e50914;
@@ -394,20 +395,51 @@
         .regulations-scroll-box {
             flex: 1;
             overflow-y: auto;
-            padding-right: 10px;
+            padding-right: 12px;
             margin-top: 15px;
             margin-bottom: 15px;
             color: #cccccc;
             font-size: 14px;
             line-height: 1.6;
+            background: #11131a;
+            border: 1px solid #2a2e3d;
+            border-radius: 8px;
+            padding: 15px;
         }
 
         .regulations-scroll-box h3 {
             color: #ffffff;
-            font-size: 16px;
+            font-size: 15px;
             margin-top: 15px;
             margin-bottom: 5px;
             text-transform: uppercase;
+        }
+
+        /* Przycisk akceptacji nieaktywny */
+        .btn-accept-disabled {
+            width: 100%;
+            padding: 14px;
+            background-color: #2a2e3d;
+            color: #777777;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 14px;
+            text-transform: uppercase;
+            cursor: not-allowed;
+            transition: all 0.3s ease;
+        }
+
+        /* Przycisk akceptacji aktywny (czerwony) */
+        .btn-accept-active {
+            background-color: #e50914 !important;
+            color: #ffffff !important;
+            cursor: pointer !important;
+            box-shadow: 0 0 15px rgba(229, 9, 20, 0.6);
+        }
+
+        .btn-accept-active:hover {
+            background-color: #ff0f1f !important;
         }
 
         @keyframes fadeIn {
@@ -739,7 +771,7 @@
 </head>
 <body>
 
-    <!-- GÓRNY PASEK Z LOGO, REGULAMINEM I KOSZYKIEM -->
+    <!-- GÓRNY PASEK Z LOGO PO LEWEJ ORAZ REGULAMINEM I KOSZYKIEM PO PRAWEJ -->
     <div class="header">
         <img src="https://i.postimg.cc/SQrrKzc9/logo-aerostrike-biale.png" alt="AeroStrike Logo" class="logo">
         <div class="header-right">
@@ -751,36 +783,38 @@
         </div>
     </div>
 
-    <!-- OKIENKO MODAL: REGULAMIN -->
+    <!-- OKIENKO MODAL: REGULAMIN Z PRZEWIJANIEM DO DOCKA -->
     <div class="modal-overlay" id="regulationsModal">
         <div class="regulations-modal-content">
             <span class="close-btn" onclick="closeRegulationsModal()">&times;</span>
             <h2 class="modal-title">Regulamin Sklepu AeroStrike</h2>
             
-            <div class="regulations-scroll-box">
+            <div class="regulations-scroll-box" id="regulationsBox" onscroll="checkRegulationsScroll()">
                 <h3>§ 1. Postanowienia Ogólne</h3>
-                <p>1. Sklepu internetowy działający pod marką AeroStrike dostępny jest pod adresem internetowym sklepu i dedykowany jest dla graczy oraz entuzjastów esportu.</p>
-                <p>2. Właścicielem sklepu jest zespół AeroStrike.</p>
-                <p>3. Złożenie zamówienia w sklepie oznacza akceptację postanowień niniejszego regulaminu.</p>
+                <p>1. Sklep internetowy działający pod marką AeroStrike dostępny jest dla graczy oraz entuzjastów sprzętu gamingowego.</p>
+                <p>2. Złożenie zamówienia w sklepie jest równoznaczne z pełną akceptacją niniejszego regulaminu.</p>
 
-                <h3>§ 2. Składanie Zamówień i Płatności</h3>
-                <p>1. Zamówienia można składać 24 godziny na dobę, 7 dni w tygodniu za pośrednictwem koszyka na stronie głównej.</p>
-                <p>2. Dostępne metody płatności to: BLIK, Karta Płatnicza, Przelewy24/Tpay oraz Apple/Google Pay.</p>
-                <p>3. Do kwoty zamówienia doliczane są koszty wybranej dostawy oraz prowizja operatora płatności (widoczna w podsumowaniu koszyka).</p>
+                <h3>§ 2. Zamówienia i Płatności</h3>
+                <p>1. Zamówienia można składać całodobowo poprzez interaktywny koszyk na stronie.</p>
+                <p>2. Akceptowane formy płatności to: BLIK, Karta płatnicza, Przelewy24 oraz Google/Apple Pay.</p>
+                <p>3. Do każdego zamówienia doliczane są wybrane koszty dostawy oraz prowizja bramki płatniczej.</p>
 
-                <h3>§ 3. Wysyłka i Dostawa</h3>
-                <p>1. Towary wysyłane są za pośrednictwem Paczkomatów InPost (+15 zł) lub Kuriera pod wskazany adres (+20 zł).</p>
-                <p>2. Czas realizacji zamówienia wynosi zazwyczaj od 1 do 3 dni roboczych od momentu zaksięgowania wpłaty.</p>
+                <h3>§ 3. Dostawa i Realizacja</h3>
+                <p>1. Wysyłka realizowana jest za pośrednictwem Paczkomatów InPost (+15 zł) oraz Kuriera DPD/InPost pod wybrany adres (+20 zł).</p>
+                <p>2. Średni czas realizacji wynosi od 24h do 3 dni roboczych.</p>
 
                 <h3>§ 4. Zwroty i Reklamacje</h3>
-                <p>1. Zgodnie z obowiązującymi przepisami, klient ma prawo odstąpić od umowy bez podania przyczyny w terminie 14 dni od dnia otrzymania przesyłki.</p>
-                <p>2. Reklamacje dotyczące uszkodzeń mechanicznych powstałych podczas transportu lub wad fabrycznych należy zgłaszać drogą mailową.</p>
+                <p>1. Kupujący ma prawo do odstąpienia od umowy w terminie 14 dni od momentu odbioru przesyłki.</p>
+                <p>2. Reklamacje oraz pytania techniczne można zgłaszać poprzez kontakt z obsługą sklepu.</p>
 
-                <h3>§ 5. Ochrona Danych Osobowych</h3>
-                <p>1. Podane przez klienta dane osobowe (imię, nazwisko, adres, e-mail, telefon) przetwarzane są wyłącznie w celu prawidłowej realizacji zamówienia i wysyłki.</p>
+                <h3>§ 5. Bezpieczeństwo i Dane Osobowe</h3>
+                <p>1. Dane wysyłkowe podawane podczas składania zamówienia są wykorzystywane wyłącznie w celu pomyślnego dostarczenia paczki.</p>
+                <p style="margin-top: 15px; color: #e50914; font-weight: bold;">--- KONIEC REGULAMINU ---</p>
             </div>
 
-            <button class="btn-primary" style="width: 100%; padding: 12px;" onclick="closeRegulationsModal()">ZROZUMIAŁEM</button>
+            <button class="btn-accept-disabled" id="acceptRegulationsBtn" onclick="acceptRegulations()" disabled>
+                PRZEWIŃ REGULAMIN DO KOŃCA
+            </button>
         </div>
     </div>
 
@@ -1032,13 +1066,29 @@
             filterCategory('all');
         };
 
-        // Obsługa otwierania/zamykania okienka regulaminu
+        // Obsługa Regulaminu
         function openRegulationsModal() {
             document.getElementById('regulationsModal').classList.add('active');
         }
 
         function closeRegulationsModal() {
             document.getElementById('regulationsModal').classList.remove('active');
+        }
+
+        function checkRegulationsScroll() {
+            const box = document.getElementById('regulationsBox');
+            const btn = document.getElementById('acceptRegulationsBtn');
+
+            // Sprawdzanie czy użytkownik dotarł do samego dołu okienka scrollowania
+            if (box.scrollTop + box.clientHeight >= box.scrollHeight - 10) {
+                btn.classList.add('btn-accept-active');
+                btn.removeAttribute('disabled');
+                btn.innerText = 'AKCEPTUJĘ REGULAMIN';
+            }
+        }
+
+        function acceptRegulations() {
+            closeRegulationsModal();
         }
 
         function selectCategory(categoryKey, button) {
@@ -1110,7 +1160,7 @@
             });
         }
 
-        // Opis Modal
+        // Modal opisu
         function openDescModal(title, price, imgSrc, description) {
             document.getElementById('modalTitle').innerText = title;
             document.getElementById('modalPrice').innerText = price + ' zł';
