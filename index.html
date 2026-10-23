@@ -407,34 +407,34 @@
             <div class="payment-options">
                 <label class="option-card">
                     <div class="option-label">
-                        <input type="radio" name="payment" value="blik" checked>
+                        <input type="radio" name="payment" value="0" data-name="BLIK" checked onclick="calculateTotal()">
                         <span>BLIK (Szybki kod)</span>
                     </div>
-                    <span style="color: #e50914; font-weight: bold;">BLIK</span>
+                    <span style="color: #e50914; font-weight: bold;">0 zł</span>
                 </label>
 
                 <label class="option-card">
                     <div class="option-label">
-                        <input type="radio" name="payment" value="card">
+                        <input type="radio" name="payment" value="0.015" data-name="Karta płatnicza" onclick="calculateTotal()">
                         <span>Karta płatnicza (Visa / Mastercard)</span>
                     </div>
-                    <span>💳</span>
+                    <span style="color: #aaaaaa; font-size: 13px;">+1.5%</span>
                 </label>
 
                 <label class="option-card">
                     <div class="option-label">
-                        <input type="radio" name="payment" value="p24">
+                        <input type="radio" name="payment" value="0.012" data-name="Przelewy24" onclick="calculateTotal()">
                         <span>Szybki przelew (Przelewy24 / Tpay)</span>
                     </div>
-                    <span>🏦</span>
+                    <span style="color: #aaaaaa; font-size: 13px;">+1.2%</span>
                 </label>
 
                 <label class="option-card">
                     <div class="option-label">
-                        <input type="radio" name="payment" value="gpay_apple">
+                        <input type="radio" name="payment" value="0.015" data-name="Google/Apple Pay" onclick="calculateTotal()">
                         <span>Google Pay / Apple Pay</span>
                     </div>
-                    <span>📱</span>
+                    <span style="color: #aaaaaa; font-size: 13px;">+1.5%</span>
                 </label>
             </div>
 
@@ -442,19 +442,23 @@
             <div class="summary-box">
                 <div class="summary-row">
                     <span>Cena podkładki:</span>
-                    <span id="summaryProductPrice">65 zł</span>
+                    <span id="summaryProductPrice">65.00 zł</span>
                 </div>
                 <div class="summary-row">
                     <span>Koszt dostawy:</span>
-                    <span id="summaryDeliveryPrice">15 zł</span>
+                    <span id="summaryDeliveryPrice">15.00 zł</span>
+                </div>
+                <div class="summary-row">
+                    <span>Opłata operatora płatności:</span>
+                    <span id="summaryFeePrice">0.00 zł</span>
                 </div>
                 <div class="summary-row total">
                     <span>Do zapłaty łącznie:</span>
-                    <span id="summaryTotalPrice" style="color: #e50914;">80 zł</span>
+                    <span id="summaryTotalPrice" style="color: #e50914;">80.00 zł</span>
                 </div>
             </div>
 
-            <button class="buy-btn" id="paySubmitBtn" onclick="processFinalPayment()">ZAPŁAĆ TERAZ (80 zł)</button>
+            <button class="buy-btn" id="paySubmitBtn" onclick="processFinalPayment()">ZAPŁAĆ TERAZ (80.00 zł)</button>
         </div>
     </div>
 
@@ -487,23 +491,32 @@
             document.getElementById('paymentModal').classList.remove('active');
         }
 
-        // Funkcja przeliczająca kwotę końcową
+        // Funkcja przeliczająca kwotę końcową wraz z prowizją płatności
         function calculateTotal() {
-            const selectedDeliveryPrice = parseInt(document.querySelector('input[name="delivery"]:checked').value);
-            const total = currentProductPrice + selectedDeliveryPrice;
+            const selectedDeliveryPrice = parseFloat(document.querySelector('input[name="delivery"]:checked').value);
+            const selectedPaymentRate = parseFloat(document.querySelector('input[name="payment"]:checked').value);
+            
+            const subtotal = currentProductPrice + selectedDeliveryPrice;
+            const paymentFee = subtotal * selectedPaymentRate;
+            const total = subtotal + paymentFee;
 
-            document.getElementById('summaryProductPrice').innerText = currentProductPrice + ' zł';
-            document.getElementById('summaryDeliveryPrice').innerText = selectedDeliveryPrice + ' zł';
-            document.getElementById('summaryTotalPrice').innerText = total + ' zł';
-            document.getElementById('paySubmitBtn').innerText = 'ZAPŁAĆ TERAZ (' + total + ' zł)';
+            document.getElementById('summaryProductPrice').innerText = currentProductPrice.toFixed(2) + ' zł';
+            document.getElementById('summaryDeliveryPrice').innerText = selectedDeliveryPrice.toFixed(2) + ' zł';
+            document.getElementById('summaryFeePrice').innerText = paymentFee.toFixed(2) + ' zł';
+            document.getElementById('summaryTotalPrice').innerText = total.toFixed(2) + ' zł';
+            document.getElementById('paySubmitBtn').innerText = 'ZAPŁAĆ TERAZ (' + total.toFixed(2) + ' zł)';
         }
 
         function processFinalPayment() {
-            const selectedPayment = document.querySelector('input[name="payment"]:checked').value;
-            const selectedDeliveryCost = document.querySelector('input[name="delivery"]:checked').value;
-            const total = currentProductPrice + parseInt(selectedDeliveryCost);
+            const selectedPaymentRadio = document.querySelector('input[name="payment"]:checked');
+            const selectedPaymentName = selectedPaymentRadio.getAttribute('data-name');
+            const selectedDeliveryCost = parseFloat(document.querySelector('input[name="delivery"]:checked').value);
             
-            alert('Przejście do bramki płatności!\n\nMetoda: ' + selectedPayment.toUpperCase() + '\nKwota łącznie: ' + total + ' zł');
+            const subtotal = currentProductPrice + selectedDeliveryCost;
+            const paymentFee = subtotal * parseFloat(selectedPaymentRadio.value);
+            const total = subtotal + paymentFee;
+            
+            alert('Przejście do bramki płatności!\n\nMetoda: ' + selectedPaymentName + '\nKwota łącznie: ' + total.toFixed(2) + ' zł');
         }
 
         // Zamknięcie po kliknięciu w tło wokół okienka
