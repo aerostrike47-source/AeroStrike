@@ -36,18 +36,18 @@
             z-index: 100;
         }
 
+        /* Lewa strona paska (logo + regulamin) */
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
         .logo {
             max-width: 160px;
             height: auto;
             object-fit: contain;
             filter: drop-shadow(0px 0px 8px rgba(229, 9, 20, 0.4));
-        }
-
-        /* Prawa strona paska z przyciskami */
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 15px;
         }
 
         .regulations-btn {
@@ -69,6 +69,7 @@
             background-color: #202333;
         }
 
+        /* Prawa strona paska (koszyk) */
         .cart-icon-btn {
             background-color: #181a24;
             border: 1px solid #2a2e3d;
@@ -771,19 +772,19 @@
 </head>
 <body>
 
-    <!-- GÓRNY PASEK Z LOGO PO LEWEJ ORAZ REGULAMINEM I KOSZYKIEM PO PRAWEJ -->
+    <!-- GÓRNY PASEK Z LOGO I REGULAMINEM PO LEWEJ, KOSZYKIEM PO PRAWEJ -->
     <div class="header">
-        <img src="https://i.postimg.cc/SQrrKzc9/logo-aerostrike-biale.png" alt="AeroStrike Logo" class="logo">
-        <div class="header-right">
+        <div class="header-left">
+            <img src="https://i.postimg.cc/SQrrKzc9/logo-aerostrike-biale.png" alt="AeroStrike Logo" class="logo">
             <button class="regulations-btn" onclick="openRegulationsModal()">REGULAMIN</button>
-            <button class="cart-icon-btn" onclick="openCart()">
-                <span>🛒 KOSZYK</span>
-                <span class="cart-badge" id="cartBadge">0</span>
-            </button>
         </div>
+        <button class="cart-icon-btn" onclick="openCart()">
+            <span>🛒 KOSZYK</span>
+            <span class="cart-badge" id="cartBadge">0</span>
+        </button>
     </div>
 
-    <!-- OKIENKO MODAL: REGULAMIN Z PRZEWIJANIEM DO DOCKA -->
+    <!-- OKIENKO MODAL: REGULAMIN -->
     <div class="modal-overlay" id="regulationsModal">
         <div class="regulations-modal-content">
             <span class="close-btn" onclick="closeRegulationsModal()">&times;</span>
@@ -1079,7 +1080,6 @@
             const box = document.getElementById('regulationsBox');
             const btn = document.getElementById('acceptRegulationsBtn');
 
-            // Sprawdzanie czy użytkownik dotarł do samego dołu okienka scrollowania
             if (box.scrollTop + box.clientHeight >= box.scrollHeight - 10) {
                 btn.classList.add('btn-accept-active');
                 btn.removeAttribute('disabled');
