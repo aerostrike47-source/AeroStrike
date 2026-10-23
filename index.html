@@ -20,7 +20,7 @@
             flex-direction: column;
         }
 
-        /* Górny pasek nawigacyjny z logo po lewej i koszykiem po prawej */
+        /* Górny pasek nawigacyjny */
         .header {
             width: 100%;
             height: 70px;
@@ -73,14 +73,14 @@
             border-radius: 12px;
         }
 
-        /* Układ główny strony */
+        /* Układ główny */
         .app-layout {
             display: flex;
             margin-top: 70px;
             flex: 1;
         }
 
-        /* Lewa kolumna - Kategorie (Accordion) */
+        /* Lewa kolumna - Kategorie */
         .sidebar-left {
             width: 280px;
             background-color: #161822;
@@ -103,6 +103,29 @@
             border-bottom: 2px solid #e50914;
             padding-bottom: 10px;
             margin-bottom: 20px;
+        }
+
+        .all-products-btn {
+            width: 100%;
+            padding: 14px 16px;
+            background: #181a24;
+            border: 1px solid #2a2e3d;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+        }
+
+        .all-products-btn:hover {
+            border-color: #e50914;
+            background: #202333;
         }
 
         .category-accordion {
@@ -163,58 +186,20 @@
             overflow: hidden;
             transition: max-height 0.3s ease-out;
             background: #11131a;
-            border-top: 1px solid transparent;
         }
 
         .category-item.active .category-content {
-            max-height: 250px;
-            border-top-color: #2a2e3d;
+            max-height: 100px;
+            border-top: 1px solid #2a2e3d;
         }
 
-        .subcategories-list {
-            list-style: none;
-            padding: 10px 15px;
-        }
-
-        .subcategories-list li {
-            padding: 8px 10px;
+        .category-content p {
+            padding: 12px 16px;
             font-size: 13px;
-            color: #cccccc;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: all 0.2s;
+            color: #aaaaaa;
         }
 
-        .subcategories-list li:hover {
-            background: #e50914;
-            color: #ffffff;
-            padding-left: 15px;
-        }
-
-        .all-products-btn {
-            width: 100%;
-            padding: 14px 16px;
-            background: #181a24;
-            border: 1px solid #2a2e3d;
-            color: #ffffff;
-            font-size: 15px;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            text-align: left;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: all 0.2s;
-        }
-
-        .all-products-btn:hover {
-            border-color: #e50914;
-            background: #202333;
-        }
-
-        /* Główna sekcja produktów na środku */
+        /* Główna sekcja produktów */
         .main-content {
             margin-left: 280px;
             flex: 1;
@@ -417,7 +402,7 @@
             margin-top: 10px;
         }
 
-        /* --- WYSUWANY PANEL KOSZYKA (DRAWER) --- */
+        /* --- WYSUWANY PANEL KOSZYKA --- */
         .cart-drawer-overlay {
             position: fixed;
             top: 0;
@@ -543,7 +528,6 @@
             font-size: 15px;
         }
 
-        /* Opcje dostawy i płatności w koszyku */
         .cart-options-title {
             font-size: 13px;
             color: #aaaaaa;
@@ -574,7 +558,6 @@
             accent-color: #e50914;
         }
 
-        /* FORMULARZ DANYCH WYSYŁKOWYCH */
         .shipping-form-box {
             background: #181a24;
             border: 1px solid #2a2e3d;
@@ -710,65 +693,52 @@
         <div class="sidebar-left">
             <h2 class="categories-title">Kategorie</h2>
 
-            <button class="all-products-btn" onclick="filterCategory('all')">
+            <button class="all-products-btn" onclick="selectCategory('all', null)">
                 <span>🔥 Wszystkie produkty</span>
             </button>
 
             <div class="category-accordion">
                 <!-- KATEGORIA 1: PODKŁADKI -->
-                <div class="category-item active" id="cat-podkladki">
-                    <button class="category-header" onclick="toggleCategory(this)">
+                <div class="category-item" id="cat-podkladki">
+                    <button class="category-header" onclick="selectCategory('podkladki', this)">
                         <span><span class="category-icon">🟩</span> Podkładki pod myszkę</span>
                         <span class="arrow-icon">▼</span>
                     </button>
-                    <div class="category-content" style="max-height: 250px;">
-                        <ul class="subcategories-list">
-                            <li onclick="filterCategory('podkladki')">📦 Wszystkie podkładki</li>
-                            <li>Podkładki Speed (Szybkie)</li>
-                            <li>Podkładki Control (Precyzyjne)</li>
-                        </ul>
+                    <div class="category-content">
+                        <p>Wyświetlamy podkładki w sklepie.</p>
                     </div>
                 </div>
 
                 <!-- KATEGORIA 2: SŁUCHAWKI -->
                 <div class="category-item" id="cat-sluchawki">
-                    <button class="category-header" onclick="toggleCategory(this)">
+                    <button class="category-header" onclick="selectCategory('sluchawki', this)">
                         <span><span class="category-icon">🎧</span> Słuchawki</span>
                         <span class="arrow-icon">▼</span>
                     </button>
                     <div class="category-content">
-                        <ul class="subcategories-list">
-                            <li onclick="filterCategory('sluchawki')">📦 Wszystkie słuchawki</li>
-                            <li>Słuchawki bezprzewodowe</li>
-                        </ul>
+                        <p>Brak produktów w tej kategorii.</p>
                     </div>
                 </div>
 
                 <!-- KATEGORIA 3: MYSZKI -->
                 <div class="category-item" id="cat-myszki">
-                    <button class="category-header" onclick="toggleCategory(this)">
+                    <button class="category-header" onclick="selectCategory('myszki', this)">
                         <span><span class="category-icon">🖱️</span> Myszki</span>
                         <span class="arrow-icon">▼</span>
                     </button>
                     <div class="category-content">
-                        <ul class="subcategories-list">
-                            <li onclick="filterCategory('myszki')">📦 Wszystkie myszki</li>
-                            <li>Myszki Ultralight</li>
-                        </ul>
+                        <p>Brak produktów w tej kategorii.</p>
                     </div>
                 </div>
 
                 <!-- KATEGORIA 4: KLAWIATURY -->
                 <div class="category-item" id="cat-klawiatury">
-                    <button class="category-header" onclick="toggleCategory(this)">
+                    <button class="category-header" onclick="selectCategory('klawiatury', this)">
                         <span><span class="category-icon">⌨️</span> Klawiatury</span>
                         <span class="arrow-icon">▼</span>
                     </button>
                     <div class="category-content">
-                        <ul class="subcategories-list">
-                            <li onclick="filterCategory('klawiatury')">📦 Wszystkie klawiatury</li>
-                            <li>Klawiatury mechaniczne</li>
-                        </ul>
+                        <p>Brak produktów w tej kategorii.</p>
                     </div>
                 </div>
             </div>
@@ -779,7 +749,7 @@
             <h1 class="section-title" id="sectionTitle">Wszystkie Produkty</h1>
 
             <div class="products-container" id="productsContainer">
-                <!-- Generowane dynamicznie przez JavaScript -->
+                <!-- Wyświetlane dynamicznie -->
             </div>
         </div>
     </div>
@@ -933,7 +903,6 @@
     </div>
 
     <script>
-        // Baza produktów z podziałem na kategorie
         const products = [
             {
                 id: 1,
@@ -963,25 +932,36 @@
 
         let cart = [];
 
-        // Inicjalizacja widoku - pokazujemy wszystkie produkty na start
         window.onload = function() {
-            renderProducts('all');
+            filterCategory('all');
         };
 
-        function toggleCategory(button) {
-            const categoryItem = button.parentElement;
-            const isOpen = categoryItem.classList.contains('active');
+        function selectCategory(categoryKey, button) {
+            // Zwijanie/rozwijanie podmenu
+            if (button) {
+                const parentItem = button.parentElement;
+                const isCurrentlyActive = parentItem.classList.contains('active');
 
-            document.querySelectorAll('.category-item').forEach(item => {
-                item.classList.remove('active');
-            });
+                // Zamykamy wszystkie pozostałe
+                document.querySelectorAll('.category-item').forEach(item => {
+                    item.classList.remove('active');
+                });
 
-            if (!isOpen) {
-                categoryItem.classList.add('active');
+                // Jeśli nie była aktywna, to ją otwieramy
+                if (!isCurrentlyActive) {
+                    parentItem.classList.add('active');
+                }
+            } else {
+                // Kliknięto "Wszystkie produkty" -> zwijamy wszystkie kategorie
+                document.querySelectorAll('.category-item').forEach(item => {
+                    item.classList.remove('active');
+                });
             }
+
+            // Filtrujemy produkty na środku
+            filterCategory(categoryKey);
         }
 
-        // Filtrowanie produktów
         function filterCategory(categoryKey) {
             const container = document.getElementById('productsContainer');
             const titleEl = document.getElementById('sectionTitle');
@@ -1006,7 +986,7 @@
             }
 
             if (filtered.length === 0) {
-                container.innerHTML = '<div class="no-products-msg">1 brak - Brak produktów w tej kategorii.</div>';
+                container.innerHTML = '<div class="no-products-msg">Brak produktów w tej kategorii.</div>';
                 return;
             }
 
@@ -1030,11 +1010,7 @@
             });
         }
 
-        function renderProducts(categoryKey) {
-            filterCategory(categoryKey);
-        }
-
-        // Modal opisu
+        // Opis Modal
         function openDescModal(title, price, imgSrc, description) {
             document.getElementById('modalTitle').innerText = title;
             document.getElementById('modalPrice').innerText = price + ' zł';
@@ -1053,7 +1029,7 @@
             document.getElementById('descModal').classList.remove('active');
         }
 
-        // Koszyk
+        // Obsługa Koszyka
         function openCart() {
             document.getElementById('cartOverlay').classList.add('active');
             document.getElementById('cartDrawer').classList.add('active');
