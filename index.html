@@ -3,533 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AeroStrike BEST GAMING</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>AeroStrike - Sklep</title>
     <style>
-        :root {
-            --bg-color: #0b0e14;
-            --card-bg: rgba(18, 22, 31, 0.92);
-            --accent-purple: #8a2be2;
-            --accent-cyan: #00f3ff;
-            --text-main: #f0f6fc;
-            --text-sub: #8b949e;
-        }
-
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            background-color: #0f1015;
+            color: #ffffff;
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
             min-height: 100vh;
-            padding: 40px 20px;
-            position: relative;
-            overflow-x: hidden;
         }
 
-        #bg-canvas {
+        /* Lewy panel z logo */
+        .sidebar {
+            width: 280px;
+            background-color: #161822;
+            padding: 30px 20px;
+            border-right: 2px solid #e50914;
             position: fixed;
             top: 0;
+            bottom: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 780px;
-            background: var(--card-bg);
-            border: 1px solid rgba(0, 243, 255, 0.2);
-            backdrop-filter: blur(12px);
-            border-radius: 24px;
-            padding: 35px;
-            box-shadow: 0 0 30px rgba(0, 243, 255, 0.1), 0 15px 35px rgba(0, 0, 0, 0.6);
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .avatar-container {
-            position: relative;
-            width: 110px;
-            height: 110px;
-            margin: 0 auto 15px auto;
-        }
-
-        .avatar {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 45px;
-            box-shadow: 0 0 25px rgba(0, 243, 255, 0.5);
-            animation: pulseGlow 3s infinite alternate;
-        }
-
-        @keyframes pulseGlow {
-            0% { box-shadow: 0 0 15px rgba(0, 243, 255, 0.4); }
-            100% { box-shadow: 0 0 30px rgba(138, 43, 226, 0.7); }
-        }
-
-        h1 {
-            font-size: 32px;
-            font-weight: 800;
-            background: linear-gradient(45deg, #ffffff, var(--accent-cyan));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 6px;
-            letter-spacing: 1px;
-        }
-
-        .discord-community-btn {
-            display: inline-block;
-            margin-bottom: 10px;
-            color: #00f3ff;
-            font-weight: 700;
-            text-decoration: none;
-            font-size: 15px;
-            transition: all 0.3s ease;
-        }
-
-        .discord-community-btn:hover {
-            color: #ffffff;
-            text-shadow: 0 0 10px #00f3ff;
-        }
-
-        p.bio {
-            color: var(--text-sub);
-            font-size: 14px;
-            margin-bottom: 25px;
-        }
-
-        .links {
             display: flex;
             flex-direction: column;
-            gap: 14px;
-            margin-bottom: 40px;
-        }
-
-        .link-btn {
-            display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 14px 20px;
-            border-radius: 14px;
-            color: var(--text-main);
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: 1px solid transparent;
         }
 
-        .link-btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .main-offer-title {
-            font-size: 24px;
-            font-weight: 900;
-            text-align: center;
-            margin: 35px 0 25px 0;
-            color: #ffffff;
-            letter-spacing: 1.5px;
-            text-shadow: 0 0 12px rgba(0, 243, 255, 0.6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .category-title {
-            font-size: 15px;
-            font-weight: 700;
-            text-align: left;
-            margin: 25px 0 14px 0;
-            color: var(--accent-cyan);
-            border-bottom: 1px solid rgba(0, 243, 255, 0.2);
-            padding-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .gear-grid-3 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 14px;
-        }
-
-        @media (max-width: 650px) {
-            .gear-grid-3 {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .gear-card {
-            background: rgba(10, 13, 20, 0.6);
-            padding: 16px;
-            border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .gear-card:hover {
-            border-color: var(--accent-cyan);
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(0, 243, 255, 0.15);
-        }
-
-        .gear-card span {
-            display: block;
-            font-size: 10px;
-            color: var(--text-sub);
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            margin-bottom: 6px;
-        }
-
-        .gear-card strong {
-            font-size: 14px;
-            color: var(--text-main);
-            display: block;
-        }
-
-        .category-dropdown-box {
-            display: none;
+        .logo {
             width: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid var(--accent-cyan);
-            border-radius: 14px;
-            padding: 20px;
-            margin-top: 14px;
-            text-align: left;
-            animation: fadeIn 0.3s ease;
+            max-width: 180px;
+            height: auto;
+            object-fit: contain;
+            filter: drop-shadow(0px 0px 8px rgba(229, 9, 20, 0.4));
         }
 
-        .category-dropdown-box.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .details-content {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-        }
-
-        @media (max-width: 600px) {
-            .details-content {
-                flex-direction: column;
-            }
-        }
-
-        .details-img {
-            width: 180px;
-            height: 120px;
-            object-fit: cover;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: #000;
-        }
-
-        .details-info {
+        /* Prawa strona z zawartością i możliwością skrolowania */
+        .main-content {
+            margin-left: 280px;
             flex: 1;
+            padding: 40px;
+            overflow-y: auto;
         }
 
-        .details-title {
-            font-size: 18px;
-            color: #fff;
-            margin-bottom: 5px;
+        .section-title {
+            font-size: 28px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 2px solid #2a2e3d;
+            padding-bottom: 10px;
+            color: #ffffff;
         }
 
-        .details-price {
-            font-size: 20px;
-            font-weight: 800;
-            color: var(--accent-cyan);
-            margin-bottom: 8px;
+        /* Karta produktu */
+        .product-card {
+            background: #181a24;
+            border: 1px solid #2a2e3d;
+            border-radius: 12px;
+            max-width: 450px;
+            padding: 24px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, border-color 0.3s ease;
         }
 
-        .details-desc {
-            font-size: 13px;
-            color: var(--text-sub);
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: #e50914;
+        }
+
+        .product-title {
+            font-size: 22px;
+            font-weight: bold;
             margin-bottom: 15px;
-            line-height: 1.4;
+            color: #ffffff;
+        }
+
+        .product-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: block;
+            object-fit: cover;
+        }
+
+        .price-tag {
+            font-size: 26px;
+            font-weight: bold;
+            color: #e50914;
+            margin-bottom: 20px;
         }
 
         .buy-btn {
-            display: inline-block;
-            padding: 8px 16px;
-            font-size: 12px;
-            font-weight: 800;
-            color: #0b0e14;
-            background: var(--accent-cyan);
-            border-radius: 8px;
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background-color: #e50914;
+            color: #ffffff;
+            text-align: center;
             text-decoration: none;
-            transition: all 0.2s ease;
+            font-weight: bold;
+            font-size: 16px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease;
         }
 
         .buy-btn:hover {
-            background: #ffffff;
-            box-shadow: 0 0 10px #ffffff;
+            background-color: #ff0f1f;
+            box-shadow: 0 0 15px rgba(229, 9, 20, 0.6);
         }
 
-        footer {
-            margin-top: 40px;
-            font-size: 12px;
-            color: var(--text-sub);
+        /* RWD - Dostosowanie na telefony */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                position: relative;
+                width: 100%;
+                border-right: none;
+                border-bottom: 2px solid #e50914;
+                padding: 20px;
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <canvas id="bg-canvas"></canvas>
-
-    <div class="container">
-        <div class="avatar-container">
-            <div class="avatar">
-                <i class="fa-solid fa-gamepad"></i>
-            </div>
-        </div>
-
-        <h1>AeroStrike</h1>
-        
-        <a href="https://discord.gg/FneCx5rfuq" target="_blank" class="discord-community-btn">
-            <i class="fa-brands fa-discord"></i> Dołącz do społeczności!
-        </a>
-        <p class="bio">Zakup swój sprzęt marzeń i podnieś swój gaming na wyższy poziom.</p>
-
-        <div class="links">
-            <a href="http://www.youtube.com/@AeroStrike47" target="_blank" class="link-btn" style="border-color: rgba(255, 0, 0, 0.3); background: rgba(255, 0, 0, 0.05);" onmouseover="this.style.borderColor='#FF0000'; this.style.boxShadow='0 0 15px rgba(255, 0, 0, 0.4)';" onmouseout="this.style.borderColor='rgba(255, 0, 0, 0.3)'; this.style.boxShadow='none';">
-                <div style="display: flex; align-items: center; gap: 12px;">
-                    <i class="fa-brands fa-youtube" style="color: #FF0000; font-size: 22px;"></i>
-                    <span style="color: #ffffff; font-size: 15px; font-weight: 700;">Oficjalny Kanał YouTube</span>
-                </div>
-                <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 12px; opacity: 0.6; color: #FF0000;"></i>
-            </a>
-
-            <a href="https://www.tiktok.com/@aero_strike47?is_from_webapp=1&sender_device=pc" target="_blank" class="link-btn" style="border-color: rgba(0, 243, 255, 0.3); background: rgba(0, 243, 255, 0.05);" onmouseover="this.style.borderColor='#00f3ff'; this.style.boxShadow='0 0 15px rgba(0, 243, 255, 0.4)';" onmouseout="this.style.borderColor='rgba(0, 243, 255, 0.3)'; this.style.boxShadow='none';">
-                <div style="display: flex; align-items: center; gap: 12px;">
-                    <i class="fa-brands fa-tiktok" style="color: #00f3ff; font-size: 20px;"></i>
-                    <span style="color: #ffffff; font-size: 15px; font-weight: 700;">Profil TikTok</span>
-                </div>
-                <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 12px; opacity: 0.6; color: #00f3ff;"></i>
-            </a>
-
-            <a href="https://discord.gg/FneCx5rfuq" target="_blank" class="link-btn" style="border-color: rgba(88, 101, 242, 0.4); background: rgba(88, 101, 242, 0.08);" onmouseover="this.style.borderColor='#5865F2'; this.style.boxShadow='0 0 15px rgba(88, 101, 242, 0.5)';" onmouseout="this.style.borderColor='rgba(88, 101, 242, 0.4)'; this.style.boxShadow='none';">
-                <div style="display: flex; align-items: center; gap: 12px;">
-                    <i class="fa-brands fa-discord" style="color: #5865F2; font-size: 22px;"></i>
-                    <span style="color: #7289da; font-size: 15px; font-weight: 700;">Serwer Discord</span>
-                </div>
-                <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 12px; opacity: 0.6; color: #5865F2;"></i>
-            </a>
-        </div>
-
-        <div class="main-offer-title">
-            <i class="fa-solid fa-cart-shopping" style="color: var(--accent-cyan);"></i> CO OFERUJEMY:
-        </div>
-
-        <!-- 1. PODKŁADKI -->
-        <div class="category-title"><i class="fa-solid fa-layer-group"></i> PODKŁADKI POD MYSZKĘ</div>
-        <div class="gear-grid-3">
-            <div class="gear-card" onclick="showProduct('podkladka', 1)">
-                <span>Podkładka</span><strong>Podkładka #1</strong>
-            </div>
-            <div class="gear-card" onclick="showProduct('podkladka', 2)">
-                <span>Podkładka</span><strong>Podkładka #2</strong>
-            </div>
-            <div class="gear-card" onclick="showProduct('podkladka', 3)">
-                <span>Podkładka</span><strong>Podkładka #3</strong>
-            </div>
-        </div>
-        <div id="box-podkladka" class="category-dropdown-box">
-            <div class="details-content">
-                <img id="img-podkladka" src="" class="details-img" alt="Produkt">
-                <div class="details-info">
-                    <div id="title-podkladka" class="details-title">Nazwa</div>
-                    <div id="price-podkladka" class="details-price">0.00 zł</div>
-                    <div id="desc-podkladka" class="details-desc">Opis...</div>
-                    <a id="link-podkladka" href="#" target="_blank" class="buy-btn">KUP TERAZ</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- 2. MYSZKI -->
-        <div class="category-title"><i class="fa-solid fa-computer-mouse"></i> MYSZKI GAMINGOWE</div>
-        <div class="gear-grid-3">
-            <div class="gear-card" onclick="showProduct('myszka', 1)">
-                <span>Myszka</span><strong>Myszka #1</strong>
-            </div>
-            <div class="gear-card" onclick="showProduct('myszka', 2)">
-                <span>Myszka</span><strong>Myszka #2</strong>
-            </div>
-            <div class="gear-card" onclick="showProduct('myszka', 3)">
-                <span>Myszka</span><strong>Myszka #3</strong>
-            </div>
-        </div>
-        <div id="box-myszka" class="category-dropdown-box">
-            <div class="details-content">
-                <img id="img-myszka" src="" class="details-img" alt="Produkt">
-                <div class="details-info">
-                    <div id="title-myszka" class="details-title">Nazwa</div>
-                    <div id="price-myszka" class="details-price">0.00 zł</div>
-                    <div id="desc-myszka" class="details-desc">Opis...</div>
-                    <a id="link-myszka" href="#" target="_blank" class="buy-btn">KUP TERAZ</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- 3. KLAWIATURY -->
-        <div class="category-title"><i class="fa-solid fa-keyboard"></i> KLAWIATURY MECHANICZNE</div>
-        <div class="gear-grid-3">
-            <div class="gear-card" onclick="showProduct('klawiatura', 1)">
-                <span>Klawiatura</span><strong>Klawiatura #1</strong>
-            </div>
-            <div class="gear-card" onclick="showProduct('klawiatura', 2)">
-                <span>Klawiatura</span><strong>Klawiatura #2</strong>
-            </div>
-            <div class="gear-card" onclick="showProduct('klawiatura', 3)">
-                <span>Klawiatura</span><strong>Klawiatura #3</strong>
-            </div>
-        </div>
-        <div id="box-klawiatura" class="category-dropdown-box">
-            <div class="details-content">
-                <img id="img-klawiatura" src="" class="details-img" alt="Produkt">
-                <div class="details-info">
-                    <div id="title-klawiatura" class="details-title">Nazwa</div>
-                    <div id="price-klawiatura" class="details-price">0.00 zł</div>
-                    <div id="desc-klawiatura" class="details-desc">Opis...</div>
-                    <a id="link-klawiatura" href="#" target="_blank" class="buy-btn">KUP TERAZ</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- 4. SŁUCHAWKI -->
-        <div class="category-title"><i class="fa-solid fa-headphones"></i> SŁUCHAWKI GAMINGOWE</div>
-        <div class="gear-grid-3">
-            <div class="gear-card" onclick="showProduct('sluchawki', 1)">
-                <span>Słuchawki</span><strong>Słuchawki #1</strong>
-            </div>
-            <div class="gear-card" onclick="showProduct('sluchawki', 2)">
-                <span>Słuchawki</span><strong>Słuchawki #2</strong>
-            </div>
-            <div class="gear-card" onclick="showProduct('sluchawki', 3)">
-                <span>Słuchawki</span><strong>Słuchawki #3</strong>
-            </div>
-        </div>
-        <div id="box-sluchawki" class="category-dropdown-box">
-            <div class="details-content">
-                <img id="img-sluchawki" src="" class="details-img" alt="Produkt">
-                <div class="details-info">
-                    <div id="title-sluchawki" class="details-title">Nazwa</div>
-                    <div id="price-sluchawki" class="details-price">0.00 zł</div>
-                    <div id="desc-sluchawki" class="details-desc">Opis...</div>
-                    <a id="link-sluchawki" href="#" target="_blank" class="buy-btn">KUP TERAZ</a>
-                </div>
-            </div>
-        </div>
-
-        <footer>
-            © 2026 AeroStrike. All rights reserved.
-        </footer>
+    <!-- LEWA STRONA: LOGO -->
+    <div class="sidebar">
+        <img src="logo-aerostrike.png" alt="AeroStrike Logo" class="logo">
     </div>
 
-    <script>
-        const db = {
-            'podkladka': {
-                1: { title: 'Podkładka #1', price: '79.99 zł', desc: 'Wysokiej jakości podkładka gładka typu Speed, wymiary 900x400mm.', img: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500', link: '#' },
-                2: { title: 'Podkładka #2', price: '89.99 zł', desc: 'Podkładka z podświetleniem RGB, idealny poślizg dla czujników.', img: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500', link: '#' },
-                3: { title: 'Podkładka #3', price: '99.99 zł', desc: 'Wersja Control z chropowatą strukturą zapewniającą precyzję.', img: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500', link: '#' }
-            },
-            'myszka': {
-                1: { title: 'Myszka #1', price: '249.99 zł', desc: 'Ultra-lekka myszka bezprzewodowa 55g, czujnik 26,000 DPI.', img: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500', link: '#' },
-                2: { title: 'Myszka #2', price: '199.99 zł', desc: 'Ergonomiczny kształt profilowany pod prawą dłoń.', img: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500', link: '#' },
-                3: { title: 'Myszka #3', price: '299.99 zł', desc: 'Myszka z odświeżaniem 8000Hz Polling Rate.', img: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500', link: '#' }
-            },
-            'klawiatura': {
-                1: { title: 'Klawiatura #1', price: '399.99 zł', desc: 'Klawiatura mechaniczna 60% na przełącznikach magnetycznych.', img: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500', link: '#' },
-                2: { title: 'Klawiatura #2', price: '299.99 zł', desc: 'Customowa klawiatura wyciszona piankami Poron.', img: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500', link: '#' },
-                3: { title: 'Klawiatura #3', price: '349.99 zł', desc: 'Bezprzewodowa klawiatura mechaniczna TKL.', img: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500', link: '#' }
-            },
-            'sluchawki': {
-                1: { title: 'Słuchawki #1', price: '189.99 zł', desc: 'Słuchawki z dźwiękiem przestrzennym 7.1 i mikrofonem.', img: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500', link: '#' },
-                2: { title: 'Słuchawki #2', price: '279.99 zł', desc: 'Bezprzewodowe słuchawki z baterią do 50 godzin.', img: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500', link: '#' },
-                3: { title: 'Słuchawki #3', price: '149.99 zł', desc: 'Profesjonalne słuchawki dokanałowe (IEM).', img: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500', link: '#' }
-            }
-        };
+    <!-- PRAWA STRONA: PRODUKTY -->
+    <div class="main-content">
+        <h1 class="section-title">Nasze Produkty</h1>
 
-        function showProduct(category, num) {
-            const item = db[category][num];
-            const box = document.getElementById('box-' + category);
+        <!-- PRZEDMIOT 1: PODKŁADKA -->
+        <div class="product-card">
+            <h2 class="product-title">Podkładka Gamingowa AeroStrike</h2>
             
-            document.getElementById('img-' + category).src = item.img;
-            document.getElementById('title-' + category).innerText = item.title;
-            document.getElementById('price-' + category).innerText = item.price;
-            document.getElementById('desc-' + category).innerText = item.desc;
-            document.getElementById('link-' + category).href = item.link;
-
-            const isOpen = box.classList.contains('active');
+            <img src="image_d797a2.jpg" alt="Podkładka AeroStrike" class="product-image">
             
-            document.querySelectorAll('.category-dropdown-box').forEach(b => b.classList.remove('active'));
+            <div class="price-tag">65 zł</div>
+            
+            <!-- TUTAJ WKLEJ SWÓJ LINK W MIEJSCE href="#" -->
+            <a href="https://twoj-link-do-zakupu.pl" target="_blank" class="buy-btn">KUP TERAZ</a>
+        </div>
+    </div>
 
-            if (!isOpen) {
-                box.classList.add('active');
-            }
-        }
-
-        const canvas = document.getElementById('bg-canvas');
-        const ctx = canvas.getContext('2d');
-        let width = canvas.width = window.innerWidth;
-        let height = canvas.height = window.innerHeight;
-
-        window.addEventListener('resize', () => {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        });
-
-        const particles = [];
-        for (let i = 0; i < 45; i++) {
-            particles.push({
-                x: Math.random() * width,
-                y: Math.random() * height,
-                radius: Math.random() * 2 + 1,
-                vx: (Math.random() - 0.5) * 0.5,
-                vy: (Math.random() - 0.5) * 0.5,
-                alpha: Math.random() * 0.5 + 0.2
-            });
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-            particles.forEach(p => {
-                p.x += p.vx; p.y += p.vy;
-                if (p.x < 0) p.x = width; if (p.x > width) p.x = 0;
-                if (p.y < 0) p.y = height; if (p.y > height) p.y = 0;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(0, 243, 255, ${p.alpha})`;
-                ctx.fill();
-            });
-            requestAnimationFrame(animate);
-        }
-        animate();
-    </script>
 </body>
 </html>
