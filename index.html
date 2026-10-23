@@ -259,6 +259,32 @@
             font-weight: 500;
         }
 
+        /* Podsumowanie kosztów */
+        .summary-box {
+            background: #11131a;
+            border: 1px dashed #e50914;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            color: #cccccc;
+        }
+
+        .summary-row.total {
+            border-top: 1px solid #2a2e3d;
+            padding-top: 10px;
+            margin-bottom: 0;
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
         /* RWD - Dostosowanie na telefony */
         @media (max-width: 768px) {
             body {
@@ -297,11 +323,11 @@
             <div class="product-card">
                 <div>
                     <h2 class="product-title">Podkładka Pod Myszkę AeroStrike-Eagle</h2>
-                    <img src="https://i.postimg.cc/tCzRnB78/Zrzut-ekranu-2026-10-23-191712.png" alt="Podkładka AeroStrike Eagle" class="product-image" onclick="openDescModal('AeroStrike-Eagle', '65 zł', 'https://i.postimg.cc/tCzRnB78/Zrzut-ekranu-2026-10-23-191712.png', 'Wyjątkowa podkładka gamingowa AeroStrike-Eagle zapewniająca optymalny poślizg oraz najwyższą precyzję sensora.')">
+                    <img src="https://i.postimg.cc/tCzRnB78/Zrzut-ekranu-2026-10-23-191712.png" alt="Podkładka AeroStrike Eagle" class="product-image" onclick="openDescModal('AeroStrike-Eagle', 65, 'https://i.postimg.cc/tCzRnB78/Zrzut-ekranu-2026-10-23-191712.png', 'Wyjątkowa podkładka gamingowa AeroStrike-Eagle zapewniająca optymalny poślizg oraz najwyższą precyzję sensora.')">
                 </div>
                 <div>
                     <div class="price-tag">65 zł</div>
-                    <button class="buy-btn" onclick="openDescModal('AeroStrike-Eagle', '65 zł', 'https://i.postimg.cc/tCzRnB78/Zrzut-ekranu-2026-10-23-191712.png', 'Wyjątkowa podkładka gamingowa AeroStrike-Eagle zapewniająca optymalny poślizg oraz najwyższą precyzję sensora.')">ZOBACZ / KUP</button>
+                    <button class="buy-btn" onclick="openDescModal('AeroStrike-Eagle', 65, 'https://i.postimg.cc/tCzRnB78/Zrzut-ekranu-2026-10-23-191712.png', 'Wyjątkowa podkładka gamingowa AeroStrike-Eagle zapewniająca optymalny poślizg oraz najwyższą precyzję sensora.')">ZOBACZ / KUP</button>
                 </div>
             </div>
 
@@ -309,11 +335,11 @@
             <div class="product-card">
                 <div>
                     <h2 class="product-title">Podkładka Pod Myszkę AeroStrike Fortnite</h2>
-                    <img src="https://i.postimg.cc/W3VR6JWt/obraz-2026-10-23-211247348.png" alt="Podkładka AeroStrike Fortnite" class="product-image" onclick="openDescModal('AeroStrike Fortnite', '65 zł', 'https://i.postimg.cc/W3VR6JWt/obraz-2026-10-23-211247348.png', 'Dedykowana podkładka dla fanów Fortnite. Unikalny, pełen detali styl graficzny oraz obszywane krawędzie gwarantują trwałość na lata.')">
+                    <img src="https://i.postimg.cc/W3VR6JWt/obraz-2026-10-23-211247348.png" alt="Podkładka AeroStrike Fortnite" class="product-image" onclick="openDescModal('AeroStrike Fortnite', 65, 'https://i.postimg.cc/W3VR6JWt/obraz-2026-10-23-211247348.png', 'Dedykowana podkładka dla fanów Fortnite. Unikalny, pełen detali styl graficzny oraz obszywane krawędzie gwarantują trwałość na lata.')">
                 </div>
                 <div>
                     <div class="price-tag">65 zł</div>
-                    <button class="buy-btn" onclick="openDescModal('AeroStrike Fortnite', '65 zł', 'https://i.postimg.cc/W3VR6JWt/obraz-2026-10-23-211247348.png', 'Dedykowana podkładka dla fanów Fortnite. Unikalny, pełen detali styl graficzny oraz obszywane krawędzie gwarantują trwałość na lata.')">ZOBACZ / KUP</button>
+                    <button class="buy-btn" onclick="openDescModal('AeroStrike Fortnite', 65, 'https://i.postimg.cc/W3VR6JWt/obraz-2026-10-23-211247348.png', 'Dedykowana podkładka dla fanów Fortnite. Unikalny, pełen detali styl graficzny oraz obszywane krawędzie gwarantują trwałość na lata.')">ZOBACZ / KUP</button>
                 </div>
             </div>
 
@@ -321,11 +347,11 @@
             <div class="product-card">
                 <div>
                     <h2 class="product-title">Podkładka Pod Myszkę AeroStrike Minecraft</h2>
-                    <img src="https://i.postimg.cc/hvgp5LTD/Zrzut-ekranu-2026-10-23-213119.png" alt="Podkładka AeroStrike Minecraft" class="product-image" onclick="openDescModal('AeroStrike Minecraft', '65 zł', 'https://i.postimg.cc/hvgp5LTD/Zrzut-ekranu-2026-10-23-213119.png', 'Epicka podkładka z motywem blokowego świata. Trwały nadruk o wysokiej rozdzielczości oraz powłoka hydrofobowa odporna na zachlapania.')">
+                    <img src="https://i.postimg.cc/hvgp5LTD/Zrzut-ekranu-2026-10-23-213119.png" alt="Podkładka AeroStrike Minecraft" class="product-image" onclick="openDescModal('AeroStrike Minecraft', 65, 'https://i.postimg.cc/hvgp5LTD/Zrzut-ekranu-2026-10-23-213119.png', 'Epicka podkładka z motywem blokowego świata. Trwały nadruk o wysokiej rozdzielczości oraz powłoka hydrofobowa odporna na zachlapania.')">
                 </div>
                 <div>
                     <div class="price-tag">65 zł</div>
-                    <button class="buy-btn" onclick="openDescModal('AeroStrike Minecraft', '65 zł', 'https://i.postimg.cc/hvgp5LTD/Zrzut-ekranu-2026-10-23-213119.png', 'Epicka podkładka z motywem blokowego świata. Trwały nadruk o wysokiej rozdzielczości oraz powłoka hydrofobowa odporna na zachlapania.')">ZOBACZ / KUP</button>
+                    <button class="buy-btn" onclick="openDescModal('AeroStrike Minecraft', 65, 'https://i.postimg.cc/hvgp5LTD/Zrzut-ekranu-2026-10-23-213119.png', 'Epicka podkładka z motywem blokowego świata. Trwały nadruk o wysokiej rozdzielczości oraz powłoka hydrofobowa odporna na zachlapania.')">ZOBACZ / KUP</button>
                 </div>
             </div>
         </div>
@@ -357,9 +383,27 @@
     <div class="modal-overlay" id="paymentModal">
         <div class="modal-content">
             <span class="close-btn" onclick="closePaymentModal()">&times;</span>
-            <h2 class="modal-title">Wybierz Metodę Płatności</h2>
+            <h2 class="modal-title">Dostawa i Płatność</h2>
 
-            <p style="color: #aaaaaa; font-size: 14px; margin-bottom: 10px;">Forma płatności:</p>
+            <p style="color: #aaaaaa; font-size: 14px; margin-bottom: 10px;">Sposób Dostawy:</p>
+            <div class="delivery-options">
+                <label class="option-card">
+                    <div class="option-label">
+                        <input type="radio" name="delivery" value="15" checked onclick="calculateTotal()">
+                        <span>Paczkomat InPost</span>
+                    </div>
+                    <span style="color: #ffcc00; font-weight: bold;">+15 zł</span>
+                </label>
+                <label class="option-card">
+                    <div class="option-label">
+                        <input type="radio" name="delivery" value="20" onclick="calculateTotal()">
+                        <span>Kurier pod adres</span>
+                    </div>
+                    <span style="color: #cccccc; font-weight: bold;">+20 zł</span>
+                </label>
+            </div>
+
+            <p style="color: #aaaaaa; font-size: 14px; margin-bottom: 10px;">Forma Płatności:</p>
             <div class="payment-options">
                 <label class="option-card">
                     <div class="option-label">
@@ -394,33 +438,34 @@
                 </label>
             </div>
 
-            <p style="color: #aaaaaa; font-size: 14px; margin-bottom: 10px;">Dostawa:</p>
-            <div class="delivery-options">
-                <label class="option-card">
-                    <div class="option-label">
-                        <input type="radio" name="delivery" value="inpost" checked>
-                        <span>Paczkomat InPost</span>
-                    </div>
-                    <span style="color: #ffcc00; font-weight: bold;">InPost</span>
-                </label>
-                <label class="option-card">
-                    <div class="option-label">
-                        <input type="radio" name="delivery" value="courier">
-                        <span>Kurier pod adres</span>
-                    </div>
-                    <span>📦</span>
-                </label>
+            <!-- PODSUMOWANIE DYNAMICZNE -->
+            <div class="summary-box">
+                <div class="summary-row">
+                    <span>Cena podkładki:</span>
+                    <span id="summaryProductPrice">65 zł</span>
+                </div>
+                <div class="summary-row">
+                    <span>Koszt dostawy:</span>
+                    <span id="summaryDeliveryPrice">15 zł</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Do zapłaty łącznie:</span>
+                    <span id="summaryTotalPrice" style="color: #e50914;">80 zł</span>
+                </div>
             </div>
 
-            <button class="buy-btn" onclick="processFinalPayment()">ZAPŁAĆ TERAZ</button>
+            <button class="buy-btn" id="paySubmitBtn" onclick="processFinalPayment()">ZAPŁAĆ TERAZ (80 zł)</button>
         </div>
     </div>
 
     <script>
+        let currentProductPrice = 65;
+
         // Otwieranie pierwszego okienka (Opis)
         function openDescModal(title, price, imgSrc, description) {
+            currentProductPrice = price;
             document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalPrice').innerText = price;
+            document.getElementById('modalPrice').innerText = price + ' zł';
             document.getElementById('modalImg').src = imgSrc;
             document.getElementById('modalDesc').innerText = description;
             
@@ -434,6 +479,7 @@
         // Przejście z 1 okienka do 2 okienka (Płatności)
         function switchToPaymentModal() {
             closeDescModal();
+            calculateTotal();
             document.getElementById('paymentModal').classList.add('active');
         }
 
@@ -441,9 +487,23 @@
             document.getElementById('paymentModal').classList.remove('active');
         }
 
+        // Funkcja przeliczająca kwotę końcową
+        function calculateTotal() {
+            const selectedDeliveryPrice = parseInt(document.querySelector('input[name="delivery"]:checked').value);
+            const total = currentProductPrice + selectedDeliveryPrice;
+
+            document.getElementById('summaryProductPrice').innerText = currentProductPrice + ' zł';
+            document.getElementById('summaryDeliveryPrice').innerText = selectedDeliveryPrice + ' zł';
+            document.getElementById('summaryTotalPrice').innerText = total + ' zł';
+            document.getElementById('paySubmitBtn').innerText = 'ZAPŁAĆ TERAZ (' + total + ' zł)';
+        }
+
         function processFinalPayment() {
             const selectedPayment = document.querySelector('input[name="payment"]:checked').value;
-            alert('Wybrano płatność: ' + selectedPayment.toUpperCase() + '. Tutaj podepniemy natychmiastowe przekierowanie do płatności!');
+            const selectedDeliveryCost = document.querySelector('input[name="delivery"]:checked').value;
+            const total = currentProductPrice + parseInt(selectedDeliveryCost);
+            
+            alert('Przejście do bramki płatności!\n\nMetoda: ' + selectedPayment.toUpperCase() + '\nKwota łącznie: ' + total + ' zł');
         }
 
         // Zamknięcie po kliknięciu w tło wokół okienka
