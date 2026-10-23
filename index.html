@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AeroStrike - Sklep</title>
+    <title>AeroStrike - Sklep Gamingowy</title>
     <style>
         * {
             box-sizing: border-box;
@@ -17,6 +17,60 @@
             color: #ffffff;
             display: flex;
             min-height: 100vh;
+            flex-direction: column;
+        }
+
+        /* Górny pasek nawigacyjny z koszykiem */
+        .header {
+            width: 100%;
+            height: 70px;
+            background-color: #161822;
+            border-bottom: 2px solid #e50914;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 0 40px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+        }
+
+        .cart-icon-btn {
+            background-color: #181a24;
+            border: 1px solid #2a2e3d;
+            color: #ffffff;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .cart-icon-btn:hover {
+            border-color: #e50914;
+            background-color: #202333;
+        }
+
+        .cart-badge {
+            background-color: #e50914;
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 2px 7px;
+            border-radius: 12px;
+        }
+
+        /* Układ główny strony */
+        .app-layout {
+            display: flex;
+            margin-top: 70px;
+            flex: 1;
         }
 
         /* Lewy panel z logo */
@@ -26,7 +80,7 @@
             padding: 30px 20px;
             border-right: 2px solid #e50914;
             position: fixed;
-            top: 0;
+            top: 70px;
             bottom: 0;
             left: 0;
             display: flex;
@@ -43,7 +97,7 @@
             filter: drop-shadow(0px 0px 8px rgba(229, 9, 20, 0.4));
         }
 
-        /* Prawa strona z zawartością i możliwością skrolowania */
+        /* Prawa strona z zawartością */
         .main-content {
             margin-left: 280px;
             flex: 1;
@@ -74,7 +128,7 @@
             border: 1px solid #2a2e3d;
             border-radius: 12px;
             width: 100%;
-            max-width: 420px;
+            max-width: 380px;
             padding: 24px;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
             transition: transform 0.3s ease, border-color 0.3s ease;
@@ -89,7 +143,7 @@
         }
 
         .product-title {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: bold;
             margin-bottom: 15px;
             color: #ffffff;
@@ -97,7 +151,7 @@
 
         .product-image {
             width: 100%;
-            height: 250px;
+            height: 230px;
             border-radius: 8px;
             margin-bottom: 20px;
             display: block;
@@ -106,36 +160,55 @@
         }
 
         .price-tag {
-            font-size: 26px;
+            font-size: 24px;
             font-weight: bold;
             color: #e50914;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
-        .buy-btn {
-            display: block;
-            width: 100%;
-            padding: 14px;
+        .card-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-secondary {
+            flex: 1;
+            padding: 12px;
+            background: #2a2e3d;
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+            text-transform: uppercase;
+            transition: background 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: #3a3f52;
+        }
+
+        .btn-primary {
+            flex: 1.2;
+            padding: 12px;
             background-color: #e50914;
             color: #ffffff;
-            text-align: center;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 16px;
-            border-radius: 6px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
             border: none;
+            border-radius: 6px;
             cursor: pointer;
-            transition: background-color 0.2s ease, box-shadow 0.2s ease;
+            font-weight: bold;
+            font-size: 13px;
+            text-transform: uppercase;
+            transition: background-color 0.2s, box-shadow 0.2s;
         }
 
-        .buy-btn:hover {
+        .btn-primary:hover {
             background-color: #ff0f1f;
-            box-shadow: 0 0 15px rgba(229, 9, 20, 0.6);
+            box-shadow: 0 0 12px rgba(229, 9, 20, 0.6);
         }
 
-        /* --- OKIENKA MODAL (POP-UP) --- */
+        /* --- OKIENKO MODAL (OPIS PRODUKTU) --- */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -159,7 +232,7 @@
             background: #161822;
             border: 2px solid #e50914;
             border-radius: 12px;
-            max-width: 600px;
+            max-width: 550px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
@@ -189,7 +262,7 @@
         }
 
         .modal-title {
-            font-size: 24px;
+            font-size: 22px;
             margin-bottom: 15px;
             color: #ffffff;
             border-bottom: 1px solid #2a2e3d;
@@ -203,7 +276,7 @@
         }
 
         .modal-price {
-            font-size: 28px;
+            font-size: 26px;
             font-weight: bold;
             color: #e50914;
             margin-bottom: 15px;
@@ -221,81 +294,206 @@
             margin-top: 10px;
         }
 
-        /* Opcje w drugim okienku */
-        .payment-options, .delivery-options {
+        /* --- WYSOWANY PANEL KOSZYKA (DRAWER) --- */
+        .cart-drawer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            display: none;
+            z-index: 1000;
+        }
+
+        .cart-drawer-overlay.active {
+            display: block;
+        }
+
+        .cart-drawer {
+            position: fixed;
+            top: 0;
+            right: -450px;
+            width: 450px;
+            height: 100%;
+            background: #161822;
+            border-left: 2px solid #e50914;
+            z-index: 1001;
+            transition: right 0.3s ease;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            padding: 25px;
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.8);
+        }
+
+        .cart-drawer.active {
+            right: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #2a2e3d;
+            padding-bottom: 15px;
             margin-bottom: 20px;
         }
 
-        .option-card {
+        .cart-title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .cart-items-list {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-right: 5px;
+        }
+
+        .cart-item {
             background: #181a24;
             border: 1px solid #2a2e3d;
-            padding: 14px 18px;
             border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-            transition: border-color 0.2s, background-color 0.2s;
-        }
-
-        .option-card:hover {
-            border-color: #e50914;
-            background: #202333;
-        }
-
-        .option-card input[type="radio"] {
-            accent-color: #e50914;
-            width: 18px;
-            height: 18px;
-        }
-
-        .option-label {
+            padding: 12px;
             display: flex;
             align-items: center;
             gap: 12px;
-            font-weight: 500;
         }
 
-        /* Podsumowanie kosztów */
-        .summary-box {
+        .cart-item img {
+            width: 65px;
+            height: 65px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .cart-item-price {
+            color: #e50914;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .cart-item-qty {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 5px;
+        }
+
+        .qty-btn {
+            background: #2a2e3d;
+            border: none;
+            color: white;
+            width: 22px;
+            height: 22px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .remove-item-btn {
+            background: transparent;
+            border: none;
+            color: #ff4444;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 5px;
+        }
+
+        .empty-cart-msg {
+            text-align: center;
+            color: #aaaaaa;
+            margin-top: 40px;
+            font-size: 15px;
+        }
+
+        /* Opcje dostawy i płatności w koszyku */
+        .cart-options-title {
+            font-size: 13px;
+            color: #aaaaaa;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .option-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .cart-option-card {
+            background: #181a24;
+            border: 1px solid #2a2e3d;
+            padding: 10px 14px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .cart-option-card input[type="radio"] {
+            accent-color: #e50914;
+        }
+
+        /* Podsumowanie w koszyku */
+        .cart-summary {
             background: #11131a;
             border: 1px dashed #e50914;
             padding: 15px;
             border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 14px;
+            margin-bottom: 15px;
+            font-size: 13px;
         }
 
-        .summary-row {
+        .cart-summary-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             color: #cccccc;
         }
 
-        .summary-row.total {
+        .cart-summary-row.total {
             border-top: 1px solid #2a2e3d;
-            padding-top: 10px;
+            padding-top: 8px;
             margin-bottom: 0;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             color: #ffffff;
         }
 
-        /* RWD - Dostosowanie na telefony */
+        /* RWD - Dostosowanie do telefonów */
         @media (max-width: 768px) {
-            body {
-                flex-direction: column;
+            .header {
+                padding: 0 20px;
             }
             .sidebar {
                 position: relative;
+                top: 0;
                 width: 100%;
                 border-right: none;
                 border-bottom: 2px solid #e50914;
                 padding: 20px;
+            }
+            .app-layout {
+                flex-direction: column;
             }
             .main-content {
                 margin-left: 0;
@@ -304,60 +502,83 @@
             .products-container {
                 justify-content: center;
             }
+            .cart-drawer {
+                width: 100%;
+                right: -100%;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- LEWA STRONA: BIAŁE LOGO -->
-    <div class="sidebar">
-        <img src="https://i.postimg.cc/SQrrKzc9/logo-aerostrike-biale.png" alt="AeroStrike Logo" class="logo">
+    <!-- GÓRNY PASEK Z KOSZYKIEM -->
+    <div class="header">
+        <button class="cart-icon-btn" onclick="openCart()">
+            <span>🛒 KOSZYK</span>
+            <span class="cart-badge" id="cartBadge">0</span>
+        </button>
     </div>
 
-    <!-- PRAWA STRONA: PRODUKTY -->
-    <div class="main-content">
-        <h1 class="section-title">Nasze Produkty</h1>
+    <div class="app-layout">
+        <!-- LEWA STRONA: BIAŁE LOGO -->
+        <div class="sidebar">
+            <img src="https://i.postimg.cc/SQrrKzc9/logo-aerostrike-biale.png" alt="AeroStrike Logo" class="logo">
+        </div>
 
-        <div class="products-container">
-            <!-- PRZEDMIOT 1: PODKŁADKA AEROSTRIKE EAGLE -->
-            <div class="product-card">
-                <div>
-                    <h2 class="product-title">Podkładka Pod Myszkę AeroStrike-Eagle</h2>
-                    <img src="https://i.postimg.cc/tCzRnB78/Zrzut-ekranu-2026-10-23-191712.png" alt="Podkładka AeroStrike Eagle" class="product-image" onclick="openDescModal('AeroStrike-Eagle', 65, 'https://i.postimg.cc/tCzRnB78/Zrzut-ekranu-2026-10-23-191712.png', 'Wyjątkowa podkładka gamingowa AeroStrike-Eagle zapewniająca optymalny poślizg oraz najwyższą precyzję sensora.')">
-                </div>
-                <div>
-                    <div class="price-tag">65 zł</div>
-                    <button class="buy-btn" onclick="openDescModal('AeroStrike-Eagle', 65, 'https://i.postimg.cc/tCzRnB78/Zrzut-ekranu-2026-10-23-191712.png', 'Wyjątkowa podkładka gamingowa AeroStrike-Eagle zapewniająca optymalny poślizg oraz najwyższą precyzję sensora.')">ZOBACZ / KUP</button>
-                </div>
-            </div>
+        <!-- PRAWA STRONA: PRODUKTY -->
+        <div class="main-content">
+            <h1 class="section-title">Nasze Produkty</h1>
 
-            <!-- PRZEDMIOT 2: PODKŁADKA AEROSTRIKE FORTNITE -->
-            <div class="product-card">
-                <div>
-                    <h2 class="product-title">Podkładka Pod Myszkę AeroStrike Fortnite</h2>
-                    <img src="https://i.postimg.cc/W3VR6JWt/obraz-2026-10-23-211247348.png" alt="Podkładka AeroStrike Fortnite" class="product-image" onclick="openDescModal('AeroStrike Fortnite', 65, 'https://i.postimg.cc/W3VR6JWt/obraz-2026-10-23-211247348.png', 'Dedykowana podkładka dla fanów Fortnite. Unikalny, pełen detali styl graficzny oraz obszywane krawędzie gwarantują trwałość na lata.')">
+            <div class="products-container">
+                <!-- PRZEDMIOT 1: PODKŁADKA AEROSTRIKE EAGLE -->
+                <div class="product-card">
+                    <div>
+                        <h2 class="product-title">Podkładka AeroStrike-Eagle</h2>
+                        <img src="https://i.postimg.cc/tCzRnB78/Zrzut-ekranu-2026-10-23-191712.png" alt="Podkładka AeroStrike Eagle" class="product-image" onclick="openDescModal('Podkładka AeroStrike-Eagle', 65, 'https://i.postimg.cc/tCzRnB78/Zrzut-ekranu-2026-10-23-191712.png', 'Wyjątkowa podkładka gamingowa AeroStrike-Eagle zapewniająca optymalny poślizg oraz najwyższą precyzję sensora.')">
+                    </div>
+                    <div>
+                        <div class="price-tag">65 zł</div>
+                        <div class="card-buttons">
+                            <button class="btn-secondary" onclick="openDescModal('Podkładka AeroStrike-Eagle', 65, 'https://i.postimg.cc/tCzRnB78/Zrzut-ekranu-2026-10-23-191712.png', 'Wyjątkowa podkładka gamingowa AeroStrike-Eagle zapewniająca optymalny poślizg oraz najwyższą precyzję sensora.')">OPIS</button>
+                            <button class="btn-primary" onclick="addToCart('Podkładka AeroStrike-Eagle', 65, 'https://i.postimg.cc/tCzRnB78/Zrzut-ekranu-2026-10-23-191712.png')">+ KOSZYK</button>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <div class="price-tag">65 zł</div>
-                    <button class="buy-btn" onclick="openDescModal('AeroStrike Fortnite', 65, 'https://i.postimg.cc/W3VR6JWt/obraz-2026-10-23-211247348.png', 'Dedykowana podkładka dla fanów Fortnite. Unikalny, pełen detali styl graficzny oraz obszywane krawędzie gwarantują trwałość na lata.')">ZOBACZ / KUP</button>
-                </div>
-            </div>
 
-            <!-- PRZEDMIOT 3: PODKŁADKA AEROSTRIKE MINECRAFT -->
-            <div class="product-card">
-                <div>
-                    <h2 class="product-title">Podkładka Pod Myszkę AeroStrike Minecraft</h2>
-                    <img src="https://i.postimg.cc/hvgp5LTD/Zrzut-ekranu-2026-10-23-213119.png" alt="Podkładka AeroStrike Minecraft" class="product-image" onclick="openDescModal('AeroStrike Minecraft', 65, 'https://i.postimg.cc/hvgp5LTD/Zrzut-ekranu-2026-10-23-213119.png', 'Epicka podkładka z motywem blokowego świata. Trwały nadruk o wysokiej rozdzielczości oraz powłoka hydrofobowa odporna na zachlapania.')">
+                <!-- PRZEDMIOT 2: PODKŁADKA AEROSTRIKE FORTNITE -->
+                <div class="product-card">
+                    <div>
+                        <h2 class="product-title">Podkładka AeroStrike Fortnite</h2>
+                        <img src="https://i.postimg.cc/W3VR6JWt/obraz-2026-10-23-211247348.png" alt="Podkładka AeroStrike Fortnite" class="product-image" onclick="openDescModal('Podkładka AeroStrike Fortnite', 65, 'https://i.postimg.cc/W3VR6JWt/obraz-2026-10-23-211247348.png', 'Dedykowana podkładka dla fanów Fortnite. Unikalny, pełen detali styl graficzny oraz obszywane krawędzie gwarantują trwałość na lata.')">
+                    </div>
+                    <div>
+                        <div class="price-tag">65 zł</div>
+                        <div class="card-buttons">
+                            <button class="btn-secondary" onclick="openDescModal('Podkładka AeroStrike Fortnite', 65, 'https://i.postimg.cc/W3VR6JWt/obraz-2026-10-23-211247348.png', 'Dedykowana podkładka dla fanów Fortnite. Unikalny, pełen detali styl graficzny oraz obszywane krawędzie gwarantują trwałość na lata.')">OPIS</button>
+                            <button class="btn-primary" onclick="addToCart('Podkładka AeroStrike Fortnite', 65, 'https://i.postimg.cc/W3VR6JWt/obraz-2026-10-23-211247348.png')">+ KOSZYK</button>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <div class="price-tag">65 zł</div>
-                    <button class="buy-btn" onclick="openDescModal('AeroStrike Minecraft', 65, 'https://i.postimg.cc/hvgp5LTD/Zrzut-ekranu-2026-10-23-213119.png', 'Epicka podkładka z motywem blokowego świata. Trwały nadruk o wysokiej rozdzielczości oraz powłoka hydrofobowa odporna na zachlapania.')">ZOBACZ / KUP</button>
+
+                <!-- PRZEDMIOT 3: PODKŁADKA AEROSTRIKE MINECRAFT -->
+                <div class="product-card">
+                    <div>
+                        <h2 class="product-title">Podkładka AeroStrike Minecraft</h2>
+                        <img src="https://i.postimg.cc/hvgp5LTD/Zrzut-ekranu-2026-10-23-213119.png" alt="Podkładka AeroStrike Minecraft" class="product-image" onclick="openDescModal('Podkładka AeroStrike Minecraft', 65, 'https://i.postimg.cc/hvgp5LTD/Zrzut-ekranu-2026-10-23-213119.png', 'Epicka podkładka z motywem blokowego świata. Trwały nadruk o wysokiej rozdzielczości oraz powłoka hydrofobowa odporna na zachlapania.')">
+                    </div>
+                    <div>
+                        <div class="price-tag">65 zł</div>
+                        <div class="card-buttons">
+                            <button class="btn-secondary" onclick="openDescModal('Podkładka AeroStrike Minecraft', 65, 'https://i.postimg.cc/hvgp5LTD/Zrzut-ekranu-2026-10-23-213119.png', 'Epicka podkładka z motywem blokowego świata. Trwały nadruk o wysokiej rozdzielczości oraz powłoka hydrofobowa odporna na zachlapania.')">OPIS</button>
+                            <button class="btn-primary" onclick="addToCart('Podkładka AeroStrike Minecraft', 65, 'https://i.postimg.cc/hvgp5LTD/Zrzut-ekranu-2026-10-23-213119.png')">+ KOSZYK</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 1. PIERWSZE OKIENKO: OPIS PRODUKTU -->
+    <!-- OKIENKO MODAL: OPIS PRODUKTU -->
     <div class="modal-overlay" id="descModal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeDescModal()">&times;</span>
@@ -375,104 +596,115 @@
                 </ul>
             </div>
 
-            <button class="buy-btn" onclick="switchToPaymentModal()">PRZEJDŹ DO PŁATNOŚCI</button>
+            <button class="btn-primary" style="width: 100%; padding: 14px;" id="modalAddToCartBtn">DODAJ DO KOSZYKA</button>
         </div>
     </div>
 
-    <!-- 2. DRUGIE OKIENKO: WYBÓR PŁATNOŚCI I DOSTAWY -->
-    <div class="modal-overlay" id="paymentModal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closePaymentModal()">&times;</span>
-            <h2 class="modal-title">Dostawa i Płatność</h2>
+    <!-- WYSOWANY PANEL KOSZYKA (DRAWER) -->
+    <div class="cart-drawer-overlay" id="cartOverlay" onclick="closeCart()"></div>
+    <div class="cart-drawer" id="cartDrawer">
+        <div class="cart-header">
+            <div class="cart-title">Twój Koszyk</div>
+            <span class="close-btn" onclick="closeCart()" style="position: static;">&times;</span>
+        </div>
 
-            <p style="color: #aaaaaa; font-size: 14px; margin-bottom: 10px;">Sposób Dostawy:</p>
-            <div class="delivery-options">
-                <label class="option-card">
-                    <div class="option-label">
-                        <input type="radio" name="delivery" value="15" checked onclick="calculateTotal()">
+        <!-- LISTA DODANYCH PRODUKTÓW -->
+        <div class="cart-items-list" id="cartItemsList">
+            <div class="empty-cart-msg">Twój koszyk jest pusty.</div>
+        </div>
+
+        <!-- OPCJE DOSTAWY I PŁATNOŚCI W KOSZYKU -->
+        <div id="cartCheckoutSection" style="display: none;">
+            <div class="cart-options-title">Dostawa:</div>
+            <div class="option-group">
+                <label class="cart-option-card">
+                    <div>
+                        <input type="radio" name="cartDelivery" value="15" checked onclick="calculateCartTotal()">
                         <span>Paczkomat InPost</span>
                     </div>
                     <span style="color: #ffcc00; font-weight: bold;">+15 zł</span>
                 </label>
-                <label class="option-card">
-                    <div class="option-label">
-                        <input type="radio" name="delivery" value="20" onclick="calculateTotal()">
+                <label class="cart-option-card">
+                    <div>
+                        <input type="radio" name="cartDelivery" value="20" onclick="calculateCartTotal()">
                         <span>Kurier pod adres</span>
                     </div>
-                    <span style="color: #cccccc; font-weight: bold;">+20 zł</span>
+                    <span style="color: #cccccc;">+20 zł</span>
                 </label>
             </div>
 
-            <p style="color: #aaaaaa; font-size: 14px; margin-bottom: 10px;">Forma Płatności:</p>
-            <div class="payment-options">
-                <label class="option-card">
-                    <div class="option-label">
-                        <input type="radio" name="payment" value="0" data-name="BLIK" checked onclick="calculateTotal()">
-                        <span>BLIK (Szybki kod)</span>
+            <div class="cart-options-title">Płatność:</div>
+            <div class="option-group">
+                <label class="cart-option-card">
+                    <div>
+                        <input type="radio" name="cartPayment" value="0" data-name="BLIK" checked onclick="calculateCartTotal()">
+                        <span>BLIK</span>
                     </div>
                     <span style="color: #e50914; font-weight: bold;">0 zł</span>
                 </label>
-
-                <label class="option-card">
-                    <div class="option-label">
-                        <input type="radio" name="payment" value="0.015" data-name="Karta płatnicza" onclick="calculateTotal()">
-                        <span>Karta płatnicza (Visa / Mastercard)</span>
+                <label class="cart-option-card">
+                    <div>
+                        <input type="radio" name="cartPayment" value="0.015" data-name="Karta" onclick="calculateCartTotal()">
+                        <span>Karta płatnicza</span>
                     </div>
-                    <span style="color: #aaaaaa; font-size: 13px;">+1.5%</span>
+                    <span style="color: #aaaaaa;">+1.5%</span>
                 </label>
-
-                <label class="option-card">
-                    <div class="option-label">
-                        <input type="radio" name="payment" value="0.012" data-name="Przelewy24" onclick="calculateTotal()">
-                        <span>Szybki przelew (Przelewy24 / Tpay)</span>
+                <label class="cart-option-card">
+                    <div>
+                        <input type="radio" name="cartPayment" value="0.012" data-name="Przelewy24" onclick="calculateCartTotal()">
+                        <span>Przelewy24 / Tpay</span>
                     </div>
-                    <span style="color: #aaaaaa; font-size: 13px;">+1.2%</span>
+                    <span style="color: #aaaaaa;">+1.2%</span>
                 </label>
-
-                <label class="option-card">
-                    <div class="option-label">
-                        <input type="radio" name="payment" value="0.015" data-name="Google/Apple Pay" onclick="calculateTotal()">
-                        <span>Google Pay / Apple Pay</span>
+                <label class="cart-option-card">
+                    <div>
+                        <input type="radio" name="cartPayment" value="0.015" data-name="Google/Apple Pay" onclick="calculateCartTotal()">
+                        <span>Google / Apple Pay</span>
                     </div>
-                    <span style="color: #aaaaaa; font-size: 13px;">+1.5%</span>
+                    <span style="color: #aaaaaa;">+1.5%</span>
                 </label>
             </div>
 
-            <!-- PODSUMOWANIE DYNAMICZNE -->
-            <div class="summary-box">
-                <div class="summary-row">
-                    <span>Cena podkładki:</span>
-                    <span id="summaryProductPrice">65.00 zł</span>
+            <!-- PODSUMOWANIE KOSZTÓW KOSZYKA -->
+            <div class="cart-summary">
+                <div class="cart-summary-row">
+                    <span>Produkty:</span>
+                    <span id="cartSubtotal">0.00 zł</span>
                 </div>
-                <div class="summary-row">
-                    <span>Koszt dostawy:</span>
-                    <span id="summaryDeliveryPrice">15.00 zł</span>
+                <div class="cart-summary-row">
+                    <span>Dostawa:</span>
+                    <span id="cartDeliveryCost">15.00 zł</span>
                 </div>
-                <div class="summary-row">
-                    <span>Opłata operatora płatności:</span>
-                    <span id="summaryFeePrice">0.00 zł</span>
+                <div class="cart-summary-row">
+                    <span>Prowizja płatności:</span>
+                    <span id="cartFeeCost">0.00 zł</span>
                 </div>
-                <div class="summary-row total">
-                    <span>Do zapłaty łącznie:</span>
-                    <span id="summaryTotalPrice" style="color: #e50914;">80.00 zł</span>
+                <div class="cart-summary-row total">
+                    <span>Razem:</span>
+                    <span id="cartGrandTotal" style="color: #e50914;">0.00 zł</span>
                 </div>
             </div>
 
-            <button class="buy-btn" id="paySubmitBtn" onclick="processFinalPayment()">ZAPŁAĆ TERAZ (80.00 zł)</button>
+            <button class="btn-primary" style="width: 100%; padding: 14px;" onclick="processCartCheckout()">PRZEJDŹ DO PŁATNOŚCI</button>
         </div>
     </div>
 
     <script>
-        let currentProductPrice = 65;
+        // Stan koszyka
+        let cart = [];
 
-        // Otwieranie pierwszego okienka (Opis)
+        // Otwieranie / zamykanie pierwszego okienka opisu
         function openDescModal(title, price, imgSrc, description) {
-            currentProductPrice = price;
             document.getElementById('modalTitle').innerText = title;
             document.getElementById('modalPrice').innerText = price + ' zł';
             document.getElementById('modalImg').src = imgSrc;
             document.getElementById('modalDesc').innerText = description;
             
+            document.getElementById('modalAddToCartBtn').onclick = function() {
+                addToCart(title, price, imgSrc);
+                closeDescModal();
+            };
+
             document.getElementById('descModal').classList.add('active');
         }
 
@@ -480,51 +712,113 @@
             document.getElementById('descModal').classList.remove('active');
         }
 
-        // Przejście z 1 okienka do 2 okienka (Płatności)
-        function switchToPaymentModal() {
-            closeDescModal();
-            calculateTotal();
-            document.getElementById('paymentModal').classList.add('active');
+        // ZARZĄDZANIE KOSZYKIEM
+        function openCart() {
+            document.getElementById('cartOverlay').classList.add('active');
+            document.getElementById('cartDrawer').classList.add('active');
         }
 
-        function closePaymentModal() {
-            document.getElementById('paymentModal').classList.remove('active');
+        function closeCart() {
+            document.getElementById('cartOverlay').classList.remove('active');
+            document.getElementById('cartDrawer').classList.remove('active');
         }
 
-        // Funkcja przeliczająca kwotę końcową wraz z prowizją płatności
-        function calculateTotal() {
-            const selectedDeliveryPrice = parseFloat(document.querySelector('input[name="delivery"]:checked').value);
-            const selectedPaymentRate = parseFloat(document.querySelector('input[name="payment"]:checked').value);
+        function addToCart(title, price, imgSrc) {
+            const existingItem = cart.find(item => item.title === title);
             
-            const subtotal = currentProductPrice + selectedDeliveryPrice;
-            const paymentFee = subtotal * selectedPaymentRate;
-            const total = subtotal + paymentFee;
+            if (existingItem) {
+                existingItem.qty += 1;
+            } else {
+                cart.push({
+                    title: title,
+                    price: price,
+                    imgSrc: imgSrc,
+                    qty: 1
+                });
+            }
 
-            document.getElementById('summaryProductPrice').innerText = currentProductPrice.toFixed(2) + ' zł';
-            document.getElementById('summaryDeliveryPrice').innerText = selectedDeliveryPrice.toFixed(2) + ' zł';
-            document.getElementById('summaryFeePrice').innerText = paymentFee.toFixed(2) + ' zł';
-            document.getElementById('summaryTotalPrice').innerText = total.toFixed(2) + ' zł';
-            document.getElementById('paySubmitBtn').innerText = 'ZAPŁAĆ TERAZ (' + total.toFixed(2) + ' zł)';
+            updateCartUI();
+            openCart();
         }
 
-        function processFinalPayment() {
-            const selectedPaymentRadio = document.querySelector('input[name="payment"]:checked');
-            const selectedPaymentName = selectedPaymentRadio.getAttribute('data-name');
-            const selectedDeliveryCost = parseFloat(document.querySelector('input[name="delivery"]:checked').value);
-            
-            const subtotal = currentProductPrice + selectedDeliveryCost;
-            const paymentFee = subtotal * parseFloat(selectedPaymentRadio.value);
-            const total = subtotal + paymentFee;
-            
-            alert('Przejście do bramki płatności!\n\nMetoda: ' + selectedPaymentName + '\nKwota łącznie: ' + total.toFixed(2) + ' zł');
+        function changeQty(index, delta) {
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            updateCartUI();
         }
 
-        // Zamknięcie po kliknięciu w tło wokół okienka
+        function removeItem(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cartItemsList = document.getElementById('cartItemsList');
+            const cartBadge = document.getElementById('cartBadge');
+            const checkoutSection = document.getElementById('cartCheckoutSection');
+
+            // Aktualizacja licznika
+            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+            cartBadge.innerText = totalQty;
+
+            if (cart.length === 0) {
+                cartItemsList.innerHTML = '<div class="empty-cart-msg">Twój koszyk jest pusty.</div>';
+                checkoutSection.style.display = 'none';
+                return;
+            }
+
+            checkoutSection.style.display = 'block';
+            cartItemsList.innerHTML = '';
+
+            cart.forEach((item, index) => {
+                const itemEl = document.createElement('div');
+                itemEl.className = 'cart-item';
+                itemEl.innerHTML = `
+                    <img src="${item.imgSrc}" alt="${item.title}">
+                    <div class="cart-item-info">
+                        <div class="cart-item-title">${item.title}</div>
+                        <div class="cart-item-price">${(item.price * item.qty).toFixed(2)} zł</div>
+                        <div class="cart-item-qty">
+                            <button class="qty-btn" onclick="changeQty(${index}, -1)">-</button>
+                            <span>${item.qty}</span>
+                            <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                        </div>
+                    </div>
+                    <button class="remove-item-btn" onclick="removeItem(${index})">&times;</button>
+                `;
+                cartItemsList.appendChild(itemEl);
+            });
+
+            calculateCartTotal();
+        }
+
+        function calculateCartTotal() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const deliveryCost = parseFloat(document.querySelector('input[name="cartDelivery"]:checked').value);
+            const paymentRate = parseFloat(document.querySelector('input[name="cartPayment"]:checked').value);
+
+            const feeCost = (subtotal + deliveryCost) * paymentRate;
+            const grandTotal = subtotal + deliveryCost + feeCost;
+
+            document.getElementById('cartSubtotal').innerText = subtotal.toFixed(2) + ' zł';
+            document.getElementById('cartDeliveryCost').innerText = deliveryCost.toFixed(2) + ' zł';
+            document.getElementById('cartFeeCost').innerText = feeCost.toFixed(2) + ' zł';
+            document.getElementById('cartGrandTotal').innerText = grandTotal.toFixed(2) + ' zł';
+        }
+
+        function processCartCheckout() {
+            const selectedPayment = document.querySelector('input[name="cartPayment"]:checked').getAttribute('data-name');
+            const grandTotal = document.getElementById('cartGrandTotal').innerText;
+            
+            alert('Przejście do bramki płatności!\n\nWybrana metoda: ' + selectedPayment + '\nŁączna kwota: ' + grandTotal);
+        }
+
+        // Zamknięcie okienka z opisem po kliknięciu poza niego
         window.onclick = function(event) {
             const descModal = document.getElementById('descModal');
-            const paymentModal = document.getElementById('paymentModal');
             if (event.target === descModal) closeDescModal();
-            if (event.target === paymentModal) closePaymentModal();
         }
     </script>
 
