@@ -20,20 +20,27 @@
             flex-direction: column;
         }
 
-        /* Górny pasek nawigacyjny z koszykiem */
+        /* Górny pasek nawigacyjny z logo po lewej i koszykiem po prawej */
         .header {
             width: 100%;
             height: 70px;
             background-color: #161822;
             border-bottom: 2px solid #e50914;
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
             align-items: center;
             padding: 0 40px;
             position: fixed;
             top: 0;
             left: 0;
             z-index: 100;
+        }
+
+        .logo {
+            max-width: 160px;
+            height: auto;
+            object-fit: contain;
+            filter: drop-shadow(0px 0px 8px rgba(229, 9, 20, 0.4));
         }
 
         .cart-icon-btn {
@@ -66,16 +73,16 @@
             border-radius: 12px;
         }
 
-        /* Układ główny strony z trzema kolumnami */
+        /* Układ główny strony */
         .app-layout {
             display: flex;
             margin-top: 70px;
             flex: 1;
         }
 
-        /* Lewy panel z logo */
+        /* Lewa kolumna - Kategorie (Accordion) */
         .sidebar-left {
-            width: 250px;
+            width: 280px;
             background-color: #161822;
             padding: 30px 20px;
             border-right: 2px solid #e50914;
@@ -83,30 +90,6 @@
             top: 70px;
             bottom: 0;
             left: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            z-index: 10;
-        }
-
-        .logo {
-            width: 100%;
-            max-width: 180px;
-            height: auto;
-            object-fit: contain;
-            filter: drop-shadow(0px 0px 8px rgba(229, 9, 20, 0.4));
-        }
-
-        /* Prawa kolumna - Kategorie (Accordion) */
-        .sidebar-right {
-            width: 280px;
-            background-color: #161822;
-            padding: 30px 20px;
-            border-left: 1px solid #2a2e3d;
-            position: fixed;
-            top: 70px;
-            bottom: 0;
-            right: 0;
             z-index: 10;
             overflow-y: auto;
         }
@@ -208,10 +191,32 @@
             padding-left: 15px;
         }
 
-        /* Główna sekcja środków na produkty */
+        .all-products-btn {
+            width: 100%;
+            padding: 14px 16px;
+            background: #181a24;
+            border: 1px solid #2a2e3d;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+        }
+
+        .all-products-btn:hover {
+            border-color: #e50914;
+            background: #202333;
+        }
+
+        /* Główna sekcja produktów na środku */
         .main-content {
-            margin-left: 250px;
-            margin-right: 280px;
+            margin-left: 280px;
             flex: 1;
             padding: 40px;
             overflow-y: auto;
@@ -227,7 +232,6 @@
             color: #ffffff;
         }
 
-        /* Kontener na karty produktów */
         .products-container {
             display: flex;
             flex-wrap: wrap;
@@ -318,6 +322,13 @@
         .btn-primary:hover {
             background-color: #ff0f1f;
             box-shadow: 0 0 12px rgba(229, 9, 20, 0.6);
+        }
+
+        .no-products-msg {
+            font-size: 18px;
+            color: #aaaaaa;
+            margin-top: 20px;
+            font-style: italic;
         }
 
         /* --- OKIENKO MODAL (OPIS PRODUKTU) --- */
@@ -612,7 +623,6 @@
             background-color: rgba(255, 68, 68, 0.05);
         }
 
-        /* Błąd braku danych */
         .error-message-box {
             color: #ff4444;
             font-size: 13px;
@@ -626,7 +636,6 @@
             border-radius: 6px;
         }
 
-        /* Podsumowanie w koszyku */
         .cart-summary {
             background: #11131a;
             border: 1px dashed #e50914;
@@ -652,20 +661,8 @@
             color: #ffffff;
         }
 
-        /* RWD - Dostosowanie do ekranów urządzeń mobilnych */
+        /* RWD */
         @media (max-width: 1024px) {
-            .sidebar-right {
-                display: none;
-            }
-            .main-content {
-                margin-right: 0;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .header {
-                padding: 0 20px;
-            }
             .sidebar-left {
                 position: relative;
                 top: 0;
@@ -679,10 +676,12 @@
             }
             .main-content {
                 margin-left: 0;
-                padding: 20px;
             }
-            .products-container {
-                justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 0 20px;
             }
             .cart-drawer {
                 width: 100%;
@@ -697,8 +696,9 @@
 </head>
 <body>
 
-    <!-- GÓRNY PASEK Z KOSZYKIEM -->
+    <!-- GÓRNY PASEK Z LOGO I KOSZYKIEM -->
     <div class="header">
+        <img src="https://i.postimg.cc/SQrrKzc9/logo-aerostrike-biale.png" alt="AeroStrike Logo" class="logo">
         <button class="cart-icon-btn" onclick="openCart()">
             <span>🛒 KOSZYK</span>
             <span class="cart-badge" id="cartBadge">0</span>
@@ -706,128 +706,80 @@
     </div>
 
     <div class="app-layout">
-        <!-- LEWA STRONA: BIAŁE LOGO -->
+        <!-- LEWA STRONA: KATEGORIE -->
         <div class="sidebar-left">
-            <img src="https://i.postimg.cc/SQrrKzc9/logo-aerostrike-biale.png" alt="AeroStrike Logo" class="logo">
-        </div>
-
-        <!-- ŚRODEK: GLÓWNA SEKCJA PRODUKTÓW -->
-        <div class="main-content">
-            <h1 class="section-title">Nasze Produkty</h1>
-
-            <div class="products-container">
-                <!-- PRZEDMIOT 1: PODKŁADKA AEROSTRIKE EAGLE -->
-                <div class="product-card">
-                    <div>
-                        <h2 class="product-title">Podkładka AeroStrike-Eagle</h2>
-                        <img src="https://i.postimg.cc/tCzRnB78/Zrzut-ekranu-2026-10-23-191712.png" alt="Podkładka AeroStrike Eagle" class="product-image" onclick="openDescModal('Podkładka AeroStrike-Eagle', 65, 'https://i.postimg.cc/tCzRnB78/Zrzut-ekranu-2026-10-23-191712.png', 'Wyjątkowa podkładka gamingowa AeroStrike-Eagle zapewniająca optymalny poślizg oraz najwyższą precyzję sensora.')">
-                    </div>
-                    <div>
-                        <div class="price-tag">65 zł</div>
-                        <div class="card-buttons">
-                            <button class="btn-secondary" onclick="openDescModal('Podkładka AeroStrike-Eagle', 65, 'https://i.postimg.cc/tCzRnB78/Zrzut-ekranu-2026-10-23-191712.png', 'Wyjątkowa podkładka gamingowa AeroStrike-Eagle zapewniająca optymalny poślizg oraz najwyższą precyzję sensora.')">OPIS</button>
-                            <button class="btn-primary" onclick="addToCart('Podkładka AeroStrike-Eagle', 65, 'https://i.postimg.cc/tCzRnB78/Zrzut-ekranu-2026-10-23-191712.png')">+ KOSZYK</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PRZEDMIOT 2: PODKŁADKA AEROSTRIKE FORTNITE -->
-                <div class="product-card">
-                    <div>
-                        <h2 class="product-title">Podkładka AeroStrike Fortnite</h2>
-                        <img src="https://i.postimg.cc/W3VR6JWt/obraz-2026-10-23-211247348.png" alt="Podkładka AeroStrike Fortnite" class="product-image" onclick="openDescModal('Podkładka AeroStrike Fortnite', 65, 'https://i.postimg.cc/W3VR6JWt/obraz-2026-10-23-211247348.png', 'Dedykowana podkładka dla fanów Fortnite. Unikalny, pełen detali styl graficzny oraz obszywane krawędzie gwarantują trwałość na lata.')">
-                    </div>
-                    <div>
-                        <div class="price-tag">65 zł</div>
-                        <div class="card-buttons">
-                            <button class="btn-secondary" onclick="openDescModal('Podkładka AeroStrike Fortnite', 65, 'https://i.postimg.cc/W3VR6JWt/obraz-2026-10-23-211247348.png', 'Dedykowana podkładka dla fanów Fortnite. Unikalny, pełen detali styl graficzny oraz obszywane krawędzie gwarantują trwałość na lata.')">OPIS</button>
-                            <button class="btn-primary" onclick="addToCart('Podkładka AeroStrike Fortnite', 65, 'https://i.postimg.cc/W3VR6JWt/obraz-2026-10-23-211247348.png')">+ KOSZYK</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PRZEDMIOT 3: PODKŁADKA AEROSTRIKE MINECRAFT -->
-                <div class="product-card">
-                    <div>
-                        <h2 class="product-title">Podkładka AeroStrike Minecraft</h2>
-                        <img src="https://i.postimg.cc/hvgp5LTD/Zrzut-ekranu-2026-10-23-213119.png" alt="Podkładka AeroStrike Minecraft" class="product-image" onclick="openDescModal('Podkładka AeroStrike Minecraft', 65, 'https://i.postimg.cc/hvgp5LTD/Zrzut-ekranu-2026-10-23-213119.png', 'Epicka podkładka z motywem blokowego świata. Trwały nadruk o wysokiej rozdzielczości oraz powłoka hydrofobowa odporna na zachlapania.')">
-                    </div>
-                    <div>
-                        <div class="price-tag">65 zł</div>
-                        <div class="card-buttons">
-                            <button class="btn-secondary" onclick="openDescModal('Podkładka AeroStrike Minecraft', 65, 'https://i.postimg.cc/hvgp5LTD/Zrzut-ekranu-2026-10-23-213119.png', 'Epicka podkładka z motywem blokowego świata. Trwały nadruk o wysokiej rozdzielczości oraz powłoka hydrofobowa odporna na zachlapania.')">OPIS</button>
-                            <button class="btn-primary" onclick="addToCart('Podkładka AeroStrike Minecraft', 65, 'https://i.postimg.cc/hvgp5LTD/Zrzut-ekranu-2026-10-23-213119.png')">+ KOSZYK</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- PRAWA STRONA: KATEGORIE (ROZWIJANE MENU ACCORDION) -->
-        <div class="sidebar-right">
             <h2 class="categories-title">Kategorie</h2>
 
+            <button class="all-products-btn" onclick="filterCategory('all')">
+                <span>🔥 Wszystkie produkty</span>
+            </button>
+
             <div class="category-accordion">
-                <!-- KATEGORIA 1: PODKŁADKI POD MYSZKĘ -->
-                <div class="category-item">
+                <!-- KATEGORIA 1: PODKŁADKI -->
+                <div class="category-item active" id="cat-podkladki">
                     <button class="category-header" onclick="toggleCategory(this)">
                         <span><span class="category-icon">🟩</span> Podkładki pod myszkę</span>
                         <span class="arrow-icon">▼</span>
                     </button>
-                    <div class="category-content">
+                    <div class="category-content" style="max-height: 250px;">
                         <ul class="subcategories-list">
+                            <li onclick="filterCategory('podkladki')">📦 Wszystkie podkładki</li>
                             <li>Podkładki Speed (Szybkie)</li>
                             <li>Podkładki Control (Precyzyjne)</li>
-                            <li>Podkładki XXL (900x400 mm)</li>
-                            <li>Podkładki RGB</li>
                         </ul>
                     </div>
                 </div>
 
                 <!-- KATEGORIA 2: SŁUCHAWKI -->
-                <div class="category-item">
+                <div class="category-item" id="cat-sluchawki">
                     <button class="category-header" onclick="toggleCategory(this)">
                         <span><span class="category-icon">🎧</span> Słuchawki</span>
                         <span class="arrow-icon">▼</span>
                     </button>
                     <div class="category-content">
                         <ul class="subcategories-list">
+                            <li onclick="filterCategory('sluchawki')">📦 Wszystkie słuchawki</li>
                             <li>Słuchawki bezprzewodowe</li>
-                            <li>Słuchawki z mikrofonem</li>
-                            <li>Słuchawki 7.1 Surround</li>
                         </ul>
                     </div>
                 </div>
 
                 <!-- KATEGORIA 3: MYSZKI -->
-                <div class="category-item">
+                <div class="category-item" id="cat-myszki">
                     <button class="category-header" onclick="toggleCategory(this)">
                         <span><span class="category-icon">🖱️</span> Myszki</span>
                         <span class="arrow-icon">▼</span>
                     </button>
                     <div class="category-content">
                         <ul class="subcategories-list">
-                            <li>Myszki Ultralight (Lekkie)</li>
-                            <li>Myszki Bezprzewodowe</li>
-                            <li>Myszki Ergonomiczne</li>
+                            <li onclick="filterCategory('myszki')">📦 Wszystkie myszki</li>
+                            <li>Myszki Ultralight</li>
                         </ul>
                     </div>
                 </div>
 
                 <!-- KATEGORIA 4: KLAWIATURY -->
-                <div class="category-item">
+                <div class="category-item" id="cat-klawiatury">
                     <button class="category-header" onclick="toggleCategory(this)">
                         <span><span class="category-icon">⌨️</span> Klawiatury</span>
                         <span class="arrow-icon">▼</span>
                     </button>
                     <div class="category-content">
                         <ul class="subcategories-list">
-                            <li>Klawiatury Mechaniczne</li>
-                            <li>Klawiatury 60% / TKL</li>
-                            <li>Klawiatury Membranowe</li>
+                            <li onclick="filterCategory('klawiatury')">📦 Wszystkie klawiatury</li>
+                            <li>Klawiatury mechaniczne</li>
                         </ul>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- ŚRODEK: GŁÓWNA SEKCJA PRODUKTÓW -->
+        <div class="main-content">
+            <h1 class="section-title" id="sectionTitle">Wszystkie Produkty</h1>
+
+            <div class="products-container" id="productsContainer">
+                <!-- Generowane dynamicznie przez JavaScript -->
             </div>
         </div>
     </div>
@@ -854,7 +806,7 @@
         </div>
     </div>
 
-    <!-- WYSUWANY PANEL KOSZYKA (DRAWER) -->
+    <!-- WYSUWANY PANEL KOSZYKA -->
     <div class="cart-drawer-overlay" id="cartOverlay" onclick="closeCart()"></div>
     <div class="cart-drawer" id="cartDrawer">
         <div class="cart-header">
@@ -862,12 +814,10 @@
             <span class="close-btn" onclick="closeCart()" style="position: static;">&times;</span>
         </div>
 
-        <!-- LISTA DODANYCH PRODUKTÓW -->
         <div class="cart-items-list" id="cartItemsList">
             <div class="empty-cart-msg">Twój koszyk jest pusty.</div>
         </div>
 
-        <!-- OPCJE DOSTAWY I PŁATNOŚCI W KOSZYKU -->
         <div id="cartCheckoutSection" style="display: none;">
             <div class="cart-options-title">Dostawa:</div>
             <div class="option-group">
@@ -919,7 +869,6 @@
                 </label>
             </div>
 
-            <!-- FORMULARZ DANYCH WYSYŁKOWYCH -->
             <div class="cart-options-title">Dane Wysyłkowe:</div>
             <div class="shipping-form-box">
                 <div class="form-row">
@@ -951,12 +900,11 @@
                     </div>
                     <div class="form-group">
                         <label id="shipAddressLabel">Kod Paczkomatu *</label>
-                        <input type="text" id="shipAddress" class="form-control" placeholder="np. KRA01M lub Ulica 12/3">
+                        <input type="text" id="shipAddress" class="form-control" placeholder="np. KRA01M">
                     </div>
                 </div>
             </div>
 
-            <!-- PODSUMOWANIE KOSZTÓW KOSZYKA -->
             <div class="cart-summary">
                 <div class="cart-summary-row">
                     <span>Produkty:</span>
@@ -976,7 +924,6 @@
                 </div>
             </div>
 
-            <!-- KOMUNIKAT BŁĘDU -->
             <div class="error-message-box" id="shippingErrorMsg">
                 ⚠️ uzupelnij dane wysylkowe
             </div>
@@ -986,26 +933,108 @@
     </div>
 
     <script>
-        // Stan koszyka
+        // Baza produktów z podziałem na kategorie
+        const products = [
+            {
+                id: 1,
+                category: 'podkladki',
+                title: 'Podkładka AeroStrike-Eagle',
+                price: 65,
+                img: 'https://i.postimg.cc/tCzRnB78/Zrzut-ekranu-2026-10-23-191712.png',
+                desc: 'Wyjątkowa podkładka gamingowa AeroStrike-Eagle zapewniająca optymalny poślizg oraz najwyższą precyzję sensora.'
+            },
+            {
+                id: 2,
+                category: 'podkladki',
+                title: 'Podkładka AeroStrike Fortnite',
+                price: 65,
+                img: 'https://i.postimg.cc/W3VR6JWt/obraz-2026-10-23-211247348.png',
+                desc: 'Dedykowana podkładka dla fanów Fortnite. Unikalny, pełen detali styl graficzny oraz obszywane krawędzie gwarantują trwałość na lata.'
+            },
+            {
+                id: 3,
+                category: 'podkladki',
+                title: 'Podkładka AeroStrike Minecraft',
+                price: 65,
+                img: 'https://i.postimg.cc/hvgp5LTD/Zrzut-ekranu-2026-10-23-213119.png',
+                desc: 'Epicka podkładka z motywem blokowego świata. Trwały nadruk o wysokiej rozdzielczości oraz powłoka hydrofobowa odporna na zachlapania.'
+            }
+        ];
+
         let cart = [];
 
-        // Obsługa rozwijania kategorii (Accordion)
+        // Inicjalizacja widoku - pokazujemy wszystkie produkty na start
+        window.onload = function() {
+            renderProducts('all');
+        };
+
         function toggleCategory(button) {
             const categoryItem = button.parentElement;
             const isOpen = categoryItem.classList.contains('active');
 
-            // Zamykanie innych aktywnych kategorii dla przejrzystości
             document.querySelectorAll('.category-item').forEach(item => {
                 item.classList.remove('active');
             });
 
-            // Przełączanie bieżącej kategorii
             if (!isOpen) {
                 categoryItem.classList.add('active');
             }
         }
 
-        // Otwieranie / zamykanie pierwszego okienka opisu
+        // Filtrowanie produktów
+        function filterCategory(categoryKey) {
+            const container = document.getElementById('productsContainer');
+            const titleEl = document.getElementById('sectionTitle');
+            container.innerHTML = '';
+
+            let filtered = [];
+            if (categoryKey === 'all') {
+                filtered = products;
+                titleEl.innerText = 'Wszystkie Produkty';
+            } else if (categoryKey === 'podkladki') {
+                filtered = products.filter(p => p.category === 'podkladki');
+                titleEl.innerText = 'Podkładki Pod Myszkę';
+            } else if (categoryKey === 'sluchawki') {
+                filtered = [];
+                titleEl.innerText = 'Słuchawki';
+            } else if (categoryKey === 'myszki') {
+                filtered = [];
+                titleEl.innerText = 'Myszki';
+            } else if (categoryKey === 'klawiatury') {
+                filtered = [];
+                titleEl.innerText = 'Klawiatury';
+            }
+
+            if (filtered.length === 0) {
+                container.innerHTML = '<div class="no-products-msg">1 brak - Brak produktów w tej kategorii.</div>';
+                return;
+            }
+
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div>
+                        <h2 class="product-title">${p.title}</h2>
+                        <img src="${p.img}" alt="${p.title}" class="product-image" onclick="openDescModal('${p.title}', ${p.price}, '${p.img}', '${p.desc}')">
+                    </div>
+                    <div>
+                        <div class="price-tag">${p.price} zł</div>
+                        <div class="card-buttons">
+                            <button class="btn-secondary" onclick="openDescModal('${p.title}', ${p.price}, '${p.img}', '${p.desc}')">OPIS</button>
+                            <button class="btn-primary" onclick="addToCart('${p.title}', ${p.price}, '${p.img}')">+ KOSZYK</button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderProducts(categoryKey) {
+            filterCategory(categoryKey);
+        }
+
+        // Modal opisu
         function openDescModal(title, price, imgSrc, description) {
             document.getElementById('modalTitle').innerText = title;
             document.getElementById('modalPrice').innerText = price + ' zł';
@@ -1024,7 +1053,7 @@
             document.getElementById('descModal').classList.remove('active');
         }
 
-        // ZARZĄDZANIE KOSZYKIEM
+        // Koszyk
         function openCart() {
             document.getElementById('cartOverlay').classList.add('active');
             document.getElementById('cartDrawer').classList.add('active');
@@ -1037,27 +1066,18 @@
 
         function addToCart(title, price, imgSrc) {
             const existingItem = cart.find(item => item.title === title);
-            
             if (existingItem) {
                 existingItem.qty += 1;
             } else {
-                cart.push({
-                    title: title,
-                    price: price,
-                    imgSrc: imgSrc,
-                    qty: 1
-                });
+                cart.push({ title, price, imgSrc, qty: 1 });
             }
-
             updateCartUI();
             openCart();
         }
 
         function changeQty(index, delta) {
             cart[index].qty += delta;
-            if (cart[index].qty <= 0) {
-                cart.splice(index, 1);
-            }
+            if (cart[index].qty <= 0) cart.splice(index, 1);
             updateCartUI();
         }
 
@@ -1071,7 +1091,6 @@
             const cartBadge = document.getElementById('cartBadge');
             const checkoutSection = document.getElementById('cartCheckoutSection');
 
-            // Aktualizacja licznika
             const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
             cartBadge.innerText = totalQty;
 
@@ -1112,7 +1131,6 @@
             const deliveryCost = parseFloat(deliveryRadio.value);
             const paymentRate = parseFloat(document.querySelector('input[name="cartPayment"]:checked').value);
 
-            // Zmiana etykiety adresu w zależności od dostawy
             const addressLabel = document.getElementById('shipAddressLabel');
             const addressInput = document.getElementById('shipAddress');
             if (deliveryRadio.value === "15") {
@@ -1143,7 +1161,6 @@
             ];
 
             let isValid = true;
-
             fields.forEach(field => {
                 if (!field.value.trim()) {
                     field.classList.add('error');
@@ -1154,30 +1171,24 @@
             });
 
             const errorMsgBox = document.getElementById('shippingErrorMsg');
-
             if (!isValid) {
                 errorMsgBox.style.display = 'block';
-                return; // Zatrzymujemy przejście do płatności!
+                return;
             }
 
             errorMsgBox.style.display = 'none';
-
             const selectedPayment = document.querySelector('input[name="cartPayment"]:checked').getAttribute('data-name');
             const grandTotal = document.getElementById('cartGrandTotal').innerText;
             
-            alert('Dane zostały poprawne!\n\nPrzejście do płatności dla: ' + fields[0].value + ' ' + fields[1].value + '\nMetoda: ' + selectedPayment + '\nSuma: ' + grandTotal);
+            alert('Dane poprawne!\nPrzejście do płatności dla: ' + fields[0].value + ' ' + fields[1].value + '\nMetoda: ' + selectedPayment + '\nSuma: ' + grandTotal);
         }
 
-        // Czyszczenie czerwonego ramkowania podczas wpisywania
         document.querySelectorAll('.form-control').forEach(input => {
             input.addEventListener('input', function() {
-                if (this.value.trim()) {
-                    this.classList.remove('error');
-                }
+                if (this.value.trim()) this.classList.remove('error');
             });
         });
 
-        // Zamknięcie okienka z opisem po kliknięciu poza niego
         window.onclick = function(event) {
             const descModal = document.getElementById('descModal');
             if (event.target === descModal) closeDescModal();
