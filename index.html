@@ -43,6 +43,31 @@
             filter: drop-shadow(0px 0px 8px rgba(229, 9, 20, 0.4));
         }
 
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .regulations-btn {
+            background-color: transparent;
+            border: 1px solid #2a2e3d;
+            color: #aaaaaa;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+        }
+
+        .regulations-btn:hover {
+            border-color: #e50914;
+            color: #ffffff;
+            background-color: #202333;
+        }
+
         .cart-icon-btn {
             background-color: #181a24;
             border: 1px solid #2a2e3d;
@@ -316,7 +341,7 @@
             font-style: italic;
         }
 
-        /* --- OKIENKO MODAL (OPIS PRODUKTU) --- */
+        /* --- OKIENKA MODAL (POP-UP) --- */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -348,6 +373,41 @@
             position: relative;
             box-shadow: 0 0 30px rgba(229, 9, 20, 0.3);
             animation: fadeIn 0.25s ease;
+        }
+
+        /* Specjalny styl dla okienka regulaminu z możliwością skrolowania treści */
+        .regulations-modal-content {
+            background: #161822;
+            border: 2px solid #e50914;
+            border-radius: 12px;
+            max-width: 650px;
+            width: 100%;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+            position: relative;
+            box-shadow: 0 0 30px rgba(229, 9, 20, 0.3);
+            animation: fadeIn 0.25s ease;
+        }
+
+        .regulations-scroll-box {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 10px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            color: #cccccc;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .regulations-scroll-box h3 {
+            color: #ffffff;
+            font-size: 16px;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
         }
 
         @keyframes fadeIn {
@@ -679,13 +739,49 @@
 </head>
 <body>
 
-    <!-- GÓRNY PASEK Z LOGO I KOSZYKIEM -->
+    <!-- GÓRNY PASEK Z LOGO, REGULAMINEM I KOSZYKIEM -->
     <div class="header">
         <img src="https://i.postimg.cc/SQrrKzc9/logo-aerostrike-biale.png" alt="AeroStrike Logo" class="logo">
-        <button class="cart-icon-btn" onclick="openCart()">
-            <span>🛒 KOSZYK</span>
-            <span class="cart-badge" id="cartBadge">0</span>
-        </button>
+        <div class="header-right">
+            <button class="regulations-btn" onclick="openRegulationsModal()">REGULAMIN</button>
+            <button class="cart-icon-btn" onclick="openCart()">
+                <span>🛒 KOSZYK</span>
+                <span class="cart-badge" id="cartBadge">0</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- OKIENKO MODAL: REGULAMIN -->
+    <div class="modal-overlay" id="regulationsModal">
+        <div class="regulations-modal-content">
+            <span class="close-btn" onclick="closeRegulationsModal()">&times;</span>
+            <h2 class="modal-title">Regulamin Sklepu AeroStrike</h2>
+            
+            <div class="regulations-scroll-box">
+                <h3>§ 1. Postanowienia Ogólne</h3>
+                <p>1. Sklepu internetowy działający pod marką AeroStrike dostępny jest pod adresem internetowym sklepu i dedykowany jest dla graczy oraz entuzjastów esportu.</p>
+                <p>2. Właścicielem sklepu jest zespół AeroStrike.</p>
+                <p>3. Złożenie zamówienia w sklepie oznacza akceptację postanowień niniejszego regulaminu.</p>
+
+                <h3>§ 2. Składanie Zamówień i Płatności</h3>
+                <p>1. Zamówienia można składać 24 godziny na dobę, 7 dni w tygodniu za pośrednictwem koszyka na stronie głównej.</p>
+                <p>2. Dostępne metody płatności to: BLIK, Karta Płatnicza, Przelewy24/Tpay oraz Apple/Google Pay.</p>
+                <p>3. Do kwoty zamówienia doliczane są koszty wybranej dostawy oraz prowizja operatora płatności (widoczna w podsumowaniu koszyka).</p>
+
+                <h3>§ 3. Wysyłka i Dostawa</h3>
+                <p>1. Towary wysyłane są za pośrednictwem Paczkomatów InPost (+15 zł) lub Kuriera pod wskazany adres (+20 zł).</p>
+                <p>2. Czas realizacji zamówienia wynosi zazwyczaj od 1 do 3 dni roboczych od momentu zaksięgowania wpłaty.</p>
+
+                <h3>§ 4. Zwroty i Reklamacje</h3>
+                <p>1. Zgodnie z obowiązującymi przepisami, klient ma prawo odstąpić od umowy bez podania przyczyny w terminie 14 dni od dnia otrzymania przesyłki.</p>
+                <p>2. Reklamacje dotyczące uszkodzeń mechanicznych powstałych podczas transportu lub wad fabrycznych należy zgłaszać drogą mailową.</p>
+
+                <h3>§ 5. Ochrona Danych Osobowych</h3>
+                <p>1. Podane przez klienta dane osobowe (imię, nazwisko, adres, e-mail, telefon) przetwarzane są wyłącznie w celu prawidłowej realizacji zamówienia i wysyłki.</p>
+            </div>
+
+            <button class="btn-primary" style="width: 100%; padding: 12px;" onclick="closeRegulationsModal()">ZROZUMIAŁEM</button>
+        </div>
     </div>
 
     <div class="app-layout">
@@ -936,29 +1032,33 @@
             filterCategory('all');
         };
 
+        // Obsługa otwierania/zamykania okienka regulaminu
+        function openRegulationsModal() {
+            document.getElementById('regulationsModal').classList.add('active');
+        }
+
+        function closeRegulationsModal() {
+            document.getElementById('regulationsModal').classList.remove('active');
+        }
+
         function selectCategory(categoryKey, button) {
-            // Zwijanie/rozwijanie podmenu
             if (button) {
                 const parentItem = button.parentElement;
                 const isCurrentlyActive = parentItem.classList.contains('active');
 
-                // Zamykamy wszystkie pozostałe
                 document.querySelectorAll('.category-item').forEach(item => {
                     item.classList.remove('active');
                 });
 
-                // Jeśli nie była aktywna, to ją otwieramy
                 if (!isCurrentlyActive) {
                     parentItem.classList.add('active');
                 }
             } else {
-                // Kliknięto "Wszystkie produkty" -> zwijamy wszystkie kategorie
                 document.querySelectorAll('.category-item').forEach(item => {
                     item.classList.remove('active');
                 });
             }
 
-            // Filtrujemy produkty na środku
             filterCategory(categoryKey);
         }
 
@@ -1167,7 +1267,9 @@
 
         window.onclick = function(event) {
             const descModal = document.getElementById('descModal');
+            const regModal = document.getElementById('regulationsModal');
             if (event.target === descModal) closeDescModal();
+            if (event.target === regModal) closeRegulationsModal();
         }
     </script>
 
