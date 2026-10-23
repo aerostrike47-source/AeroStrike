@@ -36,7 +36,6 @@
             z-index: 100;
         }
 
-        /* Lewa strona paska (logo + regulamin + partnerstwo) */
         .header-left {
             display: flex;
             align-items: center;
@@ -69,7 +68,6 @@
             background-color: #202333;
         }
 
-        /* Prawa strona paska (koszyk) */
         .cart-icon-btn {
             background-color: #181a24;
             border: 1px solid #2a2e3d;
@@ -377,14 +375,13 @@
             animation: fadeIn 0.25s ease;
         }
 
-        /* Styl dla okienka regulaminu i partnerstwa */
         .modal-large-content {
             background: #161822;
             border: 2px solid #e50914;
             border-radius: 12px;
             max-width: 650px;
             width: 100%;
-            height: 80vh;
+            height: 85vh;
             display: flex;
             flex-direction: column;
             padding: 30px;
@@ -416,11 +413,10 @@
             text-transform: uppercase;
         }
 
-        /* Formularz w partnerstwie */
         .partner-form {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
             margin-top: 10px;
         }
 
@@ -439,7 +435,23 @@
             border-color: #e50914;
         }
 
-        /* Przycisk akceptacji regulaminu nieaktywny */
+        .file-upload-label {
+            font-size: 12px;
+            color: #aaaaaa;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .file-input {
+            background: #0f1015;
+            border: 1px solid #2a2e3d;
+            color: #cccccc;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 12px;
+        }
+
         .btn-accept-disabled {
             width: 100%;
             padding: 14px;
@@ -794,7 +806,7 @@
 </head>
 <body>
 
-    <!-- GÓRNY PASEK Z LOGO, REGULAMINEM I PARTNERSTWEM PO LEWEJ, KOSZYKIEM PO PRAWEJ -->
+    <!-- GÓRNY PASEK -->
     <div class="header">
         <div class="header-left">
             <img src="https://i.postimg.cc/SQrrKzc9/logo-aerostrike-biale.png" alt="AeroStrike Logo" class="logo">
@@ -842,7 +854,7 @@
         </div>
     </div>
 
-    <!-- OKIENKO MODAL: PARTNERSTWO -->
+    <!-- OKIENKO MODAL: PARTNERSTWO Z ZABEZPIECZENIAMI -->
     <div class="modal-overlay" id="partnerModal">
         <div class="modal-large-content">
             <span class="close-btn" onclick="closePartnerModal()">&times;</span>
@@ -862,9 +874,15 @@
 
                 <h3 style="margin-top: 20px;">Wyślij zgłoszenie współpracy:</h3>
                 <div class="partner-form">
-                    <input type="text" id="partnerName" class="partner-input" placeholder="Twój Pseudonim / Imię i Nazwisko">
-                    <input type="text" id="partnerChannel" class="partner-input" placeholder="Link do Twojego Kanału (TikTok / Twitch / YouTube)">
-                    <input type="email" id="partnerEmail" class="partner-input" placeholder="Twój Adres E-mail do kontaktu">
+                    <input type="text" id="partnerName" class="partner-input" placeholder="Twój Pseudonim / Imię i Nazwisko *">
+                    <input type="text" id="partnerChannel" class="partner-input" placeholder="Link do Twojego Kanału (np. https://tiktok.com/@...) *">
+                    <input type="email" id="partnerEmail" class="partner-input" placeholder="Twój Adres E-mail do kontaktu *">
+                    
+                    <div class="file-upload-label">
+                        <span>Dodaj zrzut ekranu (screen ze statystyk / profilu jako dowód) *</span>
+                        <input type="file" id="partnerProof" class="file-input" accept="image/*">
+                    </div>
+
                     <button class="btn-primary" style="width: 100%; padding: 12px; margin-top: 5px;" onclick="sendPartnerApplication()">WYŚLIJ ZGŁOSZENIE</button>
                 </div>
             </div>
@@ -1155,16 +1173,39 @@
         }
 
         function sendPartnerApplication() {
-            const name = document.getElementById('partnerName').value;
-            const channel = document.getElementById('partnerChannel').value;
-            const email = document.getElementById('partnerEmail').value;
+            const name = document.getElementById('partnerName').value.trim();
+            const channel = document.getElementById('partnerChannel').value.trim();
+            const email = document.getElementById('partnerEmail').value.trim();
+            const proofFile = document.getElementById('partnerProof').files[0];
 
-            if (!name || !channel || !email) {
-                alert('⚠️ Wypełnij wszystkie pola formularza zgłoszeniowego!');
+            // 1. Sprawdzenie czy wszystkie pola są wypełnione
+            if (!name || !channel || !email || !proofFile) {
+                alert('⚠️ Wypełnij wszystkie pola oraz dodaj zrzut ekranu jako dowód!');
                 return;
             }
 
-            alert('Dziękujemy za zgłoszenie, ' + name + '!\nTwoja prośba o partnerstwo została zapisana. Odezwiemy się wkrótce na podany e-mail.');
+            // 2. Walidacja linku (wykrywanie czy to nie są same losowe cyfry typu 65656565)
+            const isLinkValid = channel.includes('http') || channel.includes('www') || channel.includes('.') || channel.includes('/');
+            const isOnlyDigits = /^\d+$/.test(channel);
+
+            if (!isLinkValid || isOnlyDigits) {
+                alert('⚠️ Podaj poprawny link do swojego kanału (np. TikTok, Twitch lub YouTube), a nie przypadkowy ciąg znaków/cyfr!');
+                return;
+            }
+
+            // 3. Generowanie maila do Ciebie (automatyczne otwarcie programu pocztowego)
+            const myEmail = "twoj-adres-email@gmail.com"; // <-- TUTAJ WPISZ SWÓJ E-MAIL
+            const subject = encodeURIComponent("Nowe zgłoszenie partnerstwa od: " + name);
+            const body = encodeURIComponent(
+                "Imię / Pseudonim: " + name + "\n" +
+                "Link do kanału: " + channel + "\n" +
+                "E-mail kontaktowy: " + email + "\n\n" +
+                "(Uwaga: Pamiętaj, aby załączyć w tym mailu zrzut ekranu, który wgrałeś na stronie!)"
+            );
+
+            window.location.href = `mailto:${myEmail}?subject=${subject}&body=${body}`;
+
+            alert('Zgłoszenie zweryfikowane pomyślnie!\nZa chwilę otworzy się Twój program pocztowy z gotową wiadomością do wysłania do nas.');
             closePartnerModal();
         }
 
