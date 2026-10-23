@@ -440,7 +440,7 @@
             color: #aaaaaa;
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 6px;
         }
 
         .file-input {
@@ -450,6 +450,41 @@
             padding: 8px;
             border-radius: 6px;
             font-size: 12px;
+        }
+
+        /* Podgląd zdjęcia w partnerstwie */
+        .image-preview-container {
+            display: none;
+            align-items: center;
+            gap: 12px;
+            background: #0f1015;
+            border: 1px solid #2a2e3d;
+            padding: 8px;
+            border-radius: 6px;
+        }
+
+        .image-preview-container img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 1px solid #e50914;
+        }
+
+        .btn-remove-file {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .btn-remove-file:hover {
+            background: #ff1111;
         }
 
         .btn-accept-disabled {
@@ -854,7 +889,7 @@
         </div>
     </div>
 
-    <!-- OKIENKO MODAL: PARTNERSTWO Z ZABEZPIECZENIAMI -->
+    <!-- OKIENKO MODAL: PARTNERSTWO -->
     <div class="modal-overlay" id="partnerModal">
         <div class="modal-large-content">
             <span class="close-btn" onclick="closePartnerModal()">&times;</span>
@@ -880,14 +915,19 @@
                     
                     <div class="file-upload-label">
                         <span>Dodaj zrzut ekranu (screen ze statystyk / profilu jako dowód) *</span>
-                        <input type="file" id="partnerProof" class="file-input" accept="image/*">
+                        <input type="file" id="partnerProof" class="file-input" accept="image/*" onchange="previewPartnerImage(event)">
                     </div>
 
-                    <button class="btn-primary" style="width: 100%; padding: 12px; margin-top: 5px;" onclick="sendPartnerApplication()">WYŚLIJ ZGŁOSZENIE</button>
+                    <!-- Podgląd wgranego zdjęcia -->
+                    <div class="image-preview-container" id="imagePreviewBox">
+                        <img id="previewImg" src="" alt="Podgląd dowodu">
+                        <div style="flex: 1; font-size: 12px; color: #00ff66;">Zdjęcie dodane pomyślnie</div>
+                        <button type="button" class="btn-remove-file" onclick="removePartnerImage()">Usuń zdjęcie</button>
+                    </div>
+
+                    <button class="btn-primary" style="width: 100%; padding: 12px; margin-top: 10px;" onclick="sendPartnerApplication()">WYŚLIJ ZGŁOSZENIE</button>
                 </div>
             </div>
-
-            <button class="btn-primary" style="width: 100%; padding: 12px;" onclick="closePartnerModal()">ZAMKNIJ</button>
         </div>
     </div>
 
@@ -1163,7 +1203,7 @@
             closeRegulationsModal();
         }
 
-        // Obsługa Partnerstwa
+        // Obsługa Partnerstwa i Podglądu Zdjęcia
         function openPartnerModal() {
             document.getElementById('partnerModal').classList.add('active');
         }
@@ -1172,40 +1212,55 @@
             document.getElementById('partnerModal').classList.remove('active');
         }
 
+        function previewPartnerImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('previewImg').src = e.target.result;
+                    document.getElementById('imagePreviewBox').style.display = 'flex';
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function removePartnerImage() {
+            document.getElementById('partnerProof').value = '';
+            document.getElementById('imagePreviewBox').style.display = 'none';
+            document.getElementById('previewImg').src = '';
+        }
+
         function sendPartnerApplication() {
             const name = document.getElementById('partnerName').value.trim();
             const channel = document.getElementById('partnerChannel').value.trim();
             const email = document.getElementById('partnerEmail').value.trim();
-            const proofFile = document.getElementById('partnerProof').files[0];
+            const fileInput = document.getElementById('partnerProof');
 
-            // 1. Sprawdzenie czy wszystkie pola są wypełnione
-            if (!name || !channel || !email || !proofFile) {
-                alert('⚠️ Wypełnij wszystkie pola oraz dodaj zrzut ekranu jako dowód!');
+            if (!name || !channel || !email || fileInput.files.length === 0) {
+                alert('⚠️ Wypełnij wszystkie pola oraz załącz zrzut ekranu jako dowód!');
                 return;
             }
 
-            // 2. Walidacja linku (wykrywanie czy to nie są same losowe cyfry typu 65656565)
             const isLinkValid = channel.includes('http') || channel.includes('www') || channel.includes('.') || channel.includes('/');
             const isOnlyDigits = /^\d+$/.test(channel);
 
             if (!isLinkValid || isOnlyDigits) {
-                alert('⚠️ Podaj poprawny link do swojego kanału (np. TikTok, Twitch lub YouTube), a nie przypadkowy ciąg znaków/cyfr!');
+                alert('⚠️ Podaj poprawny link do swojego kanału, a nie ciąg cyfr!');
                 return;
             }
 
-            // 3. Generowanie maila do Ciebie (automatyczne otwarcie programu pocztowego)
             const myEmail = "twoj-adres-email@gmail.com"; // <-- TUTAJ WPISZ SWÓJ E-MAIL
-            const subject = encodeURIComponent("Nowe zgłoszenie partnerstwa od: " + name);
+            const subject = encodeURIComponent("Zgłoszenie partnerstwa od: " + name);
             const body = encodeURIComponent(
                 "Imię / Pseudonim: " + name + "\n" +
                 "Link do kanału: " + channel + "\n" +
-                "E-mail kontaktowy: " + email + "\n\n" +
-                "(Uwaga: Pamiętaj, aby załączyć w tym mailu zrzut ekranu, który wgrałeś na stronie!)"
+                "E-mail: " + email + "\n\n" +
+                "(Uwaga: Pamiętaj, aby dodać załącznik ze zdjęciem w programie pocztowym!)"
             );
 
             window.location.href = `mailto:${myEmail}?subject=${subject}&body=${body}`;
 
-            alert('Zgłoszenie zweryfikowane pomyślnie!\nZa chwilę otworzy się Twój program pocztowy z gotową wiadomością do wysłania do nas.');
+            alert('Zgłoszenie gotowe!\nOtwiera się program pocztowy z wiadomością dla Ciebie.');
             closePartnerModal();
         }
 
