@@ -19,11 +19,11 @@
             min-height: 100vh;
         }
 
-        /* Lewy panel z logo */
+        /* Lewy panel z logo - zwiększono szerokość i max rozmiar logo */
         .sidebar {
-            width: 280px;
+            width: 320px;
             background-color: #161822;
-            padding: 30px 20px;
+            padding: 40px 20px;
             border-right: 2px solid #e50914;
             position: fixed;
             top: 0;
@@ -36,38 +36,38 @@
 
         .logo {
             width: 100%;
-            max-width: 180px;
+            max-width: 240px; /* Powiększone logo */
             height: auto;
             object-fit: contain;
-            filter: drop-shadow(0px 0px 8px rgba(229, 9, 20, 0.4));
+            filter: drop-shadow(0px 0px 10px rgba(229, 9, 20, 0.4));
         }
 
         /* Prawa strona z zawartością */
         .main-content {
-            margin-left: 280px;
+            margin-left: 320px;
             flex: 1;
-            padding: 40px;
+            padding: 50px;
             overflow-y: auto;
         }
 
         .section-title {
-            font-size: 28px;
-            margin-bottom: 30px;
+            font-size: 36px; /* Większy nagłówek */
+            margin-bottom: 35px;
             text-transform: uppercase;
             letter-spacing: 2px;
             border-bottom: 2px solid #2a2e3d;
-            padding-bottom: 10px;
+            padding-bottom: 15px;
             color: #ffffff;
         }
 
-        /* Karta produktu */
+        /* Karta produktu - ZWIĘKSZONA (z 450px do 750px) */
         .product-card {
             background: #181a24;
-            border: 1px solid #2a2e3d;
-            border-radius: 12px;
-            max-width: 450px;
-            padding: 24px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            border: 2px solid #2a2e3d;
+            border-radius: 16px;
+            max-width: 750px; /* Zwiększona szerokość karty */
+            padding: 35px; /* Większy odstęp wewnątrz */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
             transition: transform 0.3s ease, border-color 0.3s ease;
         }
 
@@ -77,50 +77,53 @@
         }
 
         .product-title {
-            font-size: 22px;
+            font-size: 30px; /* Większy tytuł produktu */
             font-weight: bold;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             color: #ffffff;
         }
 
+        /* Większa grafika podkładki */
         .product-image {
             width: 100%;
+            max-height: 450px; /* Zwiększona wysokość obrazka */
             height: auto;
-            border-radius: 8px;
-            margin-bottom: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
             display: block;
             object-fit: cover;
         }
 
         .price-tag {
-            font-size: 26px;
+            font-size: 36px; /* Większy napis ceny */
             font-weight: bold;
             color: #e50914;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
+        /* Większy przycisk Kup Teraz */
         .buy-btn {
             display: block;
             width: 100%;
-            padding: 14px;
+            padding: 20px; /* Wyższy przycisk */
             background-color: #e50914;
             color: #ffffff;
             text-align: center;
             text-decoration: none;
             font-weight: bold;
-            font-size: 16px;
-            border-radius: 6px;
+            font-size: 20px; /* Większy tekst na przycisku */
+            border-radius: 8px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             transition: background-color 0.2s ease, box-shadow 0.2s ease;
         }
 
         .buy-btn:hover {
             background-color: #ff0f1f;
-            box-shadow: 0 0 15px rgba(229, 9, 20, 0.6);
+            box-shadow: 0 0 20px rgba(229, 9, 20, 0.7);
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             body {
                 flex-direction: column;
             }
@@ -129,11 +132,14 @@
                 width: 100%;
                 border-right: none;
                 border-bottom: 2px solid #e50914;
-                padding: 20px;
+                padding: 25px;
             }
             .main-content {
                 margin-left: 0;
-                padding: 20px;
+                padding: 25px;
+            }
+            .product-card {
+                max-width: 100%;
             }
         }
     </style>
@@ -142,7 +148,7 @@
 
     <!-- LEWA STRONA: LOGO -->
     <a href="https://zapodaj.net/plik-fBKG7CnguO">
-      <img src="https://zapodaj.net/thumbs/27b0f2db1b343.png" alt=hosting zdjęć zapodaj.net />
+        <img src="https://zapodaj.net/thumbs/27b0f2db1b343.png" alt=hosting zdjęć zapodaj.net />
     </a>
 
     <!-- PRAWA STRONA: PRODUKTY -->
@@ -151,9 +157,9 @@
 
         <!-- PRZEDMIOT 1: PODKŁADKA -->
         <div class="product-card">
-            <h2 class="product-title">Podkładka Gamingowa AeroStrike</h2>
+            <h2 class="product-title">Podkładka AeroStrike eagle</h2>
             
-            <img src="https://i.ibb.co/sK3Ymg1/image-d797a2.jpg" alt="Podkładka AeroStrike" class="product-image">
+            <img src="image_d797a2.jpg" alt="Podkładka AeroStrike" class="product-image">
             
             <div class="price-tag">65 zł</div>
             
