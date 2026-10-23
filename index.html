@@ -221,16 +221,65 @@
             margin-top: 10px;
         }
 
-        .checkout-box {
-            background: #1d202d;
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid #2a2e3d;
+        /* Sekcja opcji płatności i dostawy */
+        .step-section {
+            display: none;
         }
 
-        .checkout-box h3 {
-            font-size: 16px;
-            margin-bottom: 12px;
+        .step-section.active {
+            display: block;
+        }
+
+        .payment-options, .delivery-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option-card {
+            background: #181a24;
+            border: 1px solid #2a2e3d;
+            padding: 14px 18px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+
+        .option-card:hover, .option-card.selected {
+            border-color: #e50914;
+            background: #202333;
+        }
+
+        .option-card input[type="radio"] {
+            accent-color: #e50914;
+            width: 18px;
+            height: 18px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+        }
+
+        .back-btn {
+            background: transparent;
+            border: 1px solid #2a2e3d;
+            color: #cccccc;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            border-color: #ffffff;
             color: #ffffff;
         }
 
@@ -271,7 +320,7 @@
             <!-- PRZEDMIOT 1: PODKŁADKA AEROSTRIKE EAGLE -->
             <div class="product-card">
                 <div>
-                    <h2 class="product-title">Podkładka Pod Myszkę AeroStrike Eagle</h2>
+                    <h2 class="product-title">Podkładka Pod Myszkę AeroStrike-Eagle</h2>
                     <img src="https://i.postimg.cc/tCzRnB78/Zrzut-ekranu-2026-10-23-191712.png" alt="Podkładka AeroStrike Eagle" class="product-image" onclick="openModal('AeroStrike-Eagle', '65 zł', 'https://i.postimg.cc/tCzRnB78/Zrzut-ekranu-2026-10-23-191712.png', 'Wyjątkowa podkładka gamingowa AeroStrike-Eagle zapewniająca optymalny poślizg oraz najwyższą precyzję sensora.')">
                 </div>
                 <div>
@@ -306,54 +355,31 @@
         </div>
     </div>
 
-    <!-- MIEJSCE NA OKIENKO MODAL (POP-UP) -->
+    <!-- MIEJSCE NA DWUETAPOWE OKIENKO MODAL (POP-UP) -->
     <div class="modal-overlay" id="productModal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">&times;</span>
-            <h2 class="modal-title" id="modalTitle">Nazwa Produktu</h2>
-            <img src="" alt="Produkt" class="modal-img" id="modalImg">
-            <div class="modal-price" id="modalPrice">65 zł</div>
-            
-            <div class="modal-description">
-                <p id="modalDesc">Opis produktu...</p>
-                <ul>
-                    <li>Gładka powierzchnia Speed/Control</li>
-                    <li>Antypoślizgowy spód z kauczuku</li>
-                    <li>Trwały obszyty brzeg</li>
-                    <li>Wysoka jakość nadruku</li>
-                </ul>
+
+            <!-- KROK 1: OPIS I SZCZEGÓŁY PRODUKTU -->
+            <div id="step1" class="step-section active">
+                <h2 class="modal-title" id="modalTitle">Nazwa Produktu</h2>
+                <img src="" alt="Produkt" class="modal-img" id="modalImg">
+                <div class="modal-price" id="modalPrice">65 zł</div>
+                
+                <div class="modal-description">
+                    <p id="modalDesc">Opis produktu...</p>
+                    <ul>
+                        <li>Gładka powierzchnia Speed/Control</li>
+                        <li>Antypoślizgowy spód z kauczuku</li>
+                        <li>Trwały obszyty brzeg</li>
+                        <li>Wysoka jakość nadruku</li>
+                    </ul>
+                </div>
+
+                <button class="buy-btn" onclick="goToStep2()">PRZEJDŹ DO PŁATNOŚCI</button>
             </div>
 
-            <div class="checkout-box">
-                <h3>Zamów bezpośrednio:</h3>
-                <!-- Miejsce na bramkę płatności lub link zakupu -->
-                <a href="https://www.vinted.pl/member/284983221" target="_blank" class="buy-btn" id="modalBuyLink">PRZEJDŹ DO PŁATNOŚCI</a>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function openModal(title, price, imgSrc, description) {
-            document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalPrice').innerText = price;
-            document.getElementById('modalImg').src = imgSrc;
-            document.getElementById('modalDesc').innerText = description;
-            
-            document.getElementById('productModal').classList.add('active');
-        }
-
-        function closeModal() {
-            document.getElementById('productModal').classList.remove('active');
-        }
-
-        // Zamknięcie okienka po kliknięciu poza jego obszar
-        window.onclick = function(event) {
-            const modal = document.getElementById('productModal');
-            if (event.target === modal) {
-                closeModal();
-            }
-        }
-    </script>
-
-</body>
-</html>
+            <!-- KROK 2: WYBÓR PŁATNOŚCI I DOSTAWY -->
+            <div id="step2" class="step-section">
+                <button class="back-btn" onclick="goToStep1()">← Wróć do opisu</button>
+                <h2 class="modal
